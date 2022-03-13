@@ -7,12 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D7820B427DD807C00C8EFB7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7820B327DD807C00C8EFB7 /* main.swift */; };
+		4D45C3F527DE19BD004E02C7 /* CAToneFileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7820BC27DD8C9400C8EFB7 /* CAToneFileGenerator.swift */; };
+		4D45C3FF27DE1C29004E02C7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
+		4D45C40027DE1C29004E02C7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4D7820BB27DD81C500C8EFB7 /* CAMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7820BA27DD81C500C8EFB7 /* CAMetadata.swift */; };
-		4D7820BD27DD8C9400C8EFB7 /* CAToneFileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7820BC27DD8C9400C8EFB7 /* CAToneFileGenerator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		4D45C3F927DE19BD004E02C7 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		4D7820AE27DD807C00C8EFB7 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -25,13 +35,21 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4D7820B027DD807C00C8EFB7 /* CoreAudioDemoCode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CoreAudioDemoCode; sourceTree = BUILT_PRODUCTS_DIR; };
-		4D7820B327DD807C00C8EFB7 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		4D45C3FD27DE19BD004E02C7 /* CAToneFileGenerator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAToneFileGenerator; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D45C3FE27DE1C29004E02C7 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		4D7820B027DD807C00C8EFB7 /* CAMetadata */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAMetadata; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D7820BA27DD81C500C8EFB7 /* CAMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAMetadata.swift; sourceTree = "<group>"; };
 		4D7820BC27DD8C9400C8EFB7 /* CAToneFileGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAToneFileGenerator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4D45C3F827DE19BD004E02C7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4D7820AD27DD807C00C8EFB7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -53,7 +71,8 @@
 		4D7820B127DD807C00C8EFB7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4D7820B027DD807C00C8EFB7 /* CoreAudioDemoCode */,
+				4D7820B027DD807C00C8EFB7 /* CAMetadata */,
+				4D45C3FD27DE19BD004E02C7 /* CAToneFileGenerator */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,9 +80,9 @@
 		4D7820B227DD807C00C8EFB7 /* CoreAudioDemoCode */ = {
 			isa = PBXGroup;
 			children = (
-				4D7820B327DD807C00C8EFB7 /* main.swift */,
 				4D7820BA27DD81C500C8EFB7 /* CAMetadata.swift */,
 				4D7820BC27DD8C9400C8EFB7 /* CAToneFileGenerator.swift */,
+				4D45C3FE27DE1C29004E02C7 /* main.swift */,
 			);
 			path = CoreAudioDemoCode;
 			sourceTree = "<group>";
@@ -71,9 +90,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4D7820AF27DD807C00C8EFB7 /* CoreAudioDemoCode */ = {
+		4D45C3F327DE19BD004E02C7 /* CAToneFileGenerator */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4D7820B727DD807C00C8EFB7 /* Build configuration list for PBXNativeTarget "CoreAudioDemoCode" */;
+			buildConfigurationList = 4D45C3FA27DE19BD004E02C7 /* Build configuration list for PBXNativeTarget "CAToneFileGenerator" */;
+			buildPhases = (
+				4D45C3F427DE19BD004E02C7 /* Sources */,
+				4D45C3F827DE19BD004E02C7 /* Frameworks */,
+				4D45C3F927DE19BD004E02C7 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CAToneFileGenerator;
+			productName = CoreAudioDemoCode;
+			productReference = 4D45C3FD27DE19BD004E02C7 /* CAToneFileGenerator */;
+			productType = "com.apple.product-type.tool";
+		};
+		4D7820AF27DD807C00C8EFB7 /* CAMetadata */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D7820B727DD807C00C8EFB7 /* Build configuration list for PBXNativeTarget "CAMetadata" */;
 			buildPhases = (
 				4D7820AC27DD807C00C8EFB7 /* Sources */,
 				4D7820AD27DD807C00C8EFB7 /* Frameworks */,
@@ -83,9 +119,9 @@
 			);
 			dependencies = (
 			);
-			name = CoreAudioDemoCode;
+			name = CAMetadata;
 			productName = CoreAudioDemoCode;
-			productReference = 4D7820B027DD807C00C8EFB7 /* CoreAudioDemoCode */;
+			productReference = 4D7820B027DD807C00C8EFB7 /* CAMetadata */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -116,25 +152,58 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4D7820AF27DD807C00C8EFB7 /* CoreAudioDemoCode */,
+				4D7820AF27DD807C00C8EFB7 /* CAMetadata */,
+				4D45C3F327DE19BD004E02C7 /* CAToneFileGenerator */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4D45C3F427DE19BD004E02C7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D45C40027DE1C29004E02C7 /* main.swift in Sources */,
+				4D45C3F527DE19BD004E02C7 /* CAToneFileGenerator.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4D7820AC27DD807C00C8EFB7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D7820BD27DD8C9400C8EFB7 /* CAToneFileGenerator.swift in Sources */,
+				4D45C3FF27DE1C29004E02C7 /* main.swift in Sources */,
 				4D7820BB27DD81C500C8EFB7 /* CAMetadata.swift in Sources */,
-				4D7820B427DD807C00C8EFB7 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		4D45C3FB27DE19BD004E02C7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 566Y4FXUU7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		4D45C3FC27DE19BD004E02C7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 566Y4FXUU7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		4D7820B527DD807C00C8EFB7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -277,6 +346,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4D45C3FA27DE19BD004E02C7 /* Build configuration list for PBXNativeTarget "CAToneFileGenerator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D45C3FB27DE19BD004E02C7 /* Debug */,
+				4D45C3FC27DE19BD004E02C7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4D7820AB27DD807C00C8EFB7 /* Build configuration list for PBXProject "CoreAudioDemoCode" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -286,7 +364,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4D7820B727DD807C00C8EFB7 /* Build configuration list for PBXNativeTarget "CoreAudioDemoCode" */ = {
+		4D7820B727DD807C00C8EFB7 /* Build configuration list for PBXNativeTarget "CAMetadata" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4D7820B827DD807C00C8EFB7 /* Debug */,

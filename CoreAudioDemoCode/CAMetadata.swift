@@ -8,9 +8,9 @@
 import Foundation
 import AVFoundation
 
-func caMetadata() {
+func main() {
     guard CommandLine.argc > 1 else {
-        print("Usage: CoreAudioDemoCode /full/path/to/audiofile")
+        print("Usage: \(CommandLine.arguments[0]) /full/path/to/audiofile")
         return
     }
     

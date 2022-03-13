@@ -11,12 +11,14 @@ import AVFoundation
 fileprivate struct Settings {
     static let sampleRate = Float64(44100)
     static let duration = 5.0
-    static let filenameFormat = "%0.1f-square.aif"
+    static let filenameFormat = "%0.1f-square.wav"
+    // static let filenameFormat = "%0.1f-saw.aif"
+    // static let filenameFormat = "%0.1f-sine.aif"
 }
 
-func caToneFileGenerator() {
+func main() {
     guard CommandLine.argc > 1 else {
-        print("Usage: CoreAudioDemoCode n")
+        print("Usage: \(CommandLine.arguments[0]) n")
         print("(where n in tone in Hz)")
         return
     }
@@ -70,19 +72,21 @@ func caToneFileGenerator() {
     // Start writing samples
     let maxSampleCount = Int(Settings.sampleRate) * Int(Settings.duration)
     var sampleCount = Int64(0)
-    var bytesToWrite = UInt32(2)
     let wavelengthInSamples = Int(Settings.sampleRate / hz)
-    
+    var bytesToWrite = UInt32(wavelengthInSamples * 2)
+
+    var wave = (0..<wavelengthInSamples)
+        .map{ square(value: $0, wavelengthInSamples: wavelengthInSamples) }
+        // .map { saw(value: $0, wavelengthInSamples: wavelengthInSamples) }
+        // .map { sine(value: $0, wavelengthInSamples: wavelengthInSamples) }
+ 
     while sampleCount < maxSampleCount {
-        for i in 0..<wavelengthInSamples {
-            var sample = i < wavelengthInSamples / 2 ? Int16.max : Int16.min
-            audioErr = AudioFileWriteBytes(audioFile, false, sampleCount * 2, &bytesToWrite, &sample)
-            guard audioErr == noErr else {
-                print ("Error \(audioErr) writing file.")
-                return
-            }
-            sampleCount += 1
+        audioErr = AudioFileWriteBytes(audioFile, false, sampleCount * 2, &bytesToWrite, &wave)
+        guard audioErr == noErr else {
+            print ("Error \(audioErr) writing file.")
+            return
         }
+        sampleCount += Int64(wavelengthInSamples)
     }
     audioErr = AudioFileClose(audioFile)
     guard audioErr == noErr else {
@@ -92,3 +96,16 @@ func caToneFileGenerator() {
     print ("Wrote \(sampleCount) samples.")
     return
 }
+
+func saw(value: Int, wavelengthInSamples: Int) -> Int16 {
+    Int16((Double(value) * 2 * Double(Int16.max) / Double(wavelengthInSamples)) - Double(Int16.max)).bigEndian
+}
+
+func sine(value: Int, wavelengthInSamples: Int) -> Int16 {
+    Int16(Double(Int16.max) * sin(2 * Double.pi * Double(value) / Double(wavelengthInSamples))).bigEndian
+}
+
+func square(value: Int, wavelengthInSamples: Int) -> Int16 {
+    (value < wavelengthInSamples / 2 ? Int16.max : Int16.min).bigEndian
+}
+
