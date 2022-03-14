@@ -7,13 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D45C3F527DE19BD004E02C7 /* CAToneFileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7820BC27DD8C9400C8EFB7 /* CAToneFileGenerator.swift */; };
+		4D1E1ABD27DECB2D0052CB16 /* NCO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1E1ABC27DECB2D0052CB16 /* NCO.swift */; };
+		4D1E1AC027DECFA00052CB16 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
+		4D1E1AC227DECFA00052CB16 /* NCO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1E1ABC27DECB2D0052CB16 /* NCO.swift */; };
+		4D1E1ACA27DED0030052CB16 /* CAStreamFormatTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1E1AC927DED0030052CB16 /* CAStreamFormatTester.swift */; };
+		4D1E1ACB27DED0340052CB16 /* CAToneFileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7820BC27DD8C9400C8EFB7 /* CAToneFileGenerator.swift */; };
 		4D45C3FF27DE1C29004E02C7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4D45C40027DE1C29004E02C7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4D7820BB27DD81C500C8EFB7 /* CAMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7820BA27DD81C500C8EFB7 /* CAMetadata.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		4D1E1AC427DECFA00052CB16 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		4D45C3F927DE19BD004E02C7 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -35,6 +48,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D1E1ABC27DECB2D0052CB16 /* NCO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NCO.swift; sourceTree = "<group>"; };
+		4D1E1AC827DECFA00052CB16 /* CAStreamFormatTester */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAStreamFormatTester; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D1E1AC927DED0030052CB16 /* CAStreamFormatTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAStreamFormatTester.swift; sourceTree = "<group>"; };
 		4D45C3FD27DE19BD004E02C7 /* CAToneFileGenerator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAToneFileGenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D45C3FE27DE1C29004E02C7 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		4D7820B027DD807C00C8EFB7 /* CAMetadata */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAMetadata; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -43,6 +59,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4D1E1AC327DECFA00052CB16 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4D45C3F827DE19BD004E02C7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -73,6 +96,7 @@
 			children = (
 				4D7820B027DD807C00C8EFB7 /* CAMetadata */,
 				4D45C3FD27DE19BD004E02C7 /* CAToneFileGenerator */,
+				4D1E1AC827DECFA00052CB16 /* CAStreamFormatTester */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -82,7 +106,9 @@
 			children = (
 				4D7820BA27DD81C500C8EFB7 /* CAMetadata.swift */,
 				4D7820BC27DD8C9400C8EFB7 /* CAToneFileGenerator.swift */,
+				4D1E1AC927DED0030052CB16 /* CAStreamFormatTester.swift */,
 				4D45C3FE27DE1C29004E02C7 /* main.swift */,
+				4D1E1ABC27DECB2D0052CB16 /* NCO.swift */,
 			);
 			path = CoreAudioDemoCode;
 			sourceTree = "<group>";
@@ -90,6 +116,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4D1E1ABE27DECFA00052CB16 /* CAStreamFormatTester */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D1E1AC527DECFA00052CB16 /* Build configuration list for PBXNativeTarget "CAStreamFormatTester" */;
+			buildPhases = (
+				4D1E1ABF27DECFA00052CB16 /* Sources */,
+				4D1E1AC327DECFA00052CB16 /* Frameworks */,
+				4D1E1AC427DECFA00052CB16 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CAStreamFormatTester;
+			productName = CoreAudioDemoCode;
+			productReference = 4D1E1AC827DECFA00052CB16 /* CAStreamFormatTester */;
+			productType = "com.apple.product-type.tool";
+		};
 		4D45C3F327DE19BD004E02C7 /* CAToneFileGenerator */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4D45C3FA27DE19BD004E02C7 /* Build configuration list for PBXNativeTarget "CAToneFileGenerator" */;
@@ -154,17 +197,29 @@
 			targets = (
 				4D7820AF27DD807C00C8EFB7 /* CAMetadata */,
 				4D45C3F327DE19BD004E02C7 /* CAToneFileGenerator */,
+				4D1E1ABE27DECFA00052CB16 /* CAStreamFormatTester */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4D1E1ABF27DECFA00052CB16 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D1E1AC027DECFA00052CB16 /* main.swift in Sources */,
+				4D1E1ACA27DED0030052CB16 /* CAStreamFormatTester.swift in Sources */,
+				4D1E1AC227DECFA00052CB16 /* NCO.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4D45C3F427DE19BD004E02C7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D1E1ACB27DED0340052CB16 /* CAToneFileGenerator.swift in Sources */,
 				4D45C40027DE1C29004E02C7 /* main.swift in Sources */,
-				4D45C3F527DE19BD004E02C7 /* CAToneFileGenerator.swift in Sources */,
+				4D1E1ABD27DECB2D0052CB16 /* NCO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,6 +235,30 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		4D1E1AC627DECFA00052CB16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 566Y4FXUU7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		4D1E1AC727DECFA00052CB16 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 566Y4FXUU7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		4D45C3FB27DE19BD004E02C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -255,7 +334,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -310,7 +389,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -346,6 +425,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4D1E1AC527DECFA00052CB16 /* Build configuration list for PBXNativeTarget "CAStreamFormatTester" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D1E1AC627DECFA00052CB16 /* Debug */,
+				4D1E1AC727DECFA00052CB16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4D45C3FA27DE19BD004E02C7 /* Build configuration list for PBXNativeTarget "CAToneFileGenerator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
