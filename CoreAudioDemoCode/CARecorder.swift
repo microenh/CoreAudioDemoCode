@@ -24,4 +24,5 @@ struct MyRecorder {
 
 // MARK: - Main Function
 func main() {
+    checkError(1718449215)
 }
