@@ -11,10 +11,10 @@ import AVFoundation
 fileprivate struct Settings {
     static let sampleRate = Float64(8000)
     static let duration = 5.0
-    // static let filenameFormat = "%0.1f-square.caf"
-    // static let filenameFormat = "%0.1f-saw.caf"
-    static let filenameFormat = "%0.1f-sine.caf"
-    static let bytesPerFrame = UInt32(1)
+    // static let filenameFormat = "%0.1f-%d-square.caf"
+    // static let filenameFormat = "%0.1f-%d-saw.caf"
+    static let filenameFormat = "%0.1f-%d-sine.wav"
+    static let bytesPerFrame = UInt32(2)
 }
 
 func main() {
@@ -36,7 +36,7 @@ func main() {
     
     print ("Generating \(hz) hz tone.")
     
-    let fileName = String(format: Settings.filenameFormat, hz)
+    let fileName = String(format: Settings.filenameFormat, hz, Settings.bytesPerFrame * 8)
     
     let fileURL = NSURL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent(fileName)
     
@@ -47,8 +47,8 @@ func main() {
 
     var asbd = AudioStreamBasicDescription(mSampleRate: Settings.sampleRate,
                                            mFormatID: kAudioFormatLinearPCM,
-                                           mFormatFlags: kAudioFormatFlagIsBigEndian
-                                                         | kAudioFormatFlagIsSignedInteger
+                                           mFormatFlags: /* kAudioFormatFlagIsBigEndian
+                                                         | */ kAudioFormatFlagIsSignedInteger
                                                          | kAudioFormatFlagIsPacked,
                                            mBytesPerPacket: Settings.bytesPerFrame,
                                            mFramesPerPacket: 1,
@@ -73,24 +73,29 @@ func main() {
     }
     
     // Start writing samples
-    let maxSampleCount = Int(Settings.sampleRate) * Int(Settings.duration)
+    let maxSampleCount = Int64(Settings.sampleRate) * Int64(Settings.duration)
     var sampleCount = Int64(0)
-    let wavelengthInSamples = Int(Settings.sampleRate / hz)
-    var bytesToWrite = UInt32(wavelengthInSamples) * Settings.bytesPerFrame
+    let wavelengthInSamples = Int64(Settings.sampleRate / hz)
+    var samplesToWrite = wavelengthInSamples
 
     var wave = (0..<wavelengthInSamples)
-        // .map{ square(value: $0, wavelengthInSamples: wavelengthInSamples) }
+        // .map { square(value: $0, wavelengthInSamples: wavelengthInSamples) }
         // .map { saw(value: $0, wavelengthInSamples: wavelengthInSamples) }
         // .map { sine16(value: $0, wavelengthInSamples: wavelengthInSamples) }
-        .map { _ in nco.value8.bigEndian }
- 
+        // .map { _ in nco.value8 }
+        .map { _ in nco.value16.bigEndian }
+
     while sampleCount < maxSampleCount {
+        if sampleCount + wavelengthInSamples >= maxSampleCount {
+            samplesToWrite = Int64(maxSampleCount - sampleCount)
+        }
+        var bytesToWrite = UInt32(samplesToWrite) * UInt32(Settings.bytesPerFrame)
         audioErr = AudioFileWriteBytes(audioFile, false, sampleCount * Int64(Settings.bytesPerFrame), &bytesToWrite, &wave)
         guard audioErr == noErr else {
             print ("Error \(audioErr) writing file.")
             return
         }
-        sampleCount += Int64(wavelengthInSamples)
+        sampleCount += samplesToWrite
     }
     audioErr = AudioFileClose(audioFile)
     guard audioErr == noErr else {
@@ -114,6 +119,6 @@ func sine16(value: Int, wavelengthInSamples: Int) -> Int16 {
 }
 
 func sine8(value: Int, wavelengthInSamples: Int) -> Int8 {
-    Int8(Double(Int8.max) * sin(2 * Double.pi * Double(value) / Double(wavelengthInSamples))).bigEndian
+    Int8(Double(Int8.max) * sin(2 * Double.pi * Double(value) / Double(wavelengthInSamples)))
 }
 
