@@ -64,6 +64,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D1665B727E02AD400BB7313 /* CAStreamFormatTester.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CAStreamFormatTester.entitlements; sourceTree = "<group>"; };
 		4D1E1ABC27DECB2D0052CB16 /* NCO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NCO.swift; sourceTree = "<group>"; };
 		4D1E1AC827DECFA00052CB16 /* CAStreamFormatTester */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAStreamFormatTester; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D1E1AC927DED0030052CB16 /* CAStreamFormatTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAStreamFormatTester.swift; sourceTree = "<group>"; };
@@ -112,6 +113,7 @@
 		4D7820A727DD807C00C8EFB7 = {
 			isa = PBXGroup;
 			children = (
+				4D1665B727E02AD400BB7313 /* CAStreamFormatTester.entitlements */,
 				4D7820B227DD807C00C8EFB7 /* CoreAudioDemoCode */,
 				4D7820B127DD807C00C8EFB7 /* Products */,
 			);
@@ -307,6 +309,7 @@
 		4D1E1AC627DECFA00052CB16 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = CAStreamFormatTester.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 566Y4FXUU7;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -319,6 +322,7 @@
 		4D1E1AC727DECFA00052CB16 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = CAStreamFormatTester.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 566Y4FXUU7;
 				ENABLE_HARDENED_RUNTIME = YES;
