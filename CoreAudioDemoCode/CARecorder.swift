@@ -12,7 +12,7 @@ struct Settings {
     static let fileName = "output.caf"
     static let numberRecordBuffers = 3
     static let formatID = kAudioFormatMPEG4AAC
-    static let channels = UInt32(1)
+    static let channels = UInt32(2)
     static let duration = Float(0.5)
 }
 
