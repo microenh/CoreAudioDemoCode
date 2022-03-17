@@ -9,7 +9,7 @@ import AVFoundation
 
 // MARK: Global Constants
 struct Settings {
-    static let fileName = "output.caf"
+    static let fileName = "../../../Data/output.caf"
     static let numberRecordBuffers = 3
     static let formatID = kAudioFormatMPEG4AAC
     static let channels = UInt32(2)

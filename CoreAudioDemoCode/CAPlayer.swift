@@ -9,7 +9,7 @@ import AVFoundation
 
 // MARK: Global Constants
 struct Settings {
-    static let fileName = "output.caf"
+    static let fileName = "../../../Data/output.mp3"
     static let duration = Float64(0.5)
     static let numberPlaybackBuffers = 3
 }
@@ -20,19 +20,21 @@ struct MyPlayer {
     var packetPosition: Int64
     var numPacketsToRead: UInt32
     var packetDescs: UnsafeMutablePointer<AudioStreamPacketDescription>?
-    var bufferByteSize: UInt32
+    var bufferByteSize: UInt32  // added: needed for call to AudioFileReadPacketData
     var isDone: Bool
+    var bufferDone = false
 }
 
 // MARK: Utility Functions
 // checkError in CheckError.swift
 func calculateBytesForTime(inAudioFile: AudioFileID,
                            inDesc: AudioStreamBasicDescription,
-                           inSeconds: Float64,
-                           outBufferSize: inout UInt32,
-                           outNumPackets: inout UInt32) {
+                           inSeconds: Float64) -> (outBufferSize: UInt32, outNumPackets: UInt32) {
+
+    var outBufferSize: UInt32
     var maxPacketSize = UInt32(0)
     var propSize = UInt32(MemoryLayout<UInt32>.size)
+    
     checkError(AudioFileGetProperty(inAudioFile,
                                     kAudioFilePropertyPacketSizeUpperBound,
                                     &propSize,
@@ -43,22 +45,20 @@ func calculateBytesForTime(inAudioFile: AudioFileID,
     let minBufferSize = UInt32(0x4000)
     
     if inDesc.mFramesPerPacket > 0 {
-        let numPacketsForTime = UInt32(inDesc.mSampleRate /
-                                Float64(inDesc.mFramesPerPacket) * inSeconds)
-        outBufferSize = numPacketsForTime * maxPacketSize
+        let numPacketsForTime = inDesc.mSampleRate /
+                                Float64(inDesc.mFramesPerPacket) * inSeconds
+        outBufferSize = UInt32(numPacketsForTime) * maxPacketSize
     } else {
-        outBufferSize = maxBufferSize > maxPacketSize ? maxBufferSize : maxPacketSize
+        outBufferSize = max(maxBufferSize, maxPacketSize)
     }
-    
-    if (outBufferSize > maxBufferSize &&
-        outBufferSize > maxPacketSize) {
+    if outBufferSize > max(maxBufferSize, maxPacketSize) {
         outBufferSize = maxBufferSize
     } else {
         if outBufferSize < minBufferSize {
             outBufferSize = minBufferSize
         }
     }
-    outNumPackets = outBufferSize / maxPacketSize
+    return (outBufferSize, outBufferSize / maxPacketSize)
 }
 
 func myCopyEncoderCookieToQueue(theFile: AudioFileID, queue: AudioQueueRef) {
@@ -94,51 +94,73 @@ func myAQOutputCallback(inUserData: UnsafeMutableRawPointer?,
     
     guard let aqp = aqp, !aqp.pointee.isDone else { return }
     
-    var numBytes = aqp.pointee.bufferByteSize
-    var nPackets = aqp.pointee.numPacketsToRead
+//    if aqp.pointee.isDone {
+//        return
+//    }
     
     // (-50) AVAudioSessionErrorCodeBadParam
     
     // 2022-03-15 21:05:10.563094-0400 CAPlayer[20364:2121326] [aqme]        MEMixerChannel.cpp:1639  client <AudioQueueObject@0x106808200;
     // [0]; play> got error 2003332927 while sending format information  (who?) kAudioCodecUnknownPropertyError
+    // original code generating same message
+    
+    var bufferByteSize = aqp.pointee.bufferByteSize
     
     let err = AudioFileReadPacketData(aqp.pointee.playbackFile!,
-                                       false,
-                                       &numBytes,
-                                       aqp.pointee.packetDescs,
-                                       aqp.pointee.packetPosition,
-                                       &nPackets,
-                                       inCompleteAQBuffer.pointee.mAudioData)
-    
+                                      false,
+                                      &bufferByteSize,
+                                      aqp.pointee.packetDescs,
+                                      aqp.pointee.packetPosition,
+                                      &aqp.pointee.numPacketsToRead,
+                                      inCompleteAQBuffer.pointee.mAudioData)
     checkError(err, "AudioFileReadPacketData failed")
-    
+
+// AudioFileReadPackets deprecated - use AudioFileReadPacketData
+// difference is that with AudioFileReadPacketData numBytes must have buffer size on input
 //    checkError(AudioFileReadPackets(aqp.pointee.playbackFile!,
 //                                    false,
-//                                    &numBytes,
+//                                    &aqp.pointee.bufferByteSize,
 //                                    aqp.pointee.packetDescs,
 //                                    aqp.pointee.packetPosition,
-//                                    &nPackets,
+//                                    &aqp.pointee.numPacketsToRead,
 //                                    inCompleteAQBuffer.pointee.mAudioData),
 //               "AudioFileReadPackets failed")
     
-    if nPackets > 0 {
-        inCompleteAQBuffer.pointee.mAudioDataByteSize = numBytes
+    if aqp.pointee.numPacketsToRead > 0 {
+        inCompleteAQBuffer.pointee.mAudioDataByteSize = aqp.pointee.bufferByteSize
         AudioQueueEnqueueBuffer(inAQ,
                                 inCompleteAQBuffer,
-                                nPackets,
+                                aqp.pointee.numPacketsToRead,
                                 aqp.pointee.packetDescs)
-        aqp.pointee.packetPosition += Int64(nPackets)
+        aqp.pointee.packetPosition += Int64(aqp.pointee.numPacketsToRead)
     } else {
-        checkError((AudioQueueStop(inAQ, false)), "AudioQueueStop failed")
+        // checkError((AudioQueueStop(inAQ, false)), "AudioQueueStop failed")
         aqp.pointee.isDone = true
+    }
+    
+}
+
+// MARK: QueuePropertyListener
+func queuePropertyListener(inUserData: UnsafeMutableRawPointer?,
+                           inAQ: AudioQueueRef,
+                           propertyID: AudioQueuePropertyID) {
+    var running = UInt32(0)
+    var propSize = UInt32(0)
+    
+    checkError(AudioQueueGetProperty(inAQ, propertyID, &running, &propSize),
+               "AudioQueueGetProperty failed")
+    
+    if running == 0 {
+        let aqp = inUserData?.assumingMemoryBound(to: MyPlayer.self)
+        if let aqp = aqp {
+            aqp.pointee.bufferDone = true
+        }
     }
     
 }
 
 // MARK: - Main Function
 func main () {
-    // var player = MyPlayer()
-    
     let myFileURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault,
                                                   Settings.fileName as CFString,
                                                   CFURLPathStyle.cfurlposixPathStyle,
@@ -158,34 +180,21 @@ func main () {
                "AudilFileOpenURL failed")
     
     var dataFormat = AudioStreamBasicDescription()
-    var propSize = UInt32(40)
-    var isWritable = UInt32(0)
-
-    checkError(AudioFileGetPropertyInfo(playbackFile!,
-                                    kAudioFilePropertyDataFormat,
-                                    &propSize,
-                                    &isWritable),
-               "Couldn't get data format size")
-    
-    
+    var propSize = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
+        
     checkError(AudioFileGetProperty(playbackFile!,
                                     kAudioFilePropertyDataFormat,
                                     &propSize,
                                     &dataFormat),
                "Couldn't get file's data format.")
     
-    var bufferByteSize = UInt32(0)
-    var numPacketsToRead = UInt32(0)
+    let result = calculateBytesForTime(inAudioFile: playbackFile!,
+                                       inDesc: dataFormat,
+                                       inSeconds: Settings.duration)
     
-    calculateBytesForTime(inAudioFile: playbackFile!,
-                          inDesc: dataFormat,
-                          inSeconds: Settings.duration,
-                          outBufferSize: &bufferByteSize,
-                          outNumPackets: &numPacketsToRead)
+    let bufferByteSize = result.outBufferSize
+    let numPacketsToRead = result.outNumPackets
     
-    print (bufferByteSize)
-    print (numPacketsToRead)
-
     var packetDescs: UnsafeMutablePointer<AudioStreamPacketDescription>? = nil
     
     let isFormatVBR = dataFormat.mBytesPerPacket == 0 || dataFormat.mFramesPerPacket == 0
@@ -248,11 +257,16 @@ func main () {
                            0.25,
                            false)
     } while !player.isDone
-    CFRunLoopRunInMode(CFRunLoopMode.defaultMode,
-                       2,
-                       false)
-    player.isDone = true
     checkError(AudioQueueStop(queue, false), "AudioQueueStop failed")
+    
+    AudioQueueAddPropertyListener(queue, kAudioQueueProperty_IsRunning, queuePropertyListener, &player)
+    
+    repeat {
+        CFRunLoopRunInMode(CFRunLoopMode.defaultMode,
+                           0.25,
+                           false)
+    } while !player.bufferDone
+                
     AudioQueueDispose(queue, true)
     AudioFileClose(player.playbackFile!)
     return
