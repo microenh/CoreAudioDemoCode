@@ -9,7 +9,7 @@ import AVFoundation
 
 // MARK: Global Constants
 struct Settings {
-    static let fileName = "../../../Data/output.mp3"
+    static let fileName = "../../../Data/output.caf"
     static let duration = Float64(0.5)
     static let numberPlaybackBuffers = 3
 }
@@ -93,11 +93,7 @@ func myAQOutputCallback(inUserData: UnsafeMutableRawPointer?,
     let aqp = inUserData?.assumingMemoryBound(to: MyPlayer.self)
     
     guard let aqp = aqp, !aqp.pointee.isDone else { return }
-    
-//    if aqp.pointee.isDone {
-//        return
-//    }
-    
+
     // (-50) AVAudioSessionErrorCodeBadParam
     
     // 2022-03-15 21:05:10.563094-0400 CAPlayer[20364:2121326] [aqme]        MEMixerChannel.cpp:1639  client <AudioQueueObject@0x106808200;
@@ -106,26 +102,14 @@ func myAQOutputCallback(inUserData: UnsafeMutableRawPointer?,
     
     var bufferByteSize = aqp.pointee.bufferByteSize
     
-    let err = AudioFileReadPacketData(aqp.pointee.playbackFile!,
+    checkError(AudioFileReadPacketData(aqp.pointee.playbackFile!,
                                       false,
                                       &bufferByteSize,
                                       aqp.pointee.packetDescs,
                                       aqp.pointee.packetPosition,
                                       &aqp.pointee.numPacketsToRead,
-                                      inCompleteAQBuffer.pointee.mAudioData)
-    checkError(err, "AudioFileReadPacketData failed")
+                                      inCompleteAQBuffer.pointee.mAudioData), "AudioFileReadPacketData failed")
 
-// AudioFileReadPackets deprecated - use AudioFileReadPacketData
-// difference is that with AudioFileReadPacketData numBytes must have buffer size on input
-//    checkError(AudioFileReadPackets(aqp.pointee.playbackFile!,
-//                                    false,
-//                                    &aqp.pointee.bufferByteSize,
-//                                    aqp.pointee.packetDescs,
-//                                    aqp.pointee.packetPosition,
-//                                    &aqp.pointee.numPacketsToRead,
-//                                    inCompleteAQBuffer.pointee.mAudioData),
-//               "AudioFileReadPackets failed")
-    
     if aqp.pointee.numPacketsToRead > 0 {
         inCompleteAQBuffer.pointee.mAudioDataByteSize = aqp.pointee.bufferByteSize
         AudioQueueEnqueueBuffer(inAQ,
@@ -134,7 +118,7 @@ func myAQOutputCallback(inUserData: UnsafeMutableRawPointer?,
                                 aqp.pointee.packetDescs)
         aqp.pointee.packetPosition += Int64(aqp.pointee.numPacketsToRead)
     } else {
-        // checkError((AudioQueueStop(inAQ, false)), "AudioQueueStop failed")
+        checkError((AudioQueueStop(inAQ, false)), "AudioQueueStop failed")
         aqp.pointee.isDone = true
     }
     
@@ -195,13 +179,9 @@ func main () {
     let bufferByteSize = result.outBufferSize
     let numPacketsToRead = result.outNumPackets
     
-    var packetDescs: UnsafeMutablePointer<AudioStreamPacketDescription>? = nil
-    
-    let isFormatVBR = dataFormat.mBytesPerPacket == 0 || dataFormat.mFramesPerPacket == 0
-    
-    if isFormatVBR {
-        packetDescs = UnsafeMutablePointer<AudioStreamPacketDescription>.allocate(capacity: Int(numPacketsToRead))
-    }
+    let packetDescs : UnsafeMutablePointer<AudioStreamPacketDescription>? = dataFormat.mBytesPerPacket == 0 || dataFormat.mFramesPerPacket == 0
+        ? .allocate(capacity: Int(numPacketsToRead))
+        : nil
     
     var player = MyPlayer(playbackFile: playbackFile!,
                           packetPosition: 0,
@@ -225,10 +205,8 @@ func main () {
         return
     }
     
-    
     myCopyEncoderCookieToQueue(theFile: playbackFile!, queue: queue)
     
-    var buffers = [AudioQueueBufferRef]()
     player.isDone = false
     player.packetPosition = 0
     
@@ -240,34 +218,19 @@ func main () {
             print ("buffer nil")
             return
         }
-        
-        buffers.append(buffer)
-       
         myAQOutputCallback(inUserData: &player, inAQ: queue, inCompleteAQBuffer: buffer)
-        
         if player.isDone {
             break
         }
     }
+    checkError(AudioQueueAddPropertyListener(queue, kAudioQueueProperty_IsRunning, queuePropertyListener, &player),
+               "AudioQueueAddPropertyListener failed")
     checkError(AudioQueueStart(queue, nil), "AudioQueueStart failed")
-    
     print ("Playing...")
     repeat {
-        CFRunLoopRunInMode(CFRunLoopMode.defaultMode,
-                           0.25,
-                           false)
-    } while !player.isDone
-    checkError(AudioQueueStop(queue, false), "AudioQueueStop failed")
-    
-    AudioQueueAddPropertyListener(queue, kAudioQueueProperty_IsRunning, queuePropertyListener, &player)
-    
-    repeat {
-        CFRunLoopRunInMode(CFRunLoopMode.defaultMode,
-                           0.25,
-                           false)
+        CFRunLoopRunInMode(CFRunLoopMode.defaultMode, 0.25, false)
     } while !player.bufferDone
-                
-    AudioQueueDispose(queue, true)
-    AudioFileClose(player.playbackFile!)
-    return
+    
+    checkError((AudioQueueDispose(queue, true)), "AudioQueueDispose failed")
+    checkError(AudioFileClose(player.playbackFile!), "AudioFileClose failed")
 }
