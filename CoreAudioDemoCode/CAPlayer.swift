@@ -9,9 +9,9 @@ import AVFoundation
 
 // MARK: Global Constants
 struct Settings {
-    static let fileName = "../../../Data/output.caf"
-    static let duration = Float64(0.5)
-    static let numberPlaybackBuffers = 3
+    static let fileName = "../../../Data/output.mp3"
+    static let duration = Float64(1.0)
+    static let numberPlaybackBuffers = 2
 }
 
 // MARK: User Data Struct
@@ -22,7 +22,7 @@ struct MyPlayer {
     var packetDescs: UnsafeMutablePointer<AudioStreamPacketDescription>?
     var bufferByteSize: UInt32  // added: needed for call to AudioFileReadPacketData
     var isDone: Bool
-    var bufferDone = false
+    var bufferDone = false  // added: report when all buffers played
 }
 
 // MARK: Utility Functions
