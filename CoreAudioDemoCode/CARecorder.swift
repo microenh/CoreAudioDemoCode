@@ -9,7 +9,7 @@ import AVFoundation
 
 // MARK: Global Constants
 struct Settings {
-    static let fileName = "../../../Data/output.caf"
+    static let fileName = "/Users/mark/Documents/CASoundFiles/output.caf"
     static let numberRecordBuffers = 3
     static let formatID = kAudioFormatMPEG4AAC
     static let channels = UInt32(2)
@@ -169,6 +169,7 @@ func main() {
                                                    mChannelsPerFrame: Settings.channels,
                                                    mBitsPerChannel: 0,
                                                    mReserved: 0)
+
     checkError(myGetDefaultInputDeviceSampleRate(outSampleRate: &recordFormat.mSampleRate),
                "myGetDefaultInputDeviceSampleRate failed")
     var propSize = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
@@ -178,7 +179,8 @@ func main() {
                                      &propSize,
                                      &recordFormat),
                "AudioFormatGetProperty failed")
-    
+
+
     var queue: AudioQueueRef?
     checkError(AudioQueueNewInput(&recordFormat,
                                   myAQInputCallback,
@@ -188,14 +190,14 @@ func main() {
                                   0,
                                   &queue),
                "AudioQueueNewInput failed")
-        
+
     guard let queue = queue else {
         print ("queue failed")
         return
     }
-    
+
     var size = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
-    
+
     checkError(AudioQueueGetProperty(queue,
                                      kAudioConverterCurrentOutputStreamDescription,
                                      &recordFormat,
@@ -207,6 +209,7 @@ func main() {
                                                   Settings.fileName as CFString,
                                                   CFURLPathStyle.cfurlposixPathStyle,
                                                   false)
+    // CFShow (myFileURL)
     
     checkError(AudioFileCreateWithURL(myFileURL!,
                                       kAudioFileCAFType,
@@ -215,21 +218,17 @@ func main() {
                                       &recorder.recordFile),
                "AudioFileCreateWithURL failed")
     
-    // CFRelease(myFileURL)
-    
+    myCopyEncoderCookieToFile(queue: queue, theFile: recorder.recordFile!)
+
     let bufferByteSize = myComputeRecordBufferSize(format: recordFormat, queue: queue, seconds: Settings.duration)
-    
+
     for _ in 0..<Settings.numberRecordBuffers {
         var buffer: AudioQueueBufferRef?
         checkError(AudioQueueAllocateBuffer(queue,
                                             bufferByteSize,
                                             &buffer),
                    "AudioQueueAllocateBuffer failed")
-        guard let buffer = buffer else {
-            print ("allocate buffer failure")
-            return
-        }
-        checkError(AudioQueueEnqueueBuffer(queue, buffer, 0, nil),
+        checkError(AudioQueueEnqueueBuffer(queue, buffer!, 0, nil),
                    "AudioQueueEnqueueBuffer failed")
     }
     recorder.running = true

@@ -8,10 +8,9 @@
 import AVFoundation
 
 struct Settings {
-    static let inputFileName = "../../../Data/output.mp3"
+    static let inputFileName = "../../../Data/output.caf"
     static let outputFileName = "../../../Data/output.aif"
 }
-
 
 // MARK: user data struct
 struct MyAudioConverterSettings {
@@ -31,32 +30,90 @@ struct MyAudioConverterSettings {
 
 // MARK: utility functions
 // checkError in CheckError.swift
-func convert(mySettings: inout MyAudioConverterSettings, outputBufferSize: UInt32, packetsPerBuffer: UInt32, audioConverter: AudioConverterRef) {
+func convert(inUserData: UnsafeMutableRawPointer?, outputBufferSize: UInt32, packetsPerBuffer: UInt32, audioConverter: AudioConverterRef) {
     let outBuffer: UnsafeMutableRawPointer? = malloc(Int(outputBufferSize))
     var outputFilePacketPosition = UInt32(0)
+    let mySettings = inUserData?.assumingMemoryBound(to: MyAudioConverterSettings.self)
+    guard let mySettings = mySettings else {
+        print ("mySettings nil")
+        return
+    }
+
     while true {
-        let buffer = AudioBuffer(mNumberChannels: mySettings.inputFormat.mChannelsPerFrame,
+        let buffer = AudioBuffer(mNumberChannels: mySettings.pointee.inputFormat.mChannelsPerFrame,
                                  mDataByteSize: outputBufferSize,
                                  mData: outBuffer)
         var convertedData = AudioBufferList(mNumberBuffers: 1, mBuffers: (buffer))
         var ioOutputDataPackets = packetsPerBuffer
         let error = AudioConverterFillComplexBuffer(audioConverter,
                                                     myAudioConverterCallback,
-                                                    &mySettings,
+                                                    inUserData,
                                                     &ioOutputDataPackets,
                                                     &convertedData,
-                                                    mySettings.inputFilePacketDescriptions)
+                                                    mySettings.pointee.inputFilePacketDescriptions)
+        if error != 0 || ioOutputDataPackets == 0 {
+            break
+        }
+        checkError(AudioFileWritePackets(mySettings.pointee.outputFile,
+                                         false,
+                                         ioOutputDataPackets,
+                                         nil,
+                                         Int64(outputFilePacketPosition / mySettings.pointee.outputFormat.mBytesPerPacket),
+                                         &ioOutputDataPackets,
+                                         convertedData.mBuffers.mData!),
+                   "Couldn't write packets to file")
+        outputFilePacketPosition += ioOutputDataPackets * mySettings.pointee.outputFormat.mBytesPerPacket
     }
 }
 
 // MARK: converter callback function
 func myAudioConverterCallback(inAudioConverter: AudioConverterRef,
-                              ioPacketCount: UnsafeMutablePointer<UInt32>,
+                              ioDataPacketCount: UnsafeMutablePointer<UInt32>,
                               ioData: UnsafeMutablePointer<AudioBufferList>,
                               outDataPacketDescription: UnsafeMutablePointer<UnsafeMutablePointer<AudioStreamPacketDescription>?>?,
                               inUserData: UnsafeMutableRawPointer?) -> OSStatus {
+    let audioConverterSettings = inUserData?.assumingMemoryBound(to: MyAudioConverterSettings.self)
+    guard let audioConverterSettings = audioConverterSettings else {
+        print ("nil audioConverterSettings")
+        return -1
+    }
+    ioData.pointee.mBuffers.mData = nil
+    ioData.pointee.mBuffers.mDataByteSize = 0
     
-    return noErr
+    // If there are not enough packets to satisfy request, then read what's left
+    if audioConverterSettings.pointee.inputFilePacketIndex + UInt64(ioDataPacketCount.pointee) > audioConverterSettings.pointee.inputFilePacketCount {
+        ioDataPacketCount.pointee = UInt32(audioConverterSettings.pointee.inputFilePacketCount - audioConverterSettings.pointee.inputFilePacketIndex)
+    }
+    if ioDataPacketCount.pointee == 0 {
+        return noErr
+    }
+    if audioConverterSettings.pointee.sourceBuffer != nil {
+        free(audioConverterSettings.pointee.sourceBuffer)
+        audioConverterSettings.pointee.sourceBuffer = nil
+    }
+    var outByteCount = UInt32(Int(ioDataPacketCount.pointee * audioConverterSettings.pointee.inputFileMaxPacketSize))
+    audioConverterSettings.pointee.sourceBuffer = calloc(1, Int(outByteCount))
+    var result = AudioFileReadPacketData(audioConverterSettings.pointee.inputFile,
+                                         true,
+                                         &outByteCount,
+                                         audioConverterSettings.pointee.inputFilePacketDescriptions,
+                                         Int64(audioConverterSettings.pointee.inputFilePacketIndex),
+                                         ioDataPacketCount,
+                                         audioConverterSettings.pointee.sourceBuffer)
+    if result == kAudioFileEndOfFileError && ioDataPacketCount.pointee > 0 {
+        result = noErr
+    } else {
+        if result != noErr {
+            return result
+        }
+    }
+    audioConverterSettings.pointee.inputFilePacketIndex += UInt64(ioDataPacketCount.pointee)
+    ioData.pointee.mBuffers.mData = audioConverterSettings.pointee.sourceBuffer
+    ioData.pointee.mBuffers.mDataByteSize = outByteCount
+    if outDataPacketDescription != nil {
+        outDataPacketDescription!.pointee = audioConverterSettings.pointee.inputFilePacketDescriptions
+    }
+    return result
 }
 
 // MARK: - main function
@@ -175,7 +232,7 @@ func main() {
       ? .allocate(capacity: Int(packetsPerBuffer))
       : nil
     
-    let mySettings = MyAudioConverterSettings(inputFormat: inputFormat,
+    var mySettings = MyAudioConverterSettings(inputFormat: inputFormat,
                                               outputFormat: outputFormat,
                                               inputFile: inputFile,
                                               outputFile: outputFile,
@@ -185,8 +242,9 @@ func main() {
     
     // Perform conversion
     print("Converting")
-    convert(mySettings: mySettings,
+    convert(inUserData: &mySettings,
             outputBufferSize: outputBufferSize,
             packetsPerBuffer: packetsPerBuffer,
             audioConverter: audioConverter)
+    AudioConverterDispose(audioConverter)
 }
