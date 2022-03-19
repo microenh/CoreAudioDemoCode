@@ -9,7 +9,7 @@ import AVFoundation
 
 // MARK: Global Constants
 struct Settings {
-    static let fileName = "../../../Data/output.mp3"
+    static let fileName = "/Users/mark/Documents/CASoundFiles/output.caf"
     static let duration = Float64(1.0)
     static let numberPlaybackBuffers = 2
 }
