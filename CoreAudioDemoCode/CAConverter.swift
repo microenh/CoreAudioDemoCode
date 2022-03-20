@@ -71,7 +71,7 @@ func convert(mySettings: inout MyAudioConverterSettings) {
         packetsPerBuffer = outputBufferSize / sizePerPacket
     }
     
-    let outputBuffer: UnsafeMutableRawPointer? = malloc(Int(outputBufferSize))
+    let outputBuffer /* : UnsafeMutableRawPointer? */ = malloc(Int(outputBufferSize))
     var outputFilePacketPosition = UInt32(0)
 
     while true {
@@ -157,7 +157,7 @@ func myAudioConverterCallback(inAudioConverter: AudioConverterRef,
 }
 
 // MARK: - main function
-func main() {
+func main() throws {
     // Open input file
     var audioConverterSettings = MyAudioConverterSettings()
     let inputFileURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault,

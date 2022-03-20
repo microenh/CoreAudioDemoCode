@@ -17,7 +17,7 @@ fileprivate struct Settings {
     static let bytesPerFrame = UInt32(2)
 }
 
-func main() {
+func main() throws {
     guard CommandLine.argc > 1 else {
         print("Usage: \(CommandLine.arguments[0]) n")
         print("(where n in tone in Hz)")

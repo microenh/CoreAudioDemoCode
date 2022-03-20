@@ -13,6 +13,9 @@
 		4D1E1ACB27DED0340052CB16 /* CAToneFileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7820BC27DD8C9400C8EFB7 /* CAToneFileGenerator.swift */; };
 		4D45C3FF27DE1C29004E02C7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4D45C40027DE1C29004E02C7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
+		4D63D1B027E78141006E2BB8 /* CAConverterExtended.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D63D1AF27E78141006E2BB8 /* CAConverterExtended.swift */; };
+		4D63D1B127E781EE006E2BB8 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
+		4D63D1B227E781F2006E2BB8 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
 		4D7820BB27DD81C500C8EFB7 /* CAMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7820BA27DD81C500C8EFB7 /* CAMetadata.swift */; };
 		4DABA08C27E0B8FF004E1328 /* CAPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DABA08B27E0B8FF004E1328 /* CAPlayer.swift */; };
 		4DABA08D27E0B940004E1328 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
@@ -38,6 +41,15 @@
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 		4D45C3F927DE19BD004E02C7 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		4D63D1A627E7811E006E2BB8 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -92,6 +104,8 @@
 		4D1E1AC927DED0030052CB16 /* CAStreamFormatTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAStreamFormatTester.swift; sourceTree = "<group>"; };
 		4D45C3FD27DE19BD004E02C7 /* CAToneFileGenerator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAToneFileGenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D45C3FE27DE1C29004E02C7 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		4D63D1A827E7811E006E2BB8 /* CAConverterExtended */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAConverterExtended; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D63D1AF27E78141006E2BB8 /* CAConverterExtended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAConverterExtended.swift; sourceTree = "<group>"; };
 		4D7820B027DD807C00C8EFB7 /* CAMetadata */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAMetadata; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D7820BA27DD81C500C8EFB7 /* CAMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAMetadata.swift; sourceTree = "<group>"; };
 		4D7820BC27DD8C9400C8EFB7 /* CAToneFileGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAToneFileGenerator.swift; sourceTree = "<group>"; };
@@ -116,6 +130,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4D45C3F827DE19BD004E02C7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4D63D1A527E7811E006E2BB8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -175,6 +196,7 @@
 				4DE488E727DF953E003543CB /* CARecorder */,
 				4DABA08427E0B8BD004E1328 /* CAPlayer */,
 				4DB3737C27E3FD410006DAE5 /* CAConverter */,
+				4D63D1A827E7811E006E2BB8 /* CAConverterExtended */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -189,6 +211,7 @@
 				4DE488E827DF959A003543CB /* CARecorder.swift */,
 				4DABA08B27E0B8FF004E1328 /* CAPlayer.swift */,
 				4DB3738427E3FD6B0006DAE5 /* CAConverter.swift */,
+				4D63D1AF27E78141006E2BB8 /* CAConverterExtended.swift */,
 			);
 			path = CoreAudioDemoCode;
 			sourceTree = "<group>";
@@ -238,6 +261,23 @@
 			name = CAToneFileGenerator;
 			productName = CoreAudioDemoCode;
 			productReference = 4D45C3FD27DE19BD004E02C7 /* CAToneFileGenerator */;
+			productType = "com.apple.product-type.tool";
+		};
+		4D63D1A727E7811E006E2BB8 /* CAConverterExtended */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D63D1AE27E7811E006E2BB8 /* Build configuration list for PBXNativeTarget "CAConverterExtended" */;
+			buildPhases = (
+				4D63D1A427E7811E006E2BB8 /* Sources */,
+				4D63D1A527E7811E006E2BB8 /* Frameworks */,
+				4D63D1A627E7811E006E2BB8 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CAConverterExtended;
+			productName = CAConverterExtended;
+			productReference = 4D63D1A827E7811E006E2BB8 /* CAConverterExtended */;
 			productType = "com.apple.product-type.tool";
 		};
 		4D7820AF27DD807C00C8EFB7 /* CAMetadata */ = {
@@ -318,6 +358,9 @@
 				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
+					4D63D1A727E7811E006E2BB8 = {
+						CreatedOnToolsVersion = 13.2;
+					};
 					4D7820AF27DD807C00C8EFB7 = {
 						CreatedOnToolsVersion = 13.2;
 					};
@@ -349,6 +392,7 @@
 				4DE488DD27DF953E003543CB /* CARecorder */,
 				4DABA08327E0B8BD004E1328 /* CAPlayer */,
 				4DB3737B27E3FD410006DAE5 /* CAConverter */,
+				4D63D1A727E7811E006E2BB8 /* CAConverterExtended */,
 			);
 		};
 /* End PBXProject section */
@@ -372,6 +416,16 @@
 				4D45C40027DE1C29004E02C7 /* main.swift in Sources */,
 				4D1E1ABD27DECB2D0052CB16 /* NCO.swift in Sources */,
 				4DE488EF27DF988C003543CB /* CheckError.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4D63D1A427E7811E006E2BB8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D63D1B127E781EE006E2BB8 /* main.swift in Sources */,
+				4D63D1B027E78141006E2BB8 /* CAConverterExtended.swift in Sources */,
+				4D63D1B227E781F2006E2BB8 /* CheckError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,6 +526,30 @@
 				ENABLE_HARDENED_RUNTIME = NO;
 				MACOSX_DEPLOYMENT_TARGET = 11.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.microenh;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		4D63D1AC27E7811E006E2BB8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 566Y4FXUU7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		4D63D1AD27E7811E006E2BB8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 566Y4FXUU7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -736,6 +814,15 @@
 			buildConfigurations = (
 				4D45C3FB27DE19BD004E02C7 /* Debug */,
 				4D45C3FC27DE19BD004E02C7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4D63D1AE27E7811E006E2BB8 /* Build configuration list for PBXNativeTarget "CAConverterExtended" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D63D1AC27E7811E006E2BB8 /* Debug */,
+				4D63D1AD27E7811E006E2BB8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

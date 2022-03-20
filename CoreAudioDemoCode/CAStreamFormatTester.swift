@@ -8,7 +8,7 @@
 import Foundation
 import AVFoundation
 
-func main() {
+func main() throws {
     
     var fileTypeAndFormat = AudioFileTypeAndFormatID(mFileType: kAudioFileCAFType, // kAudioFileWAVEType, // kAudioFileAIFFType,
                                                      mFormatID: kAudioFormatLinearPCM)

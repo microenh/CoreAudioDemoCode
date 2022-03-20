@@ -158,7 +158,7 @@ func myAQInputCallback(inUserData: UnsafeMutableRawPointer?,
 }
 
 // MARK: - Main Function
-func main() {
+func main() throws {
     var recorder = MyRecorder()
     var recordFormat = AudioStreamBasicDescription(mSampleRate: 0,
                                                    mFormatID: Settings.formatID,

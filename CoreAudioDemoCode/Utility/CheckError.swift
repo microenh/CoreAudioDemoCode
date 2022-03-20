@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum CAError: Error {
+    case errorString(OSStatus, String)
+}
+
 
 // convert Apple 32-bit int to 4 characters if valid
 // 1819304813 = lpcm
@@ -22,4 +26,9 @@ func checkError(_ error: OSStatus, _ operation: String = "") {
     guard error != noErr else { return }
     print ("Error: \(operation) (\(int32ToString(error))).")
     exit(EXIT_FAILURE)
+}
+
+func throwIfError(_ error: OSStatus, _ operation: String = "") throws {
+    guard error != noErr else { return }
+    throw CAError.errorString(error, operation)
 }

@@ -8,7 +8,7 @@
 import Foundation
 import AVFoundation
 
-func main() {
+func main() throws {
     guard CommandLine.argc > 1 else {
         print("Usage: \(CommandLine.arguments[0]) /full/path/to/audiofile")
         return

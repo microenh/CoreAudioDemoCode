@@ -144,7 +144,7 @@ func queuePropertyListener(inUserData: UnsafeMutableRawPointer?,
 }
 
 // MARK: - Main Function
-func main () {
+func main () throws {
     let myFileURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault,
                                                   Settings.fileName as CFString,
                                                   CFURLPathStyle.cfurlposixPathStyle,

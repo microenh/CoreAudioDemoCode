@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>5</integer>
 		</dict>
+		<key>CAConverterExtended.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
 		<key>CAMetadata.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -48,6 +53,11 @@
 			<true/>
 		</dict>
 		<key>4D45C3F327DE19BD004E02C7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4D63D1A727E7811E006E2BB8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
