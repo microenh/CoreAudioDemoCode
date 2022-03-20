@@ -41,7 +41,6 @@ struct MyAudioConverterSettings {
     var inputFileMaxPacketSize = UInt32(0)
     
     var inputFilePacketDescriptions: UnsafeMutablePointer<AudioStreamPacketDescription>?
-    var sourceBuffer: UnsafeMutableRawPointer?
 }
 
 // MARK: utility functions
@@ -128,19 +127,19 @@ func myAudioConverterCallback(inAudioConverter: AudioConverterRef,
     if ioDataPacketCount.pointee == 0 {
         return noErr
     }
-    if audioConverterSettings.pointee.sourceBuffer != nil {
-        free(audioConverterSettings.pointee.sourceBuffer)
-        audioConverterSettings.pointee.sourceBuffer = nil
-    }
+    
     var outByteCount = UInt32(Int(ioDataPacketCount.pointee * audioConverterSettings.pointee.inputFileMaxPacketSize))
-    audioConverterSettings.pointee.sourceBuffer = calloc(1, Int(outByteCount))
+    let sourceBuffer = calloc(1, Int(outByteCount))
+    defer {
+        free(sourceBuffer)
+    }
     var result = AudioFileReadPacketData(audioConverterSettings.pointee.inputFile,
                                          true,
                                          &outByteCount,
                                          audioConverterSettings.pointee.inputFilePacketDescriptions,
                                          Int64(audioConverterSettings.pointee.inputFilePacketIndex),
                                          ioDataPacketCount,
-                                         audioConverterSettings.pointee.sourceBuffer)
+                                         sourceBuffer)
     if result == kAudioFileEndOfFileError && ioDataPacketCount.pointee > 0 {
         result = noErr
     } else {
@@ -149,7 +148,7 @@ func myAudioConverterCallback(inAudioConverter: AudioConverterRef,
         }
     }
     audioConverterSettings.pointee.inputFilePacketIndex += UInt64(ioDataPacketCount.pointee)
-    ioData.pointee.mBuffers.mData = audioConverterSettings.pointee.sourceBuffer
+    ioData.pointee.mBuffers.mData = sourceBuffer
     ioData.pointee.mBuffers.mDataByteSize = outByteCount
     if outDataPacketDescription != nil {
         outDataPacketDescription!.pointee = audioConverterSettings.pointee.inputFilePacketDescriptions
