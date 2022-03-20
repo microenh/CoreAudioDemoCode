@@ -10,15 +10,31 @@ import AVFoundation
 struct Settings {
     static let inputFileName = "/Users/mark/Documents/CASoundFiles/output.mp3"
     static let outputFileName = "/Users/mark/Documents/CASoundFiles/output.aif"
+    static let outputSampleRate = Float64(6000)
+    static let outputChannels = UInt32(1)
+    static let outputBytesPerSample = UInt32(1)
 }
 
 // MARK: user data struct
 struct MyAudioConverterSettings {
-    var inputFormat: AudioStreamBasicDescription?
-    var outputFormat: AudioStreamBasicDescription?
+    var inputFormat = AudioStreamBasicDescription()
+    // var outputFormat = AudioStreamBasicDescription()
     
-    var inputFile: AudioFileID?
-    var outputFile: AudioFileID?
+    // define the ouput format. AudioConverter requires that one of the data formats be LPCM
+    var outputFormat = AudioStreamBasicDescription(mSampleRate: Settings.outputSampleRate,
+                                                   mFormatID: kAudioFormatLinearPCM,
+                                                   mFormatFlags: kAudioFormatFlagIsBigEndian
+                                                   | kAudioFormatFlagIsSignedInteger
+                                                   | kAudioFormatFlagIsPacked,
+                                                   mBytesPerPacket: Settings.outputBytesPerSample * Settings.outputChannels,
+                                                   mFramesPerPacket: 1,
+                                                   mBytesPerFrame: Settings.outputBytesPerSample * Settings.outputChannels,
+                                                   mChannelsPerFrame: Settings.outputChannels,
+                                                   mBitsPerChannel: Settings.outputBytesPerSample * 8,
+                                                   mReserved: 0)
+    
+    var inputFile: AudioFileID!
+    var outputFile: AudioFileID!
     
     var inputFilePacketIndex = UInt64(0)
     var inputFilePacketCount = UInt64(0)
@@ -33,13 +49,13 @@ struct MyAudioConverterSettings {
 func convert(mySettings: inout MyAudioConverterSettings) {
     // create the audioConverter object
     var audioConverter: AudioConverterRef?
-    checkError(AudioConverterNew(&mySettings.inputFormat!,
-                                 &mySettings.outputFormat!,
+    checkError(AudioConverterNew(&mySettings.inputFormat,
+                                 &mySettings.outputFormat,
                                  &audioConverter),
                "AudioCoverterNew failed")
     var packetsPerBuffer = UInt32(0)
     var outputBufferSize = UInt32(32 * 1024)
-    var sizePerPacket = mySettings.inputFormat!.mBytesPerPacket
+    var sizePerPacket = mySettings.inputFormat.mBytesPerPacket
     if sizePerPacket == 0 {
         var size = UInt32(MemoryLayout<UInt32>.size)
         checkError(AudioConverterGetProperty(audioConverter!,
@@ -56,12 +72,11 @@ func convert(mySettings: inout MyAudioConverterSettings) {
         packetsPerBuffer = outputBufferSize / sizePerPacket
     }
     
-
     let outputBuffer: UnsafeMutableRawPointer? = malloc(Int(outputBufferSize))
     var outputFilePacketPosition = UInt32(0)
 
     while true {
-        let buffer = AudioBuffer(mNumberChannels: mySettings.inputFormat!.mChannelsPerFrame,
+        let buffer = AudioBuffer(mNumberChannels: mySettings.inputFormat.mChannelsPerFrame,
                                  mDataByteSize: outputBufferSize,
                                  mData: outputBuffer)
         var convertedData = AudioBufferList(mNumberBuffers: 1, mBuffers: (buffer))
@@ -75,15 +90,15 @@ func convert(mySettings: inout MyAudioConverterSettings) {
         if error != 0 || ioOutputDataPackets == 0 {
             break
         }
-        checkError(AudioFileWritePackets(mySettings.outputFile!,
+        checkError(AudioFileWritePackets(mySettings.outputFile,
                                          false,
-                                         ioOutputDataPackets,
+                                         ioOutputDataPackets * mySettings.outputFormat.mBytesPerPacket,
                                          nil,
-                                         Int64(outputFilePacketPosition / mySettings.outputFormat!.mBytesPerPacket),
+                                         Int64(outputFilePacketPosition / mySettings.outputFormat.mBytesPerPacket),
                                          &ioOutputDataPackets,
                                          convertedData.mBuffers.mData!),
                    "Couldn't write packets to file")
-        outputFilePacketPosition += ioOutputDataPackets * mySettings.outputFormat!.mBytesPerPacket
+        outputFilePacketPosition += ioOutputDataPackets * mySettings.outputFormat.mBytesPerPacket
     }
     AudioConverterDispose(audioConverter!)
     free (outputBuffer)
@@ -95,11 +110,14 @@ func myAudioConverterCallback(inAudioConverter: AudioConverterRef,
                               ioData: UnsafeMutablePointer<AudioBufferList>,
                               outDataPacketDescription: UnsafeMutablePointer<UnsafeMutablePointer<AudioStreamPacketDescription>?>?,
                               inUserData: UnsafeMutableRawPointer?) -> OSStatus {
+    
+    
     let audioConverterSettings = inUserData?.assumingMemoryBound(to: MyAudioConverterSettings.self)
     guard let audioConverterSettings = audioConverterSettings else {
         print ("nil audioConverterSettings")
         return -50
     }
+    
     ioData.pointee.mBuffers.mData = nil
     ioData.pointee.mBuffers.mDataByteSize = 0
     
@@ -116,7 +134,7 @@ func myAudioConverterCallback(inAudioConverter: AudioConverterRef,
     }
     var outByteCount = UInt32(Int(ioDataPacketCount.pointee * audioConverterSettings.pointee.inputFileMaxPacketSize))
     audioConverterSettings.pointee.sourceBuffer = calloc(1, Int(outByteCount))
-    var result = AudioFileReadPacketData(audioConverterSettings.pointee.inputFile!,
+    var result = AudioFileReadPacketData(audioConverterSettings.pointee.inputFile,
                                          true,
                                          &outByteCount,
                                          audioConverterSettings.pointee.inputFilePacketDescriptions,
@@ -159,13 +177,12 @@ func main() {
                "AudioFileOpenURL failed")
 
     defer {
-        checkError(AudioFileClose(audioConverterSettings.inputFile!), "couldn't close input file")
+        checkError(AudioFileClose(audioConverterSettings.inputFile), "couldn't close input file")
     }
     
     // Get input format
     var propSize = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
-    audioConverterSettings.inputFormat = AudioStreamBasicDescription()
-    checkError(AudioFileGetProperty(audioConverterSettings.inputFile!,
+    checkError(AudioFileGetProperty(audioConverterSettings.inputFile,
                                     kAudioFilePropertyDataFormat,
                                     &propSize,
                                     &audioConverterSettings.inputFormat),
@@ -173,7 +190,7 @@ func main() {
 
     // Get the total number of packets in the file
     propSize = UInt32(MemoryLayout<UInt64>.size)
-    checkError(AudioFileGetProperty(audioConverterSettings.inputFile!,
+    checkError(AudioFileGetProperty(audioConverterSettings.inputFile,
                                     kAudioFilePropertyAudioDataPacketCount,
                                     &propSize,
                                     &audioConverterSettings.inputFilePacketCount),
@@ -181,23 +198,24 @@ func main() {
     
     // get the size of the largest possible packet
     propSize = UInt32(MemoryLayout<UInt32>.size)
-    checkError(AudioFileGetProperty(audioConverterSettings.inputFile!,
+    checkError(AudioFileGetProperty(audioConverterSettings.inputFile,
                                     kAudioFilePropertyMaximumPacketSize,
                                     &propSize,
                                     &audioConverterSettings.inputFileMaxPacketSize),
                "couldn't get file's max packet size")
     // Set up output file
-    audioConverterSettings.outputFormat = AudioStreamBasicDescription(mSampleRate: 44100.0,
-                                                                      mFormatID: kAudioFormatLinearPCM,
-                                                                      mFormatFlags: kAudioFormatFlagIsBigEndian
-                                                                      | kAudioFormatFlagIsSignedInteger
-                                                                      | kAudioFormatFlagIsPacked,
-                                                                      mBytesPerPacket: 4,
-                                                                      mFramesPerPacket: 1,
-                                                                      mBytesPerFrame: 4,
-                                                                      mChannelsPerFrame: 2,
-                                                                      mBitsPerChannel: 16,
-                                                                      mReserved: 0)
+    
+    // define the ouput format. AudioConverter requires that one of the data formats be LPCM
+//    audioConverterSettings.outputFormat.mSampleRate = 8000.0;
+//    audioConverterSettings.outputFormat.mFormatID = kAudioFormatLinearPCM;
+//    audioConverterSettings.outputFormat.mFormatFlags = kAudioFormatFlagIsBigEndian | kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
+//    audioConverterSettings.outputFormat.mBytesPerPacket = 4;
+//    audioConverterSettings.outputFormat.mFramesPerPacket = 1;
+//    audioConverterSettings.outputFormat.mBytesPerFrame = 4;
+//    audioConverterSettings.outputFormat.mChannelsPerFrame = 2;
+//    audioConverterSettings.outputFormat.mBitsPerChannel = 16;
+
+    
     let outputFileURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault,
                                                      Settings.outputFileName as CFString,
                                                      CFURLPathStyle.cfurlposixPathStyle,
@@ -208,13 +226,13 @@ func main() {
     }
     checkError(AudioFileCreateWithURL(outputFileURL,
                                       kAudioFileAIFFType,
-                                      &audioConverterSettings.outputFormat!,
+                                      &audioConverterSettings.outputFormat,
                                       AudioFileFlags.eraseFile,
                                       &audioConverterSettings.outputFile),
                "AudioFileCreateWithURL failed")
     
     defer {
-        checkError(AudioFileClose(audioConverterSettings.outputFile!), "couldn't close output file")
+        checkError(AudioFileClose(audioConverterSettings.outputFile), "couldn't close output file")
     }
     // Perform conversion
     print("Converting")
