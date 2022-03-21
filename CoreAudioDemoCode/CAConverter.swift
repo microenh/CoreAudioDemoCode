@@ -67,6 +67,9 @@ func convert(mySettings: inout MyAudioConverterSettings) {
         }
         packetsPerBuffer = outputBufferSize / sizePerPacket
         mySettings.inputFilePacketDescriptions = .allocate(capacity: Int(packetsPerBuffer))
+        defer {
+            free(mySettings.inputFilePacketDescriptions)
+        }
     } else {
         packetsPerBuffer = outputBufferSize / sizePerPacket
     }

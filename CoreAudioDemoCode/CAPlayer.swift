@@ -9,7 +9,7 @@ import AVFoundation
 
 // MARK: Global Constants
 struct Settings {
-    static let fileName = "/Users/mark/Documents/CASoundFiles/output.caf"
+    static let fileName = "/Users/mark/Documents/CASoundFiles/output.mp3"
     static let duration = Float64(1.0)
     static let numberPlaybackBuffers = 2
 }
@@ -94,11 +94,7 @@ func myAQOutputCallback(inUserData: UnsafeMutableRawPointer?,
     
     guard let aqp = aqp, !aqp.pointee.isDone else { return }
 
-    // (-50) AVAudioSessionErrorCodeBadParam
-    
-    // 2022-03-15 21:05:10.563094-0400 CAPlayer[20364:2121326] [aqme]        MEMixerChannel.cpp:1639  client <AudioQueueObject@0x106808200;
-    // [0]; play> got error 2003332927 while sending format information  (who?) kAudioCodecUnknownPropertyError
-    // original code generating same message
+
     
     var bufferByteSize = aqp.pointee.bufferByteSize
     
@@ -183,6 +179,10 @@ func main () throws {
         ? .allocate(capacity: Int(numPacketsToRead))
         : nil
     
+    defer {
+        free(packetDescs)
+    }
+    
     var player = MyPlayer(playbackFile: playbackFile!,
                           packetPosition: 0,
                           numPacketsToRead: numPacketsToRead,
@@ -190,7 +190,7 @@ func main () throws {
                           bufferByteSize: bufferByteSize,
                           isDone: false)
 
-    var queue: AudioQueueRef?
+    var queue: AudioQueueRef!
     
     checkError(AudioQueueNewOutput(&dataFormat,
                                    myAQOutputCallback,
@@ -201,10 +201,7 @@ func main () throws {
                                    &queue),
                "AudioQueueNewOutput failed")
     
-    guard let queue = queue else {
-        return
-    }
-    
+
     myCopyEncoderCookieToQueue(theFile: playbackFile!, queue: queue)
     
     player.isDone = false
@@ -225,6 +222,13 @@ func main () throws {
     }
     checkError(AudioQueueAddPropertyListener(queue, kAudioQueueProperty_IsRunning, queuePropertyListener, &player),
                "AudioQueueAddPropertyListener failed")
+    
+    // (-50) AVAudioSessionErrorCodeBadParam
+    
+    // 2022-03-15 21:05:10.563094-0400 CAPlayer[20364:2121326] [aqme]        MEMixerChannel.cpp:1639  client <AudioQueueObject@0x106808200;
+    // [0]; play> got error 2003332927 while sending format information (who?) kAudioCodecUnknownPropertyError
+    // original ObjectiveC code from book generating same message
+    
     checkError(AudioQueueStart(queue, nil), "AudioQueueStart failed")
     print ("Playing...")
     repeat {

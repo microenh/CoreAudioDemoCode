@@ -52,7 +52,7 @@ func createMyAUGraph(player: inout MyAUGraphPlayer) throws {
                                     &speechcd,
                                     &speechNode),
                      "AUGraphAddNode[kAudioUnitSubType_SpeechSynthesis]")
-    
+
     // Opening the graph opens all contains audio units, but does not allocate any resources yet
     try throwIfError(AUGraphOpen(player.graph), "AUGraphOpen")
     
@@ -111,7 +111,6 @@ func createMyAUGraph(player: inout MyAUGraphPlayer) throws {
                                           &roomType,
                                           UInt32(MemoryLayout<UInt32>.size)),
                      "AudioUnitSetProperty[kAudioUnitProperty_ReverbRoomType]")
-    
 #else
     // Connect the output source of the speech synthesis AU to the input source of the output node
     try throwIfError(AUGraphConnectNodeInput(player.graph,
@@ -122,11 +121,16 @@ func createMyAUGraph(player: inout MyAUGraphPlayer) throws {
                      "AUGraphConnectNodeInput")
     // Now initialize the graph (causes resources to be allocated)
     try throwIfError(AUGraphInitialize(player.graph), "AUGraphInitialize")
+    
 #endif
+    // CAShowFile(UnsafeMutableRawPointer(player.graph), stdout)
 }
 
 func prepareSpeechAU(player: inout MyAUGraphPlayer) throws {
     var chan = SpeechChannel.allocate(capacity: 1)
+    defer {
+        free(chan)
+    }
     var propSize = UInt32(MemoryLayout<SpeechChannel>.size)
     try throwIfError(AudioUnitGetProperty(player.speechAU,
                                           kAudioUnitProperty_SpeechChannel,
@@ -144,9 +148,7 @@ func main() throws {
     // Build a basic speech->speakers graph
     try createMyAUGraph(player: &player)
     defer {
-        print ("uninitialize graph")
         AUGraphUninitialize(player.graph)
-        print ("close graph")
         AUGraphClose(player.graph)
     }
     
