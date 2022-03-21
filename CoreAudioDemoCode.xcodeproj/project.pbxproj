@@ -7,10 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D11B59E27E8B41300A6ACC6 /* CAAudioUnitSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D11B59C27E8B3DD00A6ACC6 /* CAAudioUnitSpeech.swift */; };
+		4D11B59F27E8B41A00A6ACC6 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
+		4D11B5A027E8B41F00A6ACC6 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
 		4D1E1ABD27DECB2D0052CB16 /* NCO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1E1ABC27DECB2D0052CB16 /* NCO.swift */; };
 		4D1E1AC027DECFA00052CB16 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4D1E1ACA27DED0030052CB16 /* CAStreamFormatTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1E1AC927DED0030052CB16 /* CAStreamFormatTester.swift */; };
 		4D1E1ACB27DED0340052CB16 /* CAToneFileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7820BC27DD8C9400C8EFB7 /* CAToneFileGenerator.swift */; };
+		4D3B068D27E8C40000291BD9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
+		4D3B068E27E8C40000291BD9 /* CAAudioUnitSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D11B59C27E8B3DD00A6ACC6 /* CAAudioUnitSpeech.swift */; };
+		4D3B068F27E8C40000291BD9 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
 		4D45C3FF27DE1C29004E02C7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4D45C40027DE1C29004E02C7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4D63D1B027E78141006E2BB8 /* CAConverterExtended.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D63D1AF27E78141006E2BB8 /* CAConverterExtended.swift */; };
@@ -34,7 +40,25 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		4D11B59327E8B3B900A6ACC6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		4D1E1AC427DECFA00052CB16 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		4D3B069127E8C40000291BD9 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -110,10 +134,13 @@
 
 /* Begin PBXFileReference section */
 		4D0DD45927E21428002E9EBB /* CAPlayer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CAPlayer.entitlements; sourceTree = "<group>"; };
+		4D11B59527E8B3B900A6ACC6 /* CAAudioUnitSpeech */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAAudioUnitSpeech; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D11B59C27E8B3DD00A6ACC6 /* CAAudioUnitSpeech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAAudioUnitSpeech.swift; sourceTree = "<group>"; };
 		4D1665B727E02AD400BB7313 /* CAStreamFormatTester.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CAStreamFormatTester.entitlements; sourceTree = "<group>"; };
 		4D1E1ABC27DECB2D0052CB16 /* NCO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NCO.swift; sourceTree = "<group>"; };
 		4D1E1AC827DECFA00052CB16 /* CAStreamFormatTester */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAStreamFormatTester; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D1E1AC927DED0030052CB16 /* CAStreamFormatTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAStreamFormatTester.swift; sourceTree = "<group>"; };
+		4D3B069527E8C40000291BD9 /* CAAudioUnitSpeech 2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "CAAudioUnitSpeech 2"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D45C3FD27DE19BD004E02C7 /* CAToneFileGenerator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAToneFileGenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D45C3FE27DE1C29004E02C7 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		4D63D1A827E7811E006E2BB8 /* CAConverterExtended */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAConverterExtended; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -138,7 +165,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4D11B59227E8B3B900A6ACC6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4D1E1AC327DECFA00052CB16 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4D3B069027E8C40000291BD9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -223,6 +264,8 @@
 				4DB3737C27E3FD410006DAE5 /* CAConverter */,
 				4D63D1A827E7811E006E2BB8 /* CAConverterExtended */,
 				4DBEDD7027E7F075006E5F8F /* CAAudioUnitPlayer */,
+				4D11B59527E8B3B900A6ACC6 /* CAAudioUnitSpeech */,
+				4D3B069527E8C40000291BD9 /* CAAudioUnitSpeech 2 */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -239,6 +282,7 @@
 				4DB3738427E3FD6B0006DAE5 /* CAConverter.swift */,
 				4D63D1AF27E78141006E2BB8 /* CAConverterExtended.swift */,
 				4DBEDD7727E7F08D006E5F8F /* CAAudioUnitPlayer.swift */,
+				4D11B59C27E8B3DD00A6ACC6 /* CAAudioUnitSpeech.swift */,
 			);
 			path = CoreAudioDemoCode;
 			sourceTree = "<group>";
@@ -256,6 +300,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4D11B59427E8B3B900A6ACC6 /* CAAudioUnitSpeech */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D11B59B27E8B3B900A6ACC6 /* Build configuration list for PBXNativeTarget "CAAudioUnitSpeech" */;
+			buildPhases = (
+				4D11B59127E8B3B900A6ACC6 /* Sources */,
+				4D11B59227E8B3B900A6ACC6 /* Frameworks */,
+				4D11B59327E8B3B900A6ACC6 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CAAudioUnitSpeech;
+			productName = CAAudioUnitSpeech;
+			productReference = 4D11B59527E8B3B900A6ACC6 /* CAAudioUnitSpeech */;
+			productType = "com.apple.product-type.tool";
+		};
 		4D1E1ABE27DECFA00052CB16 /* CAStreamFormatTester */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4D1E1AC527DECFA00052CB16 /* Build configuration list for PBXNativeTarget "CAStreamFormatTester" */;
@@ -271,6 +332,23 @@
 			name = CAStreamFormatTester;
 			productName = CoreAudioDemoCode;
 			productReference = 4D1E1AC827DECFA00052CB16 /* CAStreamFormatTester */;
+			productType = "com.apple.product-type.tool";
+		};
+		4D3B068B27E8C40000291BD9 /* CAAudioUnitSpeech 2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D3B069227E8C40000291BD9 /* Build configuration list for PBXNativeTarget "CAAudioUnitSpeech 2" */;
+			buildPhases = (
+				4D3B068C27E8C40000291BD9 /* Sources */,
+				4D3B069027E8C40000291BD9 /* Frameworks */,
+				4D3B069127E8C40000291BD9 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "CAAudioUnitSpeech 2";
+			productName = CAAudioUnitSpeech;
+			productReference = 4D3B069527E8C40000291BD9 /* CAAudioUnitSpeech 2 */;
 			productType = "com.apple.product-type.tool";
 		};
 		4D45C3F327DE19BD004E02C7 /* CAToneFileGenerator */ = {
@@ -402,6 +480,9 @@
 				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
+					4D11B59427E8B3B900A6ACC6 = {
+						CreatedOnToolsVersion = 13.2;
+					};
 					4D63D1A727E7811E006E2BB8 = {
 						CreatedOnToolsVersion = 13.2;
 					};
@@ -441,11 +522,23 @@
 				4DB3737B27E3FD410006DAE5 /* CAConverter */,
 				4D63D1A727E7811E006E2BB8 /* CAConverterExtended */,
 				4DBEDD6F27E7F075006E5F8F /* CAAudioUnitPlayer */,
+				4D11B59427E8B3B900A6ACC6 /* CAAudioUnitSpeech */,
+				4D3B068B27E8C40000291BD9 /* CAAudioUnitSpeech 2 */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4D11B59127E8B3B900A6ACC6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D11B59F27E8B41A00A6ACC6 /* main.swift in Sources */,
+				4D11B59E27E8B41300A6ACC6 /* CAAudioUnitSpeech.swift in Sources */,
+				4D11B5A027E8B41F00A6ACC6 /* CheckError.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4D1E1ABF27DECFA00052CB16 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -453,6 +546,16 @@
 				4D1E1AC027DECFA00052CB16 /* main.swift in Sources */,
 				4D1E1ACA27DED0030052CB16 /* CAStreamFormatTester.swift in Sources */,
 				4DE488F027DF988C003543CB /* CheckError.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4D3B068C27E8C40000291BD9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D3B068D27E8C40000291BD9 /* main.swift in Sources */,
+				4D3B068E27E8C40000291BD9 /* CAAudioUnitSpeech.swift in Sources */,
+				4D3B068F27E8C40000291BD9 /* CheckError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +632,30 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		4D11B59927E8B3B900A6ACC6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 566Y4FXUU7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		4D11B59A27E8B3B900A6ACC6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 566Y4FXUU7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		4D1E1AC627DECFA00052CB16 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -554,6 +681,31 @@
 				ENABLE_HARDENED_RUNTIME = NO;
 				MACOSX_DEPLOYMENT_TARGET = 11.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.microenh;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		4D3B069327E8C40000291BD9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 566Y4FXUU7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS[arch=*]" = PART_II;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		4D3B069427E8C40000291BD9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 566Y4FXUU7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -670,6 +822,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS[arch=*]" = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -882,11 +1035,29 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4D11B59B27E8B3B900A6ACC6 /* Build configuration list for PBXNativeTarget "CAAudioUnitSpeech" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D11B59927E8B3B900A6ACC6 /* Debug */,
+				4D11B59A27E8B3B900A6ACC6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4D1E1AC527DECFA00052CB16 /* Build configuration list for PBXNativeTarget "CAStreamFormatTester" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4D1E1AC627DECFA00052CB16 /* Debug */,
 				4D1E1AC727DECFA00052CB16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4D3B069227E8C40000291BD9 /* Build configuration list for PBXNativeTarget "CAAudioUnitSpeech 2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D3B069327E8C40000291BD9 /* Debug */,
+				4D3B069427E8C40000291BD9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
