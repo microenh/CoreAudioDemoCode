@@ -7,6 +7,12 @@
 
 import AVFoundation
 
+
+struct Settings {
+    static let roomType = AUReverbRoomType.reverbRoomType_SmallRoom
+    static let text = "Four score and seven years ago our forefathers brought forth on this continent a new nation" as CFString
+}
+
 // MARK: user-data struct
 struct MyAUGraphPlayer {
     var graph: AUGraph!
@@ -58,7 +64,54 @@ func createMyAUGraph(player: inout MyAUGraphPlayer) throws {
                      "AUGraphNodeInfo")
     
 #if PART_II
-    print ("Part II")
+    // Generate a description that mateches the reverb effect
+    var reverbcd = AudioComponentDescription(componentType: kAudioUnitType_Effect,
+                                             componentSubType: kAudioUnitSubType_MatrixReverb,
+                                             componentManufacturer: kAudioUnitManufacturer_Apple,
+                                             componentFlags: 0,
+                                             componentFlagsMask: 0)
+    // Add a node with the above description to the graph
+    var reverbNode = AUNode()
+    try throwIfError(AUGraphAddNode(player.graph,
+                                    &reverbcd,
+                                    &reverbNode),
+                     "AUGraphAddNode[kAudioUnitSubType_MatrixReverb]")
+    
+    // Connect the output source of the speech synthesiser AU to the input source of the reverb node
+    try throwIfError(AUGraphConnectNodeInput(player.graph,
+                                             speechNode,
+                                             0,
+                                             reverbNode,
+                                             0),
+                     "AUGraphConnectNode (speech to reverb)")
+    // Connect the output source of the reverb AU to the input source of the output node
+    try throwIfError(AUGraphConnectNodeInput(player.graph,
+                                             reverbNode,
+                                             0,
+                                             outputNode,
+                                             0),
+                     "AUGraphConnectNode (reverb to output)")
+    
+    // Get the reference ot the AudioUnit object for the reverb graph node
+    var reverbUnit: AudioUnit?
+    try throwIfError(AUGraphNodeInfo(player.graph,
+                                 reverbNode,
+                                 nil,
+                                 &reverbUnit),
+                 "AUGraphNodeInfo")
+    // Now Initialize the grapho (this causes the resources to be allocated)
+    try throwIfError(AUGraphInitialize(player.graph), "AUGraphInitialize")
+
+    // Set the reverb preset for room size
+    var roomType = Settings.roomType
+    try throwIfError(AudioUnitSetProperty(reverbUnit!,
+                                          kAudioUnitProperty_ReverbRoomType,
+                                          kAudioUnitScope_Global,
+                                          0,
+                                          &roomType,
+                                          UInt32(MemoryLayout<UInt32>.size)),
+                     "AudioUnitSetProperty[kAudioUnitProperty_ReverbRoomType]")
+    
 #else
     // Connect the output source of the speech synthesis AU to the input source of the output node
     try throwIfError(AUGraphConnectNodeInput(player.graph,
@@ -75,7 +128,6 @@ func createMyAUGraph(player: inout MyAUGraphPlayer) throws {
 func prepareSpeechAU(player: inout MyAUGraphPlayer) throws {
     var chan = SpeechChannel.allocate(capacity: 1)
     var propSize = UInt32(MemoryLayout<SpeechChannel>.size)
-    print (propSize)
     try throwIfError(AudioUnitGetProperty(player.speechAU,
                                           kAudioUnitProperty_SpeechChannel,
                                           kAudioUnitScope_Global,
@@ -83,7 +135,7 @@ func prepareSpeechAU(player: inout MyAUGraphPlayer) throws {
                                           &chan,
                                           &propSize),
                      "AudioUnitGetProperty[kAudioUnitProperty_SpeechChannel]")
-    try throwIfError(Int32(SpeakCFString(chan, "Hello World" as CFString, nil)), "SpeakCFString")
+    try throwIfError(Int32(SpeakCFString(chan, Settings.text, nil)), "SpeakCFString")
 }
 
 func main() throws {
@@ -102,7 +154,7 @@ func main() throws {
     try prepareSpeechAU(player: &player)
     
     // Start playing
-    print ("Playing")// -10863 - cannot do in current context
+    print ("Playing")
     try throwIfError(AUGraphStart(player.graph), "AUGraphStart")
     defer {
         print ("Done")
