@@ -86,13 +86,18 @@ func prepareFileAU(player: inout MyAUGraphPlayer) throws -> UInt32 {
                                           &nPackets),
                      "AudioFileGetProperty[kAudioFilePropertyAudioDataPacketCount]")
     // Tell the file player AU to play the entore file
-    var ts = AudioTimeStamp()
-    memset(&ts, 0, MemoryLayout<AudioTimeStamp>.size)
-    var rgn = ScheduledAudioFileRegion(mTimeStamp: ts,
+    var rgn = ScheduledAudioFileRegion(mTimeStamp: AudioTimeStamp(),
+//    var rgn = ScheduledAudioFileRegion(mTimeStamp: AudioTimeStamp(mSampleTime: 0,
+//                                                                  mHostTime: 0,
+//                                                                  mRateScalar: 0,
+//                                                                  mWordClockTime: 0,
+//                                                                  mSMPTETime: SMPTETime(),
+//                                                                  mFlags: .sampleTimeValid,
+//                                                                  mReserved: 0),
                                        mCompletionProc: nil,
                                        mCompletionProcUserData: nil,
                                        mAudioFile: player.inputFile,
-                                       mLoopCount: 1,
+                                       mLoopCount: 0,
                                        mStartFrame: 0,
                                        mFramesToPlay: UInt32(nPackets) * player.inputFormat.mFramesPerPacket)
     try throwIfError(AudioUnitSetProperty(player.fileAU,
@@ -103,10 +108,13 @@ func prepareFileAU(player: inout MyAUGraphPlayer) throws -> UInt32 {
                                           UInt32(MemoryLayout<ScheduledAudioFileRegion>.size)),
                      "AudioUnitSetProperty[kAudioUnitProperty_ScheduledFileRegion]")
     // Tell the file player AU when to start playing (-1 sample time means next render cycle)
-    var startTime = AudioTimeStamp()
-    memset(&startTime, 0, MemoryLayout<AudioTimeStamp>.size)
-    startTime.mFlags = .sampleTimeValid
-    startTime.mSampleTime = -1
+    var startTime = AudioTimeStamp(mSampleTime: -1,
+                                   mHostTime: 0,
+                                   mRateScalar: 0,
+                                   mWordClockTime: 0,
+                                   mSMPTETime: SMPTETime(),
+                                   mFlags: .sampleTimeValid,
+                                   mReserved: 0)
     try throwIfError(AudioUnitSetProperty(player.fileAU,
                                           kAudioUnitProperty_ScheduleStartTimeStamp,
                                           kAudioUnitScope_Global,
@@ -148,16 +156,18 @@ func main() throws {
     // Build a basic fileplayer->speaker graph
     try createMyAUGraph(player: &player)
     defer {
-        AUGraphClose(player.graph)
         AUGraphUninitialize(player.graph)
+        AUGraphClose(player.graph)
     }
     
     // Configure the file player
     let fileDuration = try prepareFileAU(player: &player)
     
     // Start playing
+    print ("Playing")
     try throwIfError(AUGraphStart(player.graph), "AUGraphStart")
     defer {
+        print ("Done")
         AUGraphStop(player.graph)
     }
     
