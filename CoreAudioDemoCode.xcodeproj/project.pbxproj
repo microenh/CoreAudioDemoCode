@@ -121,6 +121,7 @@
 		4D7820B027DD807C00C8EFB7 /* CAMetadata */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAMetadata; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D7820BA27DD81C500C8EFB7 /* CAMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAMetadata.swift; sourceTree = "<group>"; };
 		4D7820BC27DD8C9400C8EFB7 /* CAToneFileGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAToneFileGenerator.swift; sourceTree = "<group>"; };
+		4D83F4EA27E81A01008A8D9E /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
 		4DABA07D27E0B83B004E1328 /* CARecorder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CARecorder.entitlements; sourceTree = "<group>"; };
 		4DABA07E27E0B841004E1328 /* CAMetadata.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CAMetadata.entitlements; sourceTree = "<group>"; };
 		4DABA07F27E0B846004E1328 /* CAToneFileGenerator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CAToneFileGenerator.entitlements; sourceTree = "<group>"; };
@@ -128,6 +129,7 @@
 		4DABA08B27E0B8FF004E1328 /* CAPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAPlayer.swift; sourceTree = "<group>"; };
 		4DB3737C27E3FD410006DAE5 /* CAConverter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAConverter; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DB3738427E3FD6B0006DAE5 /* CAConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAConverter.swift; sourceTree = "<group>"; };
+		4DBA263627E81C48006E99DE /* BookCover.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BookCover.jpg; sourceTree = "<group>"; };
 		4DBEDD7027E7F075006E5F8F /* CAAudioUnitPlayer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAAudioUnitPlayer; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DBEDD7727E7F08D006E5F8F /* CAAudioUnitPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAAudioUnitPlayer.swift; sourceTree = "<group>"; };
 		4DE488E727DF953E003543CB /* CARecorder */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CARecorder; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -198,6 +200,8 @@
 		4D7820A727DD807C00C8EFB7 = {
 			isa = PBXGroup;
 			children = (
+				4D83F4EA27E81A01008A8D9E /* readme.md */,
+				4DBA263627E81C48006E99DE /* BookCover.jpg */,
 				4D0DD45927E21428002E9EBB /* CAPlayer.entitlements */,
 				4DABA07F27E0B846004E1328 /* CAToneFileGenerator.entitlements */,
 				4DABA07E27E0B841004E1328 /* CAMetadata.entitlements */,
