@@ -46,7 +46,7 @@ func sineWaveRenderProc(inRefCon: UnsafeMutableRawPointer,
     // let dataR = abl[1].mData!.assumingMemoryBound(to: Float32.self)
     
     // should work for any number of channels
-    let data = (0..<ioData!.pointee.mNumberBuffers).map{ i in abl[UnsafeMutableAudioBufferListPointer.Index(i)].mData!.assumingMemoryBound(to: Float32.self) }
+    let data = (0..<Int(ioData!.pointee.mNumberBuffers)).map{ i in abl[i].mData!.assumingMemoryBound(to: Float32.self) }
     
     for frame in 0..<Int(inNumberFrames) {
         let output = Float32(sin (2 * Double.pi * j / cycleLength))
