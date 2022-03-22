@@ -35,16 +35,26 @@ func sineWaveRenderProc(inRefCon: UnsafeMutableRawPointer,
     var j = player.pointee.staringFrameCount
     
     // key line to decoding multiple AudioBuffers in AudioBufferList
+    // I think it only works because mBuffers is the first field in AudioBuffer list
+
     guard let abl = UnsafeMutableAudioBufferListPointer(ioData) else { return -50 }
+
+    // The following code only works if there are exactly two channels
     // left channel
-    let dataL = abl[0].mData!.assumingMemoryBound(to: Float32.self)
+    // let dataL = abl[0].mData!.assumingMemoryBound(to: Float32.self)
     // right channel
-    let dataR = abl[1].mData!.assumingMemoryBound(to: Float32.self)
+    // let dataR = abl[1].mData!.assumingMemoryBound(to: Float32.self)
+    
+    // should work for any number of channels
+    let data = (0..<ioData!.pointee.mNumberBuffers).map{ i in abl[UnsafeMutableAudioBufferListPointer.Index(i)].mData!.assumingMemoryBound(to: Float32.self) }
     
     for frame in 0..<Int(inNumberFrames) {
         let output = Float32(sin (2 * Double.pi * j / cycleLength))
-        dataL[frame] = output
-        dataR[frame] = output
+        for d in data {
+            d[frame] = output
+        }
+//        dataL[frame] = output
+//        dataR[frame] = output
         
         j += 1
         if (j > cycleLength) {
