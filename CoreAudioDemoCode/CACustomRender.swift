@@ -36,14 +36,15 @@ func sineWaveRenderProc(inRefCon: UnsafeMutableRawPointer,
     
     // key line to decoding multiple AudioBuffers in AudioBufferList
     guard let abl = UnsafeMutableAudioBufferListPointer(ioData) else { return -50 }
+    // left channel
+    let dataL = abl[0].mData!.assumingMemoryBound(to: Float32.self)
+    // right channel
+    let dataR = abl[1].mData!.assumingMemoryBound(to: Float32.self)
     
     for frame in 0..<Int(inNumberFrames) {
-        // left channel
-        let dataL = abl[0].mData!.assumingMemoryBound(to: Float32.self)
-        dataL[frame] = Float32(sin (2 * Double.pi * j / cycleLength))
-        // right channel
-        let dataR = abl[1].mData!.assumingMemoryBound(to: Float32.self)
-        dataR[frame] = Float32(sin (2 * Double.pi * j / cycleLength))
+        let output = Float32(sin (2 * Double.pi * j / cycleLength))
+        dataL[frame] = output
+        dataR[frame] = output
         
         j += 1
         if (j > cycleLength) {
