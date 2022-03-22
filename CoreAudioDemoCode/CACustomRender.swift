@@ -11,12 +11,16 @@ import AudioToolbox
 // MARK: settings
 struct Settings {
     static let sineFrequency = 880.0
+    static let sampleRate = 44100.0
+    static let twoPi = 2 * Double.pi
+    static let phaseAdj = Settings.twoPi * Settings.sineFrequency / Settings.sampleRate
 }
 
 // MARK: user data struct
 struct MySineWavePlayer {
     var outputUnit: AudioUnit!
     var staringFrameCount = Double(0)
+    var phase = Double(0)
 }
 
 // MARK: callback function
@@ -31,8 +35,8 @@ func sineWaveRenderProc(inRefCon: UnsafeMutableRawPointer,
     
     let player = inRefCon.assumingMemoryBound(to: MySineWavePlayer.self)
     
-    let cycleLength = 44100.0 / Settings.sineFrequency
-    var j = player.pointee.staringFrameCount
+    // let cycleLength = 44100.0 / Settings.sineFrequency
+    var phase = player.pointee.phase
     
     // key line to decoding multiple AudioBuffers in AudioBufferList
     // I think it only works because mBuffers is the first field in AudioBuffer list
@@ -49,19 +53,19 @@ func sineWaveRenderProc(inRefCon: UnsafeMutableRawPointer,
     let data = (0..<Int(ioData!.pointee.mNumberBuffers)).map{ i in abl[i].mData!.assumingMemoryBound(to: Float32.self) }
     
     for frame in 0..<Int(inNumberFrames) {
-        let output = Float32(sin (2 * Double.pi * j / cycleLength))
+        let output = Float32(cos(phase))
         for d in data {
             d[frame] = output
         }
 //        dataL[frame] = output
 //        dataR[frame] = output
         
-        j += 1
-        if (j > cycleLength) {
-            j -= cycleLength
+        phase += Settings.phaseAdj
+        if (phase > Settings.twoPi) {
+            phase -= Settings.twoPi
         }
     }
-    player.pointee.staringFrameCount = j
+    player.pointee.phase = phase
     return noErr
 }
 
