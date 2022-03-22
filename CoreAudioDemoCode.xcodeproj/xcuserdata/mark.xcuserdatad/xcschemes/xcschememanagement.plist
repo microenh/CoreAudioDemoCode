@@ -12,7 +12,7 @@
 		<key>CAAudioUnitSpeech 2.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>10</integer>
+			<integer>9</integer>
 		</dict>
 		<key>CAAudioUnitSpeech.xcscheme_^#shared#^_</key>
 		<dict>
@@ -28,6 +28,11 @@
 		<dict>
 			<key>orderHint</key>
 			<integer>6</integer>
+		</dict>
+		<key>CACustomRender.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
 		</dict>
 		<key>CAMetadata.xcscheme_^#shared#^_</key>
 		<dict>
@@ -78,6 +83,11 @@
 			<true/>
 		</dict>
 		<key>4D45C3F327DE19BD004E02C7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4D530CC427E928980076CF16</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -12,12 +12,6 @@ struct Settings {
     static let inputFileName = "/Users/mark/Documents/CASoundFiles/output.mp3"
 }
 
-struct MyAUGraphPlayer {
-    var inputFormat = AudioStreamBasicDescription()
-    var inputFile: AudioFileID!
-    var graph: AUGraph!
-    var fileAU: AudioUnit!
-}
  
 // MARK: Utility functions
 // throwIfError from CheckError.swift
@@ -127,6 +121,12 @@ func prepareFileAU(player: inout MyAUGraphPlayer) throws -> UInt32 {
 }
 
 // MARK: User data struct
+struct MyAUGraphPlayer {
+    var inputFormat = AudioStreamBasicDescription()
+    var inputFile: AudioFileID!
+    var graph: AUGraph!
+    var fileAU: AudioUnit!
+}
 
 // MARK: - Main function
 func main() throws {
