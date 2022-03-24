@@ -22,6 +22,11 @@ func int32ToString(_ code: OSStatus) -> String {
     return chars.reduce(true){ $0 && (UInt8(32)...127).contains($1.asciiValue ?? 0)} ? String(chars.reversed()) : "\(code)"
 }
     
+func int32ToString(_ code: OSType) -> String {
+    let chars = Swift.withUnsafeBytes(of: code){ Data($0) }.map{ Character(Unicode.Scalar($0)) }
+    return chars.reduce(true){ $0 && (UInt8(32)...127).contains($1.asciiValue ?? 0)} ? String(chars.reversed()) : "\(code)"
+}
+    
 func checkError(_ error: OSStatus, _ operation: String = "") {
     guard error != noErr else { return }
     print ("Error: \(operation) (\(int32ToString(error))).")

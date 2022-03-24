@@ -19,6 +19,8 @@
 		4D3B068F27E8C40000291BD9 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
 		4D45C3FF27DE1C29004E02C7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4D45C40027DE1C29004E02C7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
+		4D4C53B327EBC8DB007499A5 /* CARingBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4C53AE27EBC8DB007499A5 /* CARingBuffer.cpp */; };
+		4D4C53B427EBC8DB007499A5 /* CARingBufferWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4D4C53B227EBC8DB007499A5 /* CARingBufferWrapper.mm */; };
 		4D530CCF27E928CC0076CF16 /* CACustomRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D530CCC27E928C20076CF16 /* CACustomRender.swift */; };
 		4D530CD027E928D40076CF16 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4D530CD127E928D80076CF16 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
@@ -35,6 +37,9 @@
 		4DBEDD7827E7F0B3006E5F8F /* CAAudioUnitPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBEDD7727E7F08D006E5F8F /* CAAudioUnitPlayer.swift */; };
 		4DBEDD7927E7F0B7006E5F8F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4DBEDD7A27E7F0BB006E5F8F /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
+		4DC93E0F27EA6F2E000DD987 /* CAAUGraphPlayThrough.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC93E0E27EA6F2E000DD987 /* CAAUGraphPlayThrough.swift */; };
+		4DC93E1027EA6F4D000DD987 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
+		4DC93E1127EA6F52000DD987 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4DE488DF27DF953E003543CB /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4DE488EB27DF959A003543CB /* CARecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488E827DF959A003543CB /* CARecorder.swift */; };
 		4DE488EF27DF988C003543CB /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
@@ -133,6 +138,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		4DC93E0527EA6EDF000DD987 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		4DE488E327DF953E003543CB /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -155,6 +169,12 @@
 		4D3B069527E8C40000291BD9 /* CAAudioUnitSpeech 2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "CAAudioUnitSpeech 2"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D45C3FD27DE19BD004E02C7 /* CAToneFileGenerator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAToneFileGenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D45C3FE27DE1C29004E02C7 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		4D4C53AD27EBC8DB007499A5 /* CAAUGraphPlayThrough-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CAAUGraphPlayThrough-Bridging-Header.h"; sourceTree = "<group>"; };
+		4D4C53AE27EBC8DB007499A5 /* CARingBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CARingBuffer.cpp; sourceTree = "<group>"; };
+		4D4C53AF27EBC8DB007499A5 /* CARingBufferWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARingBufferWrapper.h; sourceTree = "<group>"; };
+		4D4C53B027EBC8DB007499A5 /* CARingBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARingBuffer.h; sourceTree = "<group>"; };
+		4D4C53B127EBC8DB007499A5 /* CARingBufferMisc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARingBufferMisc.h; sourceTree = "<group>"; };
+		4D4C53B227EBC8DB007499A5 /* CARingBufferWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CARingBufferWrapper.mm; sourceTree = "<group>"; };
 		4D530CC527E928980076CF16 /* CACustomRender */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CACustomRender; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D530CCC27E928C20076CF16 /* CACustomRender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CACustomRender.swift; sourceTree = "<group>"; };
 		4D63D1A827E7811E006E2BB8 /* CAConverterExtended */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAConverterExtended; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -173,6 +193,8 @@
 		4DBA263627E81C48006E99DE /* BookCover.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BookCover.jpg; sourceTree = "<group>"; };
 		4DBEDD7027E7F075006E5F8F /* CAAudioUnitPlayer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAAudioUnitPlayer; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DBEDD7727E7F08D006E5F8F /* CAAudioUnitPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAAudioUnitPlayer.swift; sourceTree = "<group>"; };
+		4DC93E0727EA6EDF000DD987 /* CAAUGraphPlayThrough */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAAUGraphPlayThrough; sourceTree = BUILT_PRODUCTS_DIR; };
+		4DC93E0E27EA6F2E000DD987 /* CAAUGraphPlayThrough.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAAUGraphPlayThrough.swift; sourceTree = "<group>"; };
 		4DE488E727DF953E003543CB /* CARecorder */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CARecorder; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DE488E827DF959A003543CB /* CARecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CARecorder.swift; sourceTree = "<group>"; };
 		4DE488EE27DF988C003543CB /* CheckError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckError.swift; sourceTree = "<group>"; };
@@ -249,6 +271,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4DC93E0427EA6EDF000DD987 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4DE488E227DF953E003543CB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -259,6 +288,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D4C53AC27EBC8B8007499A5 /* CARingBuffer */ = {
+			isa = PBXGroup;
+			children = (
+				4D4C53AE27EBC8DB007499A5 /* CARingBuffer.cpp */,
+				4D4C53B027EBC8DB007499A5 /* CARingBuffer.h */,
+				4D4C53B127EBC8DB007499A5 /* CARingBufferMisc.h */,
+				4D4C53AF27EBC8DB007499A5 /* CARingBufferWrapper.h */,
+				4D4C53B227EBC8DB007499A5 /* CARingBufferWrapper.mm */,
+				4D4C53AD27EBC8DB007499A5 /* CAAUGraphPlayThrough-Bridging-Header.h */,
+			);
+			path = CARingBuffer;
+			sourceTree = "<group>";
+		};
 		4D7820A727DD807C00C8EFB7 = {
 			isa = PBXGroup;
 			children = (
@@ -271,6 +313,7 @@
 				4D1665B727E02AD400BB7313 /* CAStreamFormatTester.entitlements */,
 				4D7820B227DD807C00C8EFB7 /* CoreAudioDemoCode */,
 				4D7820B127DD807C00C8EFB7 /* Products */,
+				4DADD00727EB403600013883 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -288,6 +331,7 @@
 				4D11B59527E8B3B900A6ACC6 /* CAAudioUnitSpeech */,
 				4D3B069527E8C40000291BD9 /* CAAudioUnitSpeech 2 */,
 				4D530CC527E928980076CF16 /* CACustomRender */,
+				4DC93E0727EA6EDF000DD987 /* CAAUGraphPlayThrough */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -306,13 +350,22 @@
 				4DBEDD7727E7F08D006E5F8F /* CAAudioUnitPlayer.swift */,
 				4D11B59C27E8B3DD00A6ACC6 /* CAAudioUnitSpeech.swift */,
 				4D530CCC27E928C20076CF16 /* CACustomRender.swift */,
+				4DC93E0E27EA6F2E000DD987 /* CAAUGraphPlayThrough.swift */,
 			);
 			path = CoreAudioDemoCode;
+			sourceTree = "<group>";
+		};
+		4DADD00727EB403600013883 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		4DE488EC27DF9839003543CB /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				4D4C53AC27EBC8B8007499A5 /* CARingBuffer */,
 				4D45C3FE27DE1C29004E02C7 /* main.swift */,
 				4D1E1ABC27DECB2D0052CB16 /* NCO.swift */,
 				4DE488EE27DF988C003543CB /* CheckError.swift */,
@@ -438,6 +491,8 @@
 			dependencies = (
 			);
 			name = CAMetadata;
+			packageProductDependencies = (
+			);
 			productName = CoreAudioDemoCode;
 			productReference = 4D7820B027DD807C00C8EFB7 /* CAMetadata */;
 			productType = "com.apple.product-type.tool";
@@ -493,6 +548,25 @@
 			productReference = 4DBEDD7027E7F075006E5F8F /* CAAudioUnitPlayer */;
 			productType = "com.apple.product-type.tool";
 		};
+		4DC93E0627EA6EDF000DD987 /* CAAUGraphPlayThrough */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4DC93E0D27EA6EDF000DD987 /* Build configuration list for PBXNativeTarget "CAAUGraphPlayThrough" */;
+			buildPhases = (
+				4DC93E0327EA6EDF000DD987 /* Sources */,
+				4DC93E0427EA6EDF000DD987 /* Frameworks */,
+				4DC93E0527EA6EDF000DD987 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CAAUGraphPlayThrough;
+			packageProductDependencies = (
+			);
+			productName = CAAUGraphPlayThrough;
+			productReference = 4DC93E0727EA6EDF000DD987 /* CAAUGraphPlayThrough */;
+			productType = "com.apple.product-type.tool";
+		};
 		4DE488DD27DF953E003543CB /* CARecorder */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4DE488E427DF953E003543CB /* Build configuration list for PBXNativeTarget "CARecorder" */;
@@ -542,6 +616,10 @@
 					4DBEDD6F27E7F075006E5F8F = {
 						CreatedOnToolsVersion = 13.2;
 					};
+					4DC93E0627EA6EDF000DD987 = {
+						CreatedOnToolsVersion = 13.2;
+						LastSwiftMigration = 1320;
+					};
 				};
 			};
 			buildConfigurationList = 4D7820AB27DD807C00C8EFB7 /* Build configuration list for PBXProject "CoreAudioDemoCode" */;
@@ -553,6 +631,8 @@
 				Base,
 			);
 			mainGroup = 4D7820A727DD807C00C8EFB7;
+			packageReferences = (
+			);
 			productRefGroup = 4D7820B127DD807C00C8EFB7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -568,6 +648,7 @@
 				4D11B59427E8B3B900A6ACC6 /* CAAudioUnitSpeech */,
 				4D3B068B27E8C40000291BD9 /* CAAudioUnitSpeech 2 */,
 				4D530CC427E928980076CF16 /* CACustomRender */,
+				4DC93E0627EA6EDF000DD987 /* CAAUGraphPlayThrough */,
 			);
 		};
 /* End PBXProject section */
@@ -673,6 +754,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4DC93E0327EA6EDF000DD987 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DC93E0F27EA6F2E000DD987 /* CAAUGraphPlayThrough.swift in Sources */,
+				4DC93E1027EA6F4D000DD987 /* CheckError.swift in Sources */,
+				4D4C53B427EBC8DB007499A5 /* CARingBufferWrapper.mm in Sources */,
+				4DC93E1127EA6F52000DD987 /* main.swift in Sources */,
+				4D4C53B327EBC8DB007499A5 /* CARingBuffer.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4DE488DE27DF953E003543CB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -689,6 +782,7 @@
 		4D11B59927E8B3B900A6ACC6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 566Y4FXUU7;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -701,6 +795,7 @@
 		4D11B59A27E8B3B900A6ACC6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 566Y4FXUU7;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -743,6 +838,7 @@
 		4D3B069327E8C40000291BD9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 566Y4FXUU7;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -756,6 +852,7 @@
 		4D3B069427E8C40000291BD9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 566Y4FXUU7;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -799,6 +896,7 @@
 		4D530CCA27E928980076CF16 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 566Y4FXUU7;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -811,6 +909,7 @@
 		4D530CCB27E928980076CF16 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 566Y4FXUU7;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -823,6 +922,7 @@
 		4D63D1AC27E7811E006E2BB8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 566Y4FXUU7;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -835,6 +935,7 @@
 		4D63D1AD27E7811E006E2BB8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 566Y4FXUU7;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1036,6 +1137,7 @@
 		4DB3738027E3FD410006DAE5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 566Y4FXUU7;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1048,6 +1150,7 @@
 		4DB3738127E3FD410006DAE5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 566Y4FXUU7;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1060,6 +1163,7 @@
 		4DBEDD7427E7F075006E5F8F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 566Y4FXUU7;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1072,11 +1176,53 @@
 		4DBEDD7527E7F075006E5F8F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 566Y4FXUU7;
 				ENABLE_HARDENED_RUNTIME = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		4DC93E0B27EA6EDF000DD987 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 566Y4FXUU7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CoreAudioDemoCode/Utility/CARingBuffer/CAAUGraphPlayThrough-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		4DC93E0C27EA6EDF000DD987 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 566Y4FXUU7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CoreAudioDemoCode/Utility/CARingBuffer/CAAUGraphPlayThrough-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -1209,6 +1355,15 @@
 			buildConfigurations = (
 				4DBEDD7427E7F075006E5F8F /* Debug */,
 				4DBEDD7527E7F075006E5F8F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4DC93E0D27EA6EDF000DD987 /* Build configuration list for PBXNativeTarget "CAAUGraphPlayThrough" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4DC93E0B27EA6EDF000DD987 /* Debug */,
+				4DC93E0C27EA6EDF000DD987 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
