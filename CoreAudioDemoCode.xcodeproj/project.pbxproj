@@ -188,6 +188,8 @@
 		4DABA07F27E0B846004E1328 /* CAToneFileGenerator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CAToneFileGenerator.entitlements; sourceTree = "<group>"; };
 		4DABA08427E0B8BD004E1328 /* CAPlayer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAPlayer; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DABA08B27E0B8FF004E1328 /* CAPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAPlayer.swift; sourceTree = "<group>"; };
+		4DAD46D327ECFD6D00EE7663 /* CAAUGraphPlayThroughRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CAAUGraphPlayThroughRelease.entitlements; sourceTree = "<group>"; };
+		4DAD46D427ECFD8D00EE7663 /* CAAUGraphPlayThroughDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CAAUGraphPlayThroughDebug.entitlements; sourceTree = "<group>"; };
 		4DB3737C27E3FD410006DAE5 /* CAConverter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAConverter; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DB3738427E3FD6B0006DAE5 /* CAConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAConverter.swift; sourceTree = "<group>"; };
 		4DBA263627E81C48006E99DE /* BookCover.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BookCover.jpg; sourceTree = "<group>"; };
@@ -304,6 +306,8 @@
 		4D7820A727DD807C00C8EFB7 = {
 			isa = PBXGroup;
 			children = (
+				4DAD46D427ECFD8D00EE7663 /* CAAUGraphPlayThroughDebug.entitlements */,
+				4DAD46D327ECFD6D00EE7663 /* CAAUGraphPlayThroughRelease.entitlements */,
 				4D83F4EA27E81A01008A8D9E /* readme.md */,
 				4DBA263627E81C48006E99DE /* BookCover.jpg */,
 				4D0DD45927E21428002E9EBB /* CAPlayer.entitlements */,
@@ -1190,10 +1194,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = CAAUGraphPlayThroughDebug.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 566Y4FXUU7;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -1211,10 +1216,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = CAAUGraphPlayThroughRelease.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 566Y4FXUU7;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

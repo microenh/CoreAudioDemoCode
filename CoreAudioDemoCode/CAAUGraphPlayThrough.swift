@@ -16,12 +16,12 @@ struct MyAUGraphPlayer {
     var outputUnit: AudioUnit!
 #if PART_II
 #else
-    var inputBuffer: UnsafeMutablePointer<AudioBufferList>!
+    var inputBuffer: UnsafeMutableAudioBufferListPointer! // UnsafeMutablePointer<AudioBufferList>!
     var ringBuffer: RingBufferWrapper?
     
-    var firstInputSampleTime = Float64(0)
-    var firstOutputSampleTime = Float64(0)
-    var inToOutSampleTimeOffset = Float64(0)
+    var firstInputSampleTime = Float64(-1)
+    var firstOutputSampleTime = Float64(-1)
+    var inToOutSampleTimeOffset = Float64(-1)
 #endif
 }
 
@@ -37,26 +37,26 @@ func inputRenderProc(inRefCon: UnsafeMutableRawPointer,
                      inNumberFrames: UInt32,
                      ioData: UnsafeMutablePointer<AudioBufferList>?) -> OSStatus {
     
-    let player = inRefCon.assumingMemoryBound(to: MyAUGraphPlayer.self)
+    var player = inRefCon.assumingMemoryBound(to: MyAUGraphPlayer.self).pointee
     
     // Have we ever logged input timing? (for offset calculation)
-    if player.pointee.firstInputSampleTime < 0 {
-        player.pointee.firstInputSampleTime = inTimeStamp.pointee.mSampleTime
-        if player.pointee.firstOutputSampleTime > 0 && player.pointee.inToOutSampleTimeOffset < 0 {
-            player.pointee.inToOutSampleTimeOffset = player.pointee.firstInputSampleTime - player.pointee.firstOutputSampleTime
+    if player.firstInputSampleTime < 0 {
+        player.firstInputSampleTime = inTimeStamp.pointee.mSampleTime
+        if player.firstOutputSampleTime > 0 && player.inToOutSampleTimeOffset < 0 {
+            player.inToOutSampleTimeOffset = player.firstInputSampleTime - player.firstOutputSampleTime
         }
     }
     
-    var inputProcErr = AudioUnitRender(player.pointee.inputUnit,
+    var inputProcErr = AudioUnitRender(player.inputUnit,
                                        ioActionFlags,
                                        inTimeStamp,
                                        inBusNumber,
                                        inNumberFrames,
-                                       player.pointee.inputBuffer!)
+                                       player.inputBuffer.unsafeMutablePointer)
     
     if inputProcErr == 0 {
-        inputProcErr = StoreBuffer(player.pointee.ringBuffer!,
-                                   player.pointee.inputBuffer,
+        inputProcErr = StoreBuffer(player.ringBuffer!,
+                                   player.inputBuffer.unsafeMutablePointer,
                                    inNumberFrames,
                                    Int64(inTimeStamp.pointee.mSampleTime))
     }
@@ -70,21 +70,21 @@ func graphRenderProc(inRefCon: UnsafeMutableRawPointer,
                      inNumberFrames: UInt32,
                      ioData: UnsafeMutablePointer<AudioBufferList>?) -> OSStatus {
     
-    let player = inRefCon.assumingMemoryBound(to: MyAUGraphPlayer.self)
+    var player = inRefCon.assumingMemoryBound(to: MyAUGraphPlayer.self).pointee
 
     // Have we ever logged input timing? (for offset calculation)
-    if player.pointee.firstOutputSampleTime < 0 {
-        player.pointee.firstOutputSampleTime = inTimeStamp.pointee.mSampleTime
-        if player.pointee.firstInputSampleTime > 0 && player.pointee.inToOutSampleTimeOffset < 0 {
-            player.pointee.inToOutSampleTimeOffset = player.pointee.firstInputSampleTime - player.pointee.firstOutputSampleTime
+    if player.firstOutputSampleTime < 0 {
+        player.firstOutputSampleTime = inTimeStamp.pointee.mSampleTime
+        if player.firstInputSampleTime > 0 && player.inToOutSampleTimeOffset < 0 {
+            player.inToOutSampleTimeOffset = player.firstInputSampleTime - player.firstOutputSampleTime
         }
     }
     
     // copy samples out of ring buffer
-    let outputProcErr = FetchBuffer(player.pointee.ringBuffer!,
+    let outputProcErr = FetchBuffer(player.ringBuffer!,
                                     ioData,
                                     inNumberFrames,
-                                    Int64(inTimeStamp.pointee.mSampleTime + player.pointee.inToOutSampleTimeOffset))
+                                    Int64(inTimeStamp.pointee.mSampleTime + player.inToOutSampleTimeOffset))
     return outputProcErr
 }
 
@@ -96,16 +96,16 @@ func createInputUnit(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
                                             componentManufacturer: kAudioUnitManufacturer_Apple,
                                             componentFlags: 0,
                                             componentFlagsMask: 0)
-    
+
     let comp = AudioComponentFindNext(nil, &inputcd)
     guard let comp = comp else {
         print ("Can't get output unit")
         exit (-1)
     }
-    try throwIfError(AudioComponentInstanceNew(comp,
-                                               &player.pointee.inputUnit),
+    try throwIfError(AudioComponentInstanceNew(comp, &player.pointee.inputUnit),
                      "open component for inputUnit")
     
+    // enable I/O
     var disableFlag = UInt32(0)
     var enableFlag = UInt32(1)
     let outputBus = AudioUnitScope(0)
@@ -138,7 +138,7 @@ func createInputUnit(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
                                                 &propertySize,
                                                 &defaultDevice),
                      "get default input device")
-    
+
     try throwIfError(AudioUnitSetProperty(player.pointee.inputUnit,
                                           kAudioOutputUnitProperty_CurrentDevice,
                                           kAudioUnitScope_Global,
@@ -146,6 +146,7 @@ func createInputUnit(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
                                           &defaultDevice,
                                           UInt32(MemoryLayout<AudioDeviceID>.size)),
                      "set default device on I/O unit")
+    // print ("defaultDevice \(defaultDevice)")
     
     propertySize = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
     try throwIfError(AudioUnitGetProperty(player.pointee.inputUnit,
@@ -162,7 +163,10 @@ func createInputUnit(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
                                           inputBus,
                                           &deviceFormat,
                                           &propertySize),
-                     "getting ASBD from input unit")
+                     "get ASBD from input unit")
+    
+    print ("Device rate \(deviceFormat.mSampleRate), graph rate \(player.pointee.streamFormat.mSampleRate)")
+    
     player.pointee.streamFormat.mSampleRate = deviceFormat.mSampleRate
     
     propertySize = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
@@ -185,14 +189,16 @@ func createInputUnit(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
                      "get buffer frame size from input unit")
     let bufferSizeBytes = bufferSizeFrames * UInt32(MemoryLayout<Float32>.size)
     
-    let abl = AudioBufferList.allocate(maximumBuffers: Int(player.pointee.streamFormat.mChannelsPerFrame))
-    for i in 0..<Int(player.pointee.streamFormat.mChannelsPerFrame) {
+    print ("format is \(player.pointee.streamFormat.mFormatFlags & kAudioFormatFlagIsNonInterleaved > 0 ? "non-" : "")interleaved")
+    let channelCount = Int(player.pointee.streamFormat.mChannelsPerFrame)
+    let abl = AudioBufferList.allocate(maximumBuffers: channelCount)
+    for i in 0..<channelCount {
         abl[i] = AudioBuffer(mNumberChannels: 1,
                              mDataByteSize: bufferSizeBytes,
                              mData: malloc(Int(bufferSizeBytes)))
     }
-    player.pointee.inputBuffer = abl.unsafeMutablePointer
-    
+    player.pointee.inputBuffer = abl
+        
     // Allocate ring buffer that will hold data between the two audio devices
     player.pointee.ringBuffer = CreateRingBuffer()
     AllocateBuffer(player.pointee.ringBuffer!,
@@ -202,7 +208,7 @@ func createInputUnit(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
     
     // Set render proc to supply samples from input unit
     var callbackStruct = AURenderCallbackStruct(inputProc: inputRenderProc,
-                                                inputProcRefCon: UnsafeMutableRawPointer(player))
+                                                inputProcRefCon: player)
     try throwIfError(AudioUnitSetProperty(player.pointee.inputUnit,
                                           kAudioOutputUnitProperty_SetInputCallback,
                                           kAudioUnitScope_Global,
@@ -210,8 +216,10 @@ func createInputUnit(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
                                           &callbackStruct,
                                           UInt32(MemoryLayout<AURenderCallbackStruct>.size)),
                      "setting input callback")
+    
     try throwIfError(AudioUnitInitialize(player.pointee.inputUnit),
                      "initialize input unit")
+    
     player.pointee.firstInputSampleTime = -1
     player.pointee.inToOutSampleTimeOffset = -1
     
@@ -219,6 +227,7 @@ func createInputUnit(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
 }
 
 func createMyAUGraph(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
+    
     // Create a new AUGraph
     try throwIfError(NewAUGraph(&player.pointee.graph),
                      "New AUGraph")
@@ -262,7 +271,8 @@ func createMyAUGraph(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
                                           0,
                                           &player.pointee.streamFormat,
                                           propertySize),
-                     "Set strem format on output unit")
+                     "Set stream format on output unit")
+    
     var callbackStruct = AURenderCallbackStruct(inputProc: graphRenderProc, inputProcRefCon: player)
     
     try throwIfError(AudioUnitSetProperty(player.pointee.outputUnit,
@@ -277,6 +287,7 @@ func createMyAUGraph(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
     try throwIfError(AUGraphInitialize(player.pointee.graph), "AUGraphInitialize")
     
     player.pointee.firstOutputSampleTime = -1
+    print ("Bottom of CreateAUGraph()")
 }
 
 // MARK: - main function
@@ -296,12 +307,12 @@ func main() throws {
 #if PART_II
 #else
 #endif
-    
+        
     // Start playing
     try throwIfError(AudioOutputUnitStart(player.inputUnit), "AudioOutputUnitStart")
     try throwIfError(AUGraphStart(player.graph), "AUGraphStart")
     defer {
-        AUGraphStop(player.graph)
+        // AUGraphStop(player.graph)
     }
     // and wait
     print ("Capturing, press <return> to stop:")
