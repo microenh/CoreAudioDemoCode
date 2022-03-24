@@ -7,6 +7,12 @@
 
 import AVFoundation
 
+#if PART_II
+struct Settings {
+    static let speakString = "Please purchase as many copies of our Core Audio book as you possibley can" as CFString
+}
+#endif
+
 // MARK: user-data struct
 struct MyAUGraphPlayer {
     var streamFormat = AudioStreamBasicDescription()
@@ -15,14 +21,14 @@ struct MyAUGraphPlayer {
     var inputUnit: AudioUnit!
     var outputUnit: AudioUnit!
 #if PART_II
-#else
+    var speechUnit: AudioUnit!
+#endif
     var inputBuffer: UnsafeMutableAudioBufferListPointer! // UnsafeMutablePointer<AudioBufferList>!
-    var ringBuffer: RingBufferWrapper?
+    var ringBuffer: RingBufferWrapper!
     
     var firstInputSampleTime = Float64(-1)
     var firstOutputSampleTime = Float64(-1)
     var inToOutSampleTimeOffset = Float64(-1)
-#endif
 }
 
 // MARK: render procs
@@ -55,7 +61,7 @@ func inputRenderProc(inRefCon: UnsafeMutableRawPointer,
                                        player.inputBuffer.unsafeMutablePointer)
     
     if inputProcErr == 0 {
-        inputProcErr = StoreBuffer(player.ringBuffer!,
+        inputProcErr = StoreBuffer(player.ringBuffer,
                                    player.inputBuffer.unsafeMutablePointer,
                                    inNumberFrames,
                                    Int64(inTimeStamp.pointee.mSampleTime))
@@ -81,7 +87,7 @@ func graphRenderProc(inRefCon: UnsafeMutableRawPointer,
     }
     
     // copy samples out of ring buffer
-    let outputProcErr = FetchBuffer(player.ringBuffer!,
+    let outputProcErr = FetchBuffer(player.ringBuffer,
                                     ioData,
                                     inNumberFrames,
                                     Int64(inTimeStamp.pointee.mSampleTime + player.inToOutSampleTimeOffset))
@@ -201,7 +207,7 @@ func createInputUnit(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
         
     // Allocate ring buffer that will hold data between the two audio devices
     player.pointee.ringBuffer = CreateRingBuffer()
-    AllocateBuffer(player.pointee.ringBuffer!,
+    AllocateBuffer(player.pointee.ringBuffer,
                    Int32(player.pointee.streamFormat.mChannelsPerFrame),
                    player.pointee.streamFormat.mBytesPerFrame,
                    bufferSizeFrames * 3)
@@ -252,6 +258,101 @@ func createMyAUGraph(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
                      "AUGraphAddNode[kAudioUnitSubType_DefaultOutput]")
     
 #if PART_II
+    // Add a mixer to the graph
+    var mixercd = AudioComponentDescription(componentType: kAudioUnitType_Mixer,
+                                            componentSubType: kAudioUnitSubType_StereoMixer,
+                                            componentManufacturer: kAudioUnitManufacturer_Apple,
+                                            componentFlags: 0,
+                                            componentFlagsMask: 0)
+    var mixerNode = AUNode()
+    try throwIfError(AUGraphAddNode(player.pointee.graph,
+                                    &mixercd,
+                                    &mixerNode),
+                     "AUGraphAddNode[kAudioUniteSubType_StereoMixer]")
+    
+    // Add the speech synthesizer to the graph
+    var speechcd = AudioComponentDescription(componentType: kAudioUnitType_Generator,
+                                             componentSubType: kAudioUnitSubType_SpeechSynthesis,
+                                             componentManufacturer: kAudioUnitManufacturer_Apple,
+                                             componentFlags: 0,
+                                             componentFlagsMask: 0)
+    var speechNode = AUNode()
+    try throwIfError(AUGraphAddNode(player.pointee.graph,
+                                    &speechcd,
+                                    &speechNode),
+                     "AUGraphAddNode[kAudioUniteSubType_SpeechSynthesis]")
+    // Opening the graph opens all contained audio units but does not allocate any resources yet
+    try throwIfError(AUGraphOpen(player.pointee.graph), "AUGraphOpen")
+    
+    // Get the reference to the AudioUnit objects for the various nodes
+    try throwIfError(AUGraphNodeInfo(player.pointee.graph,
+                                     outputNode,
+                                     nil,
+                                     &player.pointee.outputUnit),
+                     "AUGraphNodeInfo")
+    try throwIfError(AUGraphNodeInfo(player.pointee.graph,
+                                     speechNode,
+                                     nil,
+                                     &player.pointee.speechUnit),
+                     "AUGraphNodeInfo")
+    var mixerUnit: AudioUnit!
+    try throwIfError(AUGraphNodeInfo(player.pointee.graph,
+                                     mixerNode,
+                                     nil,
+                                     &mixerUnit),
+                     "AUGraphNodeInfo")
+    // Set ASBD's here
+    var propertySize = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
+    try throwIfError(AudioUnitSetProperty(player.pointee.outputUnit,
+                                          kAudioUnitProperty_StreamFormat,
+                                          kAudioUnitScope_Input,
+                                          0,
+                                          &player.pointee.streamFormat,
+                                          propertySize),
+                     "set stream format on output unit")
+    try throwIfError(AudioUnitSetProperty(mixerUnit,
+                                          kAudioUnitProperty_StreamFormat,
+                                          kAudioUnitScope_Input,
+                                          0,
+                                          &player.pointee.streamFormat,
+                                          propertySize),
+                     "set stream format on mixer unit bus 0")
+    try throwIfError(AudioUnitSetProperty(mixerUnit,
+                                          kAudioUnitProperty_StreamFormat,
+                                          kAudioUnitScope_Input,
+                                          1,
+                                          &player.pointee.streamFormat,
+                                          propertySize),
+                     "set stream format on mixer unit bus 1")
+    
+    // Connections
+    // Mixer output scope / bus 0 to outputUnit input scope / bus 0
+    // Mixer input  scope / bus 0 to render callback
+    //  (from ringbuffer, which in turn is from inputUnit)
+    // Mixer input  scope / bus 1 to speech unit outpu scope / bus 0
+    
+    try throwIfError(AUGraphConnectNodeInput(player.pointee.graph,
+                                             mixerNode,
+                                             0,
+                                             outputNode,
+                                             0),
+                     "connecting mixer output(0) to outputNode(0)")
+    try throwIfError(AUGraphConnectNodeInput(player.pointee.graph,
+                                             speechNode,
+                                             0,
+                                             mixerNode,
+                                             1),
+                     "connecting speech synth output(0) to mixer input (1)")
+
+    var callbackStruct = AURenderCallbackStruct(inputProc: graphRenderProc, inputProcRefCon: player)
+    
+    try throwIfError(AudioUnitSetProperty(mixerUnit,
+                                          kAudioUnitProperty_SetRenderCallback,
+                                          kAudioUnitScope_Global,
+                                          0,
+                                          &callbackStruct,
+                                          UInt32(MemoryLayout<AURenderCallbackStruct>.size)),
+                     "Setting render callback on mixer unit")
 #else
     // Opening the graph opens all contained audio units but does not allocate any resources yet
     try throwIfError(AUGraphOpen(player.pointee.graph), "AUGraphOpen")
@@ -290,6 +391,25 @@ func createMyAUGraph(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
     print ("Bottom of CreateAUGraph()")
 }
 
+#if PART_II
+func prepareSpeechAU(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
+    var chan = SpeechChannelRecord()
+    var propsize = UInt32(MemoryLayout<SpeechChannel>.size)
+    
+    try throwIfError(AudioUnitGetProperty(player.pointee.speechUnit,
+                                          kAudioUnitProperty_SpeechChannel,
+                                          kAudioUnitScope_Global,
+                                          0,
+                                          &chan,
+                                          &propsize),
+                     "AudioFileGetProperty[kAudioUnitProperty_SpeechChannel]")
+    SpeakCFString(&chan,
+                  Settings.speakString,
+                  nil)
+    print ("Bottom of prepareSpeechAU()")
+}
+#endif
+
 // MARK: - main function
 func main() throws {
     
@@ -305,14 +425,15 @@ func main() throws {
     }
     
 #if PART_II
-#else
+    // Configure the speech synthesizer
+    try prepareSpeechAU(player: &player)
 #endif
         
     // Start playing
     try throwIfError(AudioOutputUnitStart(player.inputUnit), "AudioOutputUnitStart")
     try throwIfError(AUGraphStart(player.graph), "AUGraphStart")
     defer {
-        // AUGraphStop(player.graph)
+        AUGraphStop(player.graph)
     }
     // and wait
     print ("Capturing, press <return> to stop:")
