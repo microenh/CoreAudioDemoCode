@@ -355,7 +355,20 @@ func createMyAUGraph(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
                                           &callbackStruct,
                                           UInt32(MemoryLayout<AURenderCallbackStruct>.size)),
                      "Setting render callback on mixer unit")
-    // CAShowFile(UnsafeMutableRawPointer(player.pointee.graph), stdout)
+    CAShowFile(UnsafeMutableRawPointer(player.pointee.graph), stdout)
+    
+/*
+ AudioUnitGraph 0x1596B0AD:
+   Member Nodes:
+     node 1: 'auou' 'def ' 'appl', instance 0x9596b0ae O  // OUTPUT
+     node 2: 'aumx' 'smxr' 'appl', instance 0x9596b0b0 O  // MIXER  (calls graphRenderProc - gets data from RingBuffer)
+     node 3: 'augn' 'ttsp' 'appl', instance 0x9596b0b1 O  // SPEECH SYNTHESIS
+   Connections:
+     node   2 bus   0 => node   1 bus   0  [ 2 ch,  44100 Hz, Float32, deinterleaved]
+     node   3 bus   0 => node   2 bus   1  [ 2 ch,  44100 Hz, Float32, deinterleaved]
+   CurrentState:
+     mLastUpdateError=0, eventsToProcess=F, isInitialized=F, isRunning=F
+ */
 #else
     // Opening the graph opens all contained audio units but does not allocate any resources yet
     try throwIfError(AUGraphOpen(player.pointee.graph), "AUGraphOpen")
