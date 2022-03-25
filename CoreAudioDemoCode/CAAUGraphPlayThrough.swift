@@ -264,7 +264,7 @@ func createMyAUGraph(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
                                             componentManufacturer: kAudioUnitManufacturer_Apple,
                                             componentFlags: 0,
                                             componentFlagsMask: 0)
-    var mixerNode = AUNode()
+    var mixerNode: AUNode = 0
     try throwIfError(AUGraphAddNode(player.pointee.graph,
                                     &mixercd,
                                     &mixerNode),
@@ -276,7 +276,7 @@ func createMyAUGraph(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
                                              componentManufacturer: kAudioUnitManufacturer_Apple,
                                              componentFlags: 0,
                                              componentFlagsMask: 0)
-    var speechNode = AUNode()
+    var speechNode: AUNode = 0
     try throwIfError(AUGraphAddNode(player.pointee.graph,
                                     &speechcd,
                                     &speechNode),
@@ -303,27 +303,29 @@ func createMyAUGraph(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
                      "AUGraphNodeInfo")
     // Set ASBD's here
     var propertySize = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
-    try throwIfError(AudioUnitSetProperty(player.pointee.outputUnit,
+    // Set stream format on input scope of bus 0 because of the render callback will be plug in at this scope
+    try throwIfError(AudioUnitSetProperty(mixerUnit, //player.pointee.outputUnit,
                                           kAudioUnitProperty_StreamFormat,
                                           kAudioUnitScope_Input,
                                           0,
                                           &player.pointee.streamFormat,
                                           propertySize),
                      "set stream format on output unit")
+    // Set output stream format on speech unit and mixer unit to let stream format propagation happens
+    try throwIfError(AudioUnitSetProperty(player.pointee.speechUnit,  // mixerUnit,
+                                          kAudioUnitProperty_StreamFormat,
+                                          kAudioUnitScope_Output, // kAudioUnitScope_Input,
+                                          0,
+                                          &player.pointee.streamFormat,
+                                          propertySize),
+                     "set stream format on speect unit bus 0")
     try throwIfError(AudioUnitSetProperty(mixerUnit,
                                           kAudioUnitProperty_StreamFormat,
-                                          kAudioUnitScope_Input,
+                                          kAudioUnitScope_Output,
                                           0,
                                           &player.pointee.streamFormat,
                                           propertySize),
                      "set stream format on mixer unit bus 0")
-    try throwIfError(AudioUnitSetProperty(mixerUnit,
-                                          kAudioUnitProperty_StreamFormat,
-                                          kAudioUnitScope_Input,
-                                          1,
-                                          &player.pointee.streamFormat,
-                                          propertySize),
-                     "set stream format on mixer unit bus 1")
     
     // Connections
     // Mixer output scope / bus 0 to outputUnit input scope / bus 0
@@ -353,6 +355,7 @@ func createMyAUGraph(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
                                           &callbackStruct,
                                           UInt32(MemoryLayout<AURenderCallbackStruct>.size)),
                      "Setting render callback on mixer unit")
+    // CAShowFile(UnsafeMutableRawPointer(player.pointee.graph), stdout)
 #else
     // Opening the graph opens all contained audio units but does not allocate any resources yet
     try throwIfError(AUGraphOpen(player.pointee.graph), "AUGraphOpen")
@@ -383,8 +386,9 @@ func createMyAUGraph(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
                                           &callbackStruct,
                                           UInt32(MemoryLayout<AURenderCallbackStruct>.size)),
                      "Setting render callback on output unit")
+    
 #endif
-    // Now initialze the graphi (causes resource to be allocated)
+    // Now initialze the graph (causes resource to be allocated)
     try throwIfError(AUGraphInitialize(player.pointee.graph), "AUGraphInitialize")
     
     player.pointee.firstOutputSampleTime = -1
@@ -393,8 +397,8 @@ func createMyAUGraph(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
 
 #if PART_II
 func prepareSpeechAU(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
-    var chan = SpeechChannelRecord()
-    var propsize = UInt32(MemoryLayout<SpeechChannel>.size)
+    var chan: SpeechChannel?
+    var propsize = UInt32(MemoryLayout<SpeechChannelRecord>.size)
     
     try throwIfError(AudioUnitGetProperty(player.pointee.speechUnit,
                                           kAudioUnitProperty_SpeechChannel,
@@ -403,7 +407,8 @@ func prepareSpeechAU(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
                                           &chan,
                                           &propsize),
                      "AudioFileGetProperty[kAudioUnitProperty_SpeechChannel]")
-    SpeakCFString(&chan,
+    
+    SpeakCFString(chan!,
                   Settings.speakString,
                   nil)
     print ("Bottom of prepareSpeechAU()")
