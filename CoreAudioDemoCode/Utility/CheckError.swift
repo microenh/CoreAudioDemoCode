@@ -12,6 +12,23 @@ enum CAError: Error {
     case componentNotFound
     case settingIO(OSStatus)
     case findDevice(OSStatus)
+    case newUnit(OSStatus)
+    case setCurrentDevice(OSStatus)
+    case getAsbd(OSStatus)
+    case setAsbd(OSStatus)
+    case getBufferFrameSize(OSStatus)
+    case setInputCallback(OSStatus)
+    case initializeAU(OSStatus)
+    case newGraph(OSStatus)
+    case addGraphNode(OSStatus)
+    case openGraph(OSStatus)
+    case getUnit(OSStatus)
+    case connectNodes(OSStatus)
+    case setRenderCallback(OSStatus)
+    case initializeGraph(OSStatus)
+    case getSpeechChan(OSStatus)
+    case auStart(OSStatus)
+    case graphStart(OSStatus)
 }
 
 // convert Apple 32-bit int to 4 characters if valid

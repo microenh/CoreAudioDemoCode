@@ -33,9 +33,6 @@ struct MyAUGraphPlayer {
 
 // MARK: render procs
 
-// MARK: utility functions
-// throwIfError in CheckError.swift
-
 func inputRenderProc(inRefCon: UnsafeMutableRawPointer,
                      ioActionFlags: UnsafeMutablePointer<AudioUnitRenderActionFlags>,
                      inTimeStamp: UnsafePointer<AudioTimeStamp>,
@@ -95,76 +92,37 @@ func graphRenderProc(inRefCon: UnsafeMutableRawPointer,
 }
 
 
+// MARK: utility functions
+// throwIfError in CheckError.swift
+
 func createInputUnit(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
-    // AudioDeviceFinder.findDevices()
-    // exit(0)
-    // Generate a description that matches audio HAL
-    let comp = try AudioComponent.find(componentType: kAudioUnitType_Output,
-                                       componentSubType: kAudioUnitSubType_HALOutput)
-    try throwIfError(AudioComponentInstanceNew(comp, &player.pointee.inputUnit),
-                     "open component for inputUnit")
-    
+    // Ger input unit from HAL
+    player.pointee.inputUnit = try AudioUnit.new(componentType: kAudioUnitType_Output,
+                                                 componentSubType: kAudioUnitSubType_HALOutput)
     // enable I/O
     try player.pointee.inputUnit.setIO(inputScope: true, inputBus: true, enable: true)
     try player.pointee.inputUnit.setIO(inputScope: false, inputBus: false, enable: false)
 
-    var defaultDevice = try AudioObjectID.find(mSelector: kAudioHardwarePropertyDefaultInputDevice)
+    // get default default input device
+    let defaultDevice = try AudioObjectID.find(mSelector: kAudioHardwarePropertyDefaultInputDevice)
     
     // manually override input device
     // defaultDevice = 57
     // print (defaultDevice)
-    let outputBus = AudioUnitScope(0)
-    let inputBus = AudioUnitScope(1)
-    var propertySize = UInt32(0)
-
-    try throwIfError(AudioUnitSetProperty(player.pointee.inputUnit,
-                                          kAudioOutputUnitProperty_CurrentDevice,
-                                          kAudioUnitScope_Global,
-                                          outputBus,
-                                          &defaultDevice,
-                                          UInt32(MemoryLayout<AudioDeviceID>.size)),
-                     "set default device on I/O unit")
     
-    propertySize = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
-    try throwIfError(AudioUnitGetProperty(player.pointee.inputUnit,
-                                          kAudioUnitProperty_StreamFormat,
-                                          kAudioUnitScope_Output,
-                                          inputBus,
-                                          &player.pointee.streamFormat,
-                                          &propertySize),
-                     "get ASBD from input unit")
-    var deviceFormat = AudioStreamBasicDescription()
-    try throwIfError(AudioUnitGetProperty(player.pointee.inputUnit,
-                                          kAudioUnitProperty_StreamFormat,
-                                          kAudioUnitScope_Input,
-                                          inputBus,
-                                          &deviceFormat,
-                                          &propertySize),
-                     "get ASBD from input unit")
+    try player.pointee.inputUnit.setCurrentDevice(device: defaultDevice, inputBus: false)
     
+    try player.pointee.streamFormat = player.pointee.inputUnit.getABSD(inputScope: false,
+                                                                       inputBus: true)
+    
+    let deviceFormat = try player.pointee.inputUnit.getABSD(inputScope: true, inputBus: true)
     print ("deviceFormat: \(deviceFormat)")
     // print ("Device rate \(deviceFormat.mSampleRate), graph rate \(player.pointee.streamFormat.mSampleRate)")
     
     player.pointee.streamFormat.mSampleRate = deviceFormat.mSampleRate
+    try player.pointee.inputUnit.setABSD(absd: player.pointee.streamFormat, inputScope: false, inputBus: true)
     
-    propertySize = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
-    try throwIfError(AudioUnitSetProperty(player.pointee.inputUnit,
-                                          kAudioUnitProperty_StreamFormat,
-                                          kAudioUnitScope_Output,
-                                          inputBus,
-                                          &player.pointee.streamFormat,
-                                          propertySize),
-                     "setting ASBD on input unit")
-    
-    var bufferSizeFrames = UInt32(0)
-    propertySize = UInt32(MemoryLayout<UInt32>.size)
-    try throwIfError(AudioUnitGetProperty(player.pointee.inputUnit,
-                                          kAudioDevicePropertyBufferFrameSize,
-                                          kAudioUnitScope_Global,
-                                          0,
-                                          &bufferSizeFrames,
-                                          &propertySize),
-                     "get buffer frame size from input unit")
+    let bufferSizeFrames = try player.pointee.inputUnit.getBufferFrameSize()
     let bufferSizeBytes = bufferSizeFrames * UInt32(MemoryLayout<Float32>.size)
     
     print ("format is \(player.pointee.streamFormat.mFormatFlags & kAudioFormatFlagIsNonInterleaved > 0 ? "non-" : "")interleaved")
@@ -186,18 +144,9 @@ func createInputUnit(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
                    bufferSizeFrames * 3)
     
     // Set render proc to supply samples from input unit
-    var callbackStruct = AURenderCallbackStruct(inputProc: inputRenderProc,
-                                                inputProcRefCon: player)
-    try throwIfError(AudioUnitSetProperty(player.pointee.inputUnit,
-                                          kAudioOutputUnitProperty_SetInputCallback,
-                                          kAudioUnitScope_Global,
-                                          0,
-                                          &callbackStruct,
-                                          UInt32(MemoryLayout<AURenderCallbackStruct>.size)),
-                     "setting input callback")
+    try player.pointee.inputUnit.setInputCallback(inputProc: inputRenderProc, inputProcRefCon: player)
     
-    try throwIfError(AudioUnitInitialize(player.pointee.inputUnit),
-                     "initialize input unit")
+    try player.pointee.inputUnit.initialize()
     
     player.pointee.firstInputSampleTime = -1
     player.pointee.inToOutSampleTimeOffset = -1
@@ -208,115 +157,41 @@ func createInputUnit(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
 func createMyAUGraph(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
     
     // Create a new AUGraph
-    try throwIfError(NewAUGraph(&player.pointee.graph),
-                     "New AUGraph")
-    
-    // Generate a description that matched default output
-    var outputcd = AudioComponentDescription(componentType: kAudioUnitType_Output,
-                                             componentSubType: kAudioUnitSubType_DefaultOutput)
-    // check if component exists
-    // let _ = try AudioComponent.find(cd: outputcd)
-
-    // Adds a node with above description to graph
-    var outputNode = AUNode()
-    
-    try throwIfError(AUGraphAddNode(player.pointee.graph,
-                                    &outputcd,
-                                    &outputNode),
-                     "AUGraphAddNode[kAudioUnitSubType_DefaultOutput]")
-
+    try player.pointee.graph = AUGraph.new()
+    let outputNode = try player.pointee.graph.addNode(componentType: kAudioUnitType_Output,
+                                                      componentSubType: kAudioUnitSubType_DefaultOutput)
 #if PART_II
     // Add a mixer to the graph
-    var mixercd = AudioComponentDescription(componentType: kAudioUnitType_Mixer,
-                                            componentSubType: kAudioUnitSubType_StereoMixer)
-    var mixerNode: AUNode = 0
-    try throwIfError(AUGraphAddNode(player.pointee.graph,
-                                    &mixercd,
-                                    &mixerNode),
-                     "AUGraphAddNode[kAudioUniteSubType_StereoMixer]")
-    
+    let mixerNode = try player.pointee.graph.addNode(componentType: kAudioUnitType_Mixer,
+                                                     componentSubType: kAudioUnitSubType_StereoMixer)
     // Add the speech synthesizer to the graph
-    var speechcd = AudioComponentDescription(componentType: kAudioUnitType_Generator,
-                                             componentSubType: kAudioUnitSubType_SpeechSynthesis)
-    var speechNode: AUNode = 0
-    try throwIfError(AUGraphAddNode(player.pointee.graph,
-                                    &speechcd,
-                                    &speechNode),
-                     "AUGraphAddNode[kAudioUniteSubType_SpeechSynthesis]")
+    let speechNode = try player.pointee.graph.addNode(componentType: kAudioUnitType_Generator,
+                                                      componentSubType: kAudioUnitSubType_SpeechSynthesis)
     // Opening the graph opens all contained audio units but does not allocate any resources yet
-    try throwIfError(AUGraphOpen(player.pointee.graph), "AUGraphOpen")
+    try player.pointee.graph.open()
     
     // Get the reference to the AudioUnit objects for the various nodes
-    try throwIfError(AUGraphNodeInfo(player.pointee.graph,
-                                     outputNode,
-                                     nil,
-                                     &player.pointee.outputUnit),
-                     "AUGraphNodeInfo")
-    try throwIfError(AUGraphNodeInfo(player.pointee.graph,
-                                     speechNode,
-                                     nil,
-                                     &player.pointee.speechUnit),
-                     "AUGraphNodeInfo")
-    var mixerUnit: AudioUnit!
-    try throwIfError(AUGraphNodeInfo(player.pointee.graph,
-                                     mixerNode,
-                                     nil,
-                                     &mixerUnit),
-                     "AUGraphNodeInfo")
+    player.pointee.outputUnit = try player.pointee.graph.getNodeAU(node: outputNode)
+    player.pointee.speechUnit = try player.pointee.graph.getNodeAU(node: speechNode)
+    let mixerUnit = try player.pointee.graph.getNodeAU(node: mixerNode)
+
     // Set ASBD's here
-    var propertySize = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
     // Set stream format on input scope of bus 0 because of the render callback will be plug in at this scope
-    try throwIfError(AudioUnitSetProperty(player.pointee.outputUnit, // mixerUnit, //player.pointee.outputUnit,
-                                          kAudioUnitProperty_StreamFormat,
-                                          kAudioUnitScope_Input,
-                                          0,
-                                          &player.pointee.streamFormat,
-                                          propertySize),
-                     "set stream format on output unit")
+    try player.pointee.outputUnit.setABSD(absd: player.pointee.streamFormat, inputScope: true)
     // Set output stream format on speech unit and mixer unit to let stream format propagation happens
-    try throwIfError(AudioUnitSetProperty(mixerUnit, // player.pointee.speechUnit,  // mixerUnit,
-                                          kAudioUnitProperty_StreamFormat,
-                                          kAudioUnitScope_Input, // kAudioUnitScope_Output, // kAudioUnitScope_Input,
-                                          0,
-                                          &player.pointee.streamFormat,
-                                          propertySize),
-                     "set stream format on speech unit bus 0")
-    try throwIfError(AudioUnitSetProperty(mixerUnit,
-                                          kAudioUnitProperty_StreamFormat,
-                                          kAudioUnitScope_Output,
-                                          0,
-                                          &player.pointee.streamFormat,
-                                          propertySize),
-                     "set stream format on mixer unit bus 0")
-    
+    try mixerUnit.setABSD(absd: player.pointee.streamFormat, inputScope: true)
+    try mixerUnit.setABSD(absd: player.pointee.streamFormat, inputScope: false)
+
     // Connections
     // Mixer output scope / bus 0 to outputUnit input scope / bus 0
     // Mixer input  scope / bus 0 to render callback
     //  (from ringbuffer, which in turn is from inputUnit)
-    // Mixer input  scope / bus 1 to speech unit outpu scope / bus 0
+    // Mixer input  scope / bus 1 to speech unit output scope / bus 0
+    try player.pointee.graph.connectNodes(node1: mixerNode, bus1: 0, node2: outputNode, bus2: 0)
+    try player.pointee.graph.connectNodes(node1: speechNode, bus1: 0, node2: mixerNode, bus2: 1)
     
-    try throwIfError(AUGraphConnectNodeInput(player.pointee.graph,
-                                             mixerNode,
-                                             0,
-                                             outputNode,
-                                             0),
-                     "connecting mixer output(0) to outputNode(0)")
-    try throwIfError(AUGraphConnectNodeInput(player.pointee.graph,
-                                             speechNode,
-                                             0,
-                                             mixerNode,
-                                             1),
-                     "connecting speech synth output(0) to mixer input (1)")
-
-    var callbackStruct = AURenderCallbackStruct(inputProc: graphRenderProc, inputProcRefCon: player)
+    try mixerUnit.setRenderCallback(inputProc: graphRenderProc, inputProcRefCon: player)
     
-    try throwIfError(AudioUnitSetProperty(mixerUnit,
-                                          kAudioUnitProperty_SetRenderCallback,
-                                          kAudioUnitScope_Global,
-                                          0,
-                                          &callbackStruct,
-                                          UInt32(MemoryLayout<AURenderCallbackStruct>.size)),
-                     "Setting render callback on mixer unit")
     // CAShowFile(UnsafeMutableRawPointer(player.pointee.graph), stdout)
     
 /*
@@ -333,48 +208,28 @@ func createMyAUGraph(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
  */
 #else
     // Opening the graph opens all contained audio units but does not allocate any resources yet
-    try throwIfError(AUGraphOpen(player.pointee.graph), "AUGraphOpen")
-                     
+    try player.pointee.graph.open()
     // Get the reference to the AudioUnit object for the output graph node
-    try throwIfError(AUGraphNodeInfo(player.pointee.graph,
-                                     outputNode,
-                                     nil,
-                                     &player.pointee.outputUnit),
-                     "AUGraphNodeInfo")
+    player.pointee.outputUnit = try player.pointee.graph.getNodeAU(node: outputNode)
     
     // Set the stream format on the output unit's input scope
-    let propertySize = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
-    try throwIfError(AudioUnitSetProperty(player.pointee.outputUnit,
-                                          kAudioUnitProperty_StreamFormat,
-                                          kAudioUnitScope_Input,
-                                          0,
-                                          &player.pointee.streamFormat,
-                                          propertySize),
-                     "Set stream format on output unit")
-    
-    var callbackStruct = AURenderCallbackStruct(inputProc: graphRenderProc, inputProcRefCon: player)
-    
-    try throwIfError(AudioUnitSetProperty(player.pointee.outputUnit,
-                                          kAudioUnitProperty_SetRenderCallback,
-                                          kAudioUnitScope_Global,
-                                          0,
-                                          &callbackStruct,
-                                          UInt32(MemoryLayout<AURenderCallbackStruct>.size)),
-                     "Setting render callback on output unit")
+    try player.pointee.outputUnit.setABSD(absd: player.pointee.streamFormat, inputScope: true)
+
+    try player.pointee.outputUnit.setRenderCallback(inputProc: graphRenderProc, inputProcRefCon: player)
     
 #endif
     
     // force desired output soundcard
-    var outputDeviceID: AudioDeviceID = 78  // replace with actual, dynamic value
-    AudioUnitSetProperty(player.pointee.outputUnit,
-                         kAudioOutputUnitProperty_CurrentDevice,
-                         kAudioUnitScope_Global,
-                         0,
-                         &outputDeviceID,
-                         UInt32(MemoryLayout<AudioDeviceID>.size))
-    
+//    var outputDeviceID: AudioDeviceID = 78  // replace with actual, dynamic value
+//    AudioUnitSetProperty(player.pointee.outputUnit,
+//                         kAudioOutputUnitProperty_CurrentDevice,
+//                         kAudioUnitScope_Global,
+//                         0,
+//                         &outputDeviceID,
+//                         UInt32(MemoryLayout<AudioDeviceID>.size))
+
     // Now initialze the graph (causes resource to be allocated)
-    try throwIfError(AUGraphInitialize(player.pointee.graph), "AUGraphInitialize")
+    try player.pointee.graph.initialze()
     
     player.pointee.firstOutputSampleTime = -1
     print ("Bottom of CreateAUGraph()")
@@ -382,20 +237,8 @@ func createMyAUGraph(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
 
 #if PART_II
 func prepareSpeechAU(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
-    var chan: SpeechChannel?
-    var propsize = UInt32(MemoryLayout<SpeechChannelRecord>.size)
-    
-    try throwIfError(AudioUnitGetProperty(player.pointee.speechUnit,
-                                          kAudioUnitProperty_SpeechChannel,
-                                          kAudioUnitScope_Global,
-                                          0,
-                                          &chan,
-                                          &propsize),
-                     "AudioFileGetProperty[kAudioUnitProperty_SpeechChannel]")
-    
-    SpeakCFString(chan!,
-                  Settings.speakString,
-                  nil)
+    let chan = try player.pointee.speechUnit.getSpeechChannel()
+    SpeakCFString(chan, Settings.speakString, nil)
     print ("Bottom of prepareSpeechAU()")
 }
 #endif
@@ -420,8 +263,9 @@ func main() throws {
 #endif
         
     // Start playing
-    try throwIfError(AudioOutputUnitStart(player.inputUnit), "AudioOutputUnitStart")
-    try throwIfError(AUGraphStart(player.graph), "AUGraphStart")
+    try player.inputUnit.start()
+    try player.graph.start()
+    
     defer {
         AUGraphStop(player.graph)
     }
