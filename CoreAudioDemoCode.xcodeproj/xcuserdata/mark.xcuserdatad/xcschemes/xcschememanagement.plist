@@ -14,6 +14,11 @@
 			<key>orderHint</key>
 			<integer>12</integer>
 		</dict>
+		<key>CAAUGraphPlayThroughMEE.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>13</integer>
+		</dict>
 		<key>CAAudioUnitPlayer.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -77,6 +82,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>4D050A5927EE9A25008F2ACF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>4D11B59427E8B3B900A6ACC6</key>
 		<dict>
 			<key>primary</key>
@@ -108,6 +118,11 @@
 			<true/>
 		</dict>
 		<key>4D7820AF27DD807C00C8EFB7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4D8ADCBB27EE8FE600145DE0</key>
 		<dict>
 			<key>primary</key>
 			<true/>

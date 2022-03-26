@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D050A5727EE980B008F2ACF /* CAAUGraphPlayThrough.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC93E0E27EA6F2E000DD987 /* CAAUGraphPlayThrough.swift */; };
+		4D050A5B27EE9A25008F2ACF /* CAUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7235E327EDF94F00ABDF4F /* CAUtility.swift */; };
+		4D050A5C27EE9A25008F2ACF /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
+		4D050A5E27EE9A25008F2ACF /* CARingBufferWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4D4C53B227EBC8DB007499A5 /* CARingBufferWrapper.mm */; };
+		4D050A5F27EE9A25008F2ACF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
+		4D050A6027EE9A25008F2ACF /* CARingBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4C53AE27EBC8DB007499A5 /* CARingBuffer.cpp */; };
+		4D050A6827EE9A9D008F2ACF /* CAAUGraphPlayThroughMEE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D050A6727EE9A9D008F2ACF /* CAAUGraphPlayThroughMEE.swift */; };
 		4D11B59E27E8B41300A6ACC6 /* CAAudioUnitSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D11B59C27E8B3DD00A6ACC6 /* CAAudioUnitSpeech.swift */; };
 		4D11B59F27E8B41A00A6ACC6 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4D11B5A027E8B41F00A6ACC6 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
@@ -27,11 +34,12 @@
 		4D63D1B027E78141006E2BB8 /* CAConverterExtended.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D63D1AF27E78141006E2BB8 /* CAConverterExtended.swift */; };
 		4D63D1B127E781EE006E2BB8 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4D63D1B227E781F2006E2BB8 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
+		4D7235E427EDF94F00ABDF4F /* CAUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7235E327EDF94F00ABDF4F /* CAUtility.swift */; };
+		4D7235E527EDF94F00ABDF4F /* CAUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7235E327EDF94F00ABDF4F /* CAUtility.swift */; };
 		4D7820BB27DD81C500C8EFB7 /* CAMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7820BA27DD81C500C8EFB7 /* CAMetadata.swift */; };
 		4DABA08C27E0B8FF004E1328 /* CAPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DABA08B27E0B8FF004E1328 /* CAPlayer.swift */; };
 		4DABA08D27E0B940004E1328 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
 		4DABA08E27E0B953004E1328 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
-		4DAD46D727ED0BB400EE7663 /* CAAUGraphPlayThrough.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC93E0E27EA6F2E000DD987 /* CAAUGraphPlayThrough.swift */; };
 		4DAD46D827ED0BB400EE7663 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
 		4DAD46D927ED0BB400EE7663 /* CARingBufferWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4D4C53B227EBC8DB007499A5 /* CARingBufferWrapper.mm */; };
 		4DAD46DA27ED0BB400EE7663 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
@@ -53,6 +61,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		4D050A6227EE9A25008F2ACF /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		4D11B59327E8B3B900A6ACC6 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -173,6 +190,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D050A6627EE9A25008F2ACF /* CAAUGraphPlayThroughMEE */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAAUGraphPlayThroughMEE; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D050A6727EE9A9D008F2ACF /* CAAUGraphPlayThroughMEE.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAAUGraphPlayThroughMEE.swift; sourceTree = "<group>"; };
 		4D0DD45927E21428002E9EBB /* CAPlayer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CAPlayer.entitlements; sourceTree = "<group>"; };
 		4D11B59527E8B3B900A6ACC6 /* CAAudioUnitSpeech */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAAudioUnitSpeech; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D11B59C27E8B3DD00A6ACC6 /* CAAudioUnitSpeech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAAudioUnitSpeech.swift; sourceTree = "<group>"; };
@@ -193,10 +212,13 @@
 		4D530CCC27E928C20076CF16 /* CACustomRender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CACustomRender.swift; sourceTree = "<group>"; };
 		4D63D1A827E7811E006E2BB8 /* CAConverterExtended */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAConverterExtended; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D63D1AF27E78141006E2BB8 /* CAConverterExtended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAConverterExtended.swift; sourceTree = "<group>"; };
+		4D7235E327EDF94F00ABDF4F /* CAUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAUtility.swift; sourceTree = "<group>"; };
 		4D7820B027DD807C00C8EFB7 /* CAMetadata */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAMetadata; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D7820BA27DD81C500C8EFB7 /* CAMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAMetadata.swift; sourceTree = "<group>"; };
 		4D7820BC27DD8C9400C8EFB7 /* CAToneFileGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAToneFileGenerator.swift; sourceTree = "<group>"; };
 		4D83F4EA27E81A01008A8D9E /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
+		4D8ADCC927EE911B00145DE0 /* CAAUGraphPlayThroughMEERelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CAAUGraphPlayThroughMEERelease.entitlements; sourceTree = "<group>"; };
+		4D8ADCCA27EE912400145DE0 /* CAAUGraphPlayThroughMEE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CAAUGraphPlayThroughMEE.entitlements; sourceTree = "<group>"; };
 		4DABA07D27E0B83B004E1328 /* CARecorder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CARecorder.entitlements; sourceTree = "<group>"; };
 		4DABA07E27E0B841004E1328 /* CAMetadata.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CAMetadata.entitlements; sourceTree = "<group>"; };
 		4DABA07F27E0B846004E1328 /* CAToneFileGenerator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CAToneFileGenerator.entitlements; sourceTree = "<group>"; };
@@ -218,6 +240,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4D050A6127EE9A25008F2ACF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4D11B59227E8B3B900A6ACC6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -328,10 +357,12 @@
 		4D7820A727DD807C00C8EFB7 = {
 			isa = PBXGroup;
 			children = (
-				4DAD46D427ECFD8D00EE7663 /* CAAUGraphPlayThroughDebug.entitlements */,
-				4DAD46D327ECFD6D00EE7663 /* CAAUGraphPlayThroughRelease.entitlements */,
 				4D83F4EA27E81A01008A8D9E /* readme.md */,
 				4DBA263627E81C48006E99DE /* BookCover.jpg */,
+				4D8ADCCA27EE912400145DE0 /* CAAUGraphPlayThroughMEE.entitlements */,
+				4D8ADCC927EE911B00145DE0 /* CAAUGraphPlayThroughMEERelease.entitlements */,
+				4DAD46D427ECFD8D00EE7663 /* CAAUGraphPlayThroughDebug.entitlements */,
+				4DAD46D327ECFD6D00EE7663 /* CAAUGraphPlayThroughRelease.entitlements */,
 				4D0DD45927E21428002E9EBB /* CAPlayer.entitlements */,
 				4DABA07F27E0B846004E1328 /* CAToneFileGenerator.entitlements */,
 				4DABA07E27E0B841004E1328 /* CAMetadata.entitlements */,
@@ -359,6 +390,7 @@
 				4D530CC527E928980076CF16 /* CACustomRender */,
 				4DC93E0727EA6EDF000DD987 /* CAAUGraphPlayThrough */,
 				4DAD46E127ED0BB400EE7663 /* CAAUGraphPlayThrough2 */,
+				4D050A6627EE9A25008F2ACF /* CAAUGraphPlayThroughMEE */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -378,6 +410,7 @@
 				4D11B59C27E8B3DD00A6ACC6 /* CAAudioUnitSpeech.swift */,
 				4D530CCC27E928C20076CF16 /* CACustomRender.swift */,
 				4DC93E0E27EA6F2E000DD987 /* CAAUGraphPlayThrough.swift */,
+				4D050A6727EE9A9D008F2ACF /* CAAUGraphPlayThroughMEE.swift */,
 			);
 			path = CoreAudioDemoCode;
 			sourceTree = "<group>";
@@ -396,6 +429,7 @@
 				4D45C3FE27DE1C29004E02C7 /* main.swift */,
 				4D1E1ABC27DECB2D0052CB16 /* NCO.swift */,
 				4DE488EE27DF988C003543CB /* CheckError.swift */,
+				4D7235E327EDF94F00ABDF4F /* CAUtility.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -403,6 +437,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4D050A5927EE9A25008F2ACF /* CAAUGraphPlayThroughMEE */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D050A6327EE9A25008F2ACF /* Build configuration list for PBXNativeTarget "CAAUGraphPlayThroughMEE" */;
+			buildPhases = (
+				4D050A5A27EE9A25008F2ACF /* Sources */,
+				4D050A6127EE9A25008F2ACF /* Frameworks */,
+				4D050A6227EE9A25008F2ACF /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CAAUGraphPlayThroughMEE;
+			packageProductDependencies = (
+			);
+			productName = CAAUGraphPlayThrough;
+			productReference = 4D050A6627EE9A25008F2ACF /* CAAUGraphPlayThroughMEE */;
+			productType = "com.apple.product-type.tool";
+		};
 		4D11B59427E8B3B900A6ACC6 /* CAAudioUnitSpeech */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4D11B59B27E8B3B900A6ACC6 /* Build configuration list for PBXNativeTarget "CAAudioUnitSpeech" */;
@@ -696,11 +749,25 @@
 				4D530CC427E928980076CF16 /* CACustomRender */,
 				4DC93E0627EA6EDF000DD987 /* CAAUGraphPlayThrough */,
 				4DAD46D527ED0BB400EE7663 /* CAAUGraphPlayThrough2 */,
+				4D050A5927EE9A25008F2ACF /* CAAUGraphPlayThroughMEE */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4D050A5A27EE9A25008F2ACF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D050A5B27EE9A25008F2ACF /* CAUtility.swift in Sources */,
+				4D050A5C27EE9A25008F2ACF /* CheckError.swift in Sources */,
+				4D050A5E27EE9A25008F2ACF /* CARingBufferWrapper.mm in Sources */,
+				4D050A6827EE9A9D008F2ACF /* CAAUGraphPlayThroughMEE.swift in Sources */,
+				4D050A5F27EE9A25008F2ACF /* main.swift in Sources */,
+				4D050A6027EE9A25008F2ACF /* CARingBuffer.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4D11B59127E8B3B900A6ACC6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -785,8 +852,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4DAD46D727ED0BB400EE7663 /* CAAUGraphPlayThrough.swift in Sources */,
+				4D7235E527EDF94F00ABDF4F /* CAUtility.swift in Sources */,
 				4DAD46D827ED0BB400EE7663 /* CheckError.swift in Sources */,
+				4D050A5727EE980B008F2ACF /* CAAUGraphPlayThrough.swift in Sources */,
 				4DAD46D927ED0BB400EE7663 /* CARingBufferWrapper.mm in Sources */,
 				4DAD46DA27ED0BB400EE7663 /* main.swift in Sources */,
 				4DAD46DB27ED0BB400EE7663 /* CARingBuffer.cpp in Sources */,
@@ -817,6 +885,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D7235E427EDF94F00ABDF4F /* CAUtility.swift in Sources */,
 				4DC93E0F27EA6F2E000DD987 /* CAAUGraphPlayThrough.swift in Sources */,
 				4DC93E1027EA6F4D000DD987 /* CheckError.swift in Sources */,
 				4D4C53B427EBC8DB007499A5 /* CARingBufferWrapper.mm in Sources */,
@@ -838,6 +907,51 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		4D050A6427EE9A25008F2ACF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = CAAUGraphPlayThroughDebug.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 566Y4FXUU7;
+				ENABLE_HARDENED_RUNTIME = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS[arch=*]" = PART_II;
+				SWIFT_OBJC_BRIDGING_HEADER = "CoreAudioDemoCode/Utility/CARingBuffer/CAAUGraphPlayThrough-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		4D050A6527EE9A25008F2ACF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = CAAUGraphPlayThroughRelease.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 566Y4FXUU7;
+				ENABLE_HARDENED_RUNTIME = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS[arch=*]" = PART_II;
+				SWIFT_OBJC_BRIDGING_HEADER = "CoreAudioDemoCode/Utility/CARingBuffer/CAAUGraphPlayThrough-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		4D11B59927E8B3B900A6ACC6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1366,6 +1480,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4D050A6327EE9A25008F2ACF /* Build configuration list for PBXNativeTarget "CAAUGraphPlayThroughMEE" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D050A6427EE9A25008F2ACF /* Debug */,
+				4D050A6527EE9A25008F2ACF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4D11B59B27E8B3B900A6ACC6 /* Build configuration list for PBXNativeTarget "CAAudioUnitSpeech" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
