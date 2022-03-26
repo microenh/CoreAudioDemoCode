@@ -67,11 +67,13 @@ func convert(mySettings: inout MyAudioConverterSettings) {
         }
         packetsPerBuffer = outputBufferSize / sizePerPacket
         mySettings.inputFilePacketDescriptions = .allocate(capacity: Int(packetsPerBuffer))
-        defer {
-            free(mySettings.inputFilePacketDescriptions)
-        }
     } else {
         packetsPerBuffer = outputBufferSize / sizePerPacket
+    }
+    defer {
+        if (mySettings.inputFilePacketDescriptions != nil) {
+            free(mySettings.inputFilePacketDescriptions)
+        }
     }
     
     let outputBuffer /* : UnsafeMutableRawPointer? */ = malloc(Int(outputBufferSize))

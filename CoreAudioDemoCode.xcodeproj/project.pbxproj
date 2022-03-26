@@ -37,6 +37,7 @@
 		4D7235E427EDF94F00ABDF4F /* CAUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7235E327EDF94F00ABDF4F /* CAUtility.swift */; };
 		4D7235E527EDF94F00ABDF4F /* CAUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7235E327EDF94F00ABDF4F /* CAUtility.swift */; };
 		4D7820BB27DD81C500C8EFB7 /* CAMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7820BA27DD81C500C8EFB7 /* CAMetadata.swift */; };
+		4D85AB8427EF344E00BF3A25 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
 		4DABA08C27E0B8FF004E1328 /* CAPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DABA08B27E0B8FF004E1328 /* CAPlayer.swift */; };
 		4DABA08D27E0B940004E1328 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
 		4DABA08E27E0B953004E1328 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
@@ -835,6 +836,7 @@
 			files = (
 				4D45C3FF27DE1C29004E02C7 /* main.swift in Sources */,
 				4D7820BB27DD81C500C8EFB7 /* CAMetadata.swift in Sources */,
+				4D85AB8427EF344E00BF3A25 /* CheckError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
