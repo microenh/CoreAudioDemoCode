@@ -119,3 +119,68 @@ struct AudioDeviceFinder {
         }
     }
 }
+
+extension AudioComponentDescription {
+    init(componentType: OSType, componentSubType: OSType) {
+        self.init(componentType: componentType,
+             componentSubType: componentSubType,
+             componentManufacturer: kAudioUnitManufacturer_Apple,
+             componentFlags: 0,
+             componentFlagsMask: 0)
+    }
+}
+
+extension AudioComponent {
+    static func find(componentType: OSType, componentSubType: OSType) throws -> AudioComponent {
+        let cd = AudioComponentDescription(componentType: componentType,
+                                           componentSubType: componentSubType,
+                                           componentManufacturer: kAudioUnitManufacturer_Apple,
+                                           componentFlags: 0,
+                                           componentFlagsMask: 0)
+        return try find(cd: cd)
+    }
+    static func find(cd: AudioComponentDescription) throws -> AudioComponent {
+        var cdp = cd
+        guard let comp = AudioComponentFindNext(nil, &cdp) else {
+            throw CAError.componentNotFound
+        }
+        return comp
+    }
+}
+
+extension AudioUnit {
+    func setIO(inputScope: Bool, inputBus: Bool, enable: Bool) throws {
+        var enableFlag: UInt32 = enable ? 1 : 0
+        let osStatus = AudioUnitSetProperty(self,
+                                            kAudioOutputUnitProperty_EnableIO,
+                                            inputScope ? kAudioUnitScope_Input : kAudioUnitScope_Output,
+                                            inputBus ? AudioUnitScope(1) : AudioUnitScope(0),
+                                            &enableFlag,
+                                            UInt32(MemoryLayout<UInt32>.size))
+        guard osStatus == noErr else {
+            throw CAError.settingIO(osStatus)
+        }
+    }
+}
+
+extension AudioObjectID {
+    static func find(mSelector: AudioObjectPropertySelector,
+              mScope: AudioObjectPropertyScope = kAudioObjectPropertyScopeGlobal,
+              mElement: AudioObjectPropertyElement = kAudioObjectPropertyElementMain) throws -> AudioObjectID {
+        var device = kAudioObjectUnknown
+        var deviceProperty = AudioObjectPropertyAddress(mSelector: mSelector,
+                                                        mScope: mScope,
+                                                        mElement: mElement)
+        var propertySize = UInt32(MemoryLayout<AudioDeviceID>.size)
+        let osStatus = AudioObjectGetPropertyData(UInt32(kAudioObjectSystemObject),
+                                                  &deviceProperty,
+                                                  0,
+                                                  nil,
+                                                  &propertySize,
+                                                  &device)
+        guard osStatus == noErr else {
+            throw CAError.findDevice(osStatus)
+        }
+        return device
+    }
+}

@@ -9,6 +9,9 @@ import Foundation
 
 enum CAError: Error {
     case errorString(OSStatus, String)
+    case componentNotFound
+    case settingIO(OSStatus)
+    case findDevice(OSStatus)
 }
 
 // convert Apple 32-bit int to 4 characters if valid

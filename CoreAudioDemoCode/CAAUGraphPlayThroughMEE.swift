@@ -9,7 +9,7 @@ import AVFoundation
 
 #if PART_II
 struct Settings {
-    static let speakString = "Please purchase as many copies of our Core Audio book as you possibly can" as CFString
+    static let speakString = "The program is running" as CFString
 }
 #endif
 
@@ -99,58 +99,24 @@ func createInputUnit(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
     // AudioDeviceFinder.findDevices()
     // exit(0)
     // Generate a description that matches audio HAL
-    var inputcd = AudioComponentDescription(componentType: kAudioUnitType_Output,
-                                            componentSubType: kAudioUnitSubType_HALOutput,
-                                            componentManufacturer: kAudioUnitManufacturer_Apple,
-                                            componentFlags: 0,
-                                            componentFlagsMask: 0)
-
-    let comp = AudioComponentFindNext(nil, &inputcd)
-    guard let comp = comp else {
-        print ("Can't get output unit")
-        exit (-1)
-    }
+    let comp = try AudioComponent.find(componentType: kAudioUnitType_Output,
+                                       componentSubType: kAudioUnitSubType_HALOutput)
     try throwIfError(AudioComponentInstanceNew(comp, &player.pointee.inputUnit),
                      "open component for inputUnit")
     
     // enable I/O
-    var disableFlag = UInt32(0)
-    var enableFlag = UInt32(1)
-    let outputBus = AudioUnitScope(0)
-    let inputBus = AudioUnitScope(1)
-    try throwIfError(AudioUnitSetProperty(player.pointee.inputUnit,
-                                          kAudioOutputUnitProperty_EnableIO,
-                                          kAudioUnitScope_Input,
-                                          inputBus,
-                                          &enableFlag,
-                                          UInt32(MemoryLayout<UInt32>.size)),
-                     "enable input on I/O unit")
-    
-    try throwIfError(AudioUnitSetProperty(player.pointee.inputUnit,
-                                          kAudioOutputUnitProperty_EnableIO,
-                                          kAudioUnitScope_Output,
-                                          outputBus,
-                                          &disableFlag,
-                                          UInt32(MemoryLayout<UInt32>.size)),
-                     "enable output on I/O unit")
+    try player.pointee.inputUnit.setIO(inputScope: true, inputBus: true, enable: true)
+    try player.pointee.inputUnit.setIO(inputScope: false, inputBus: false, enable: false)
 
-    var propertySize = UInt32(MemoryLayout<AudioDeviceID>.size)
-    var defaultDevice = kAudioObjectUnknown
-    var defaultDeviceProperty = AudioObjectPropertyAddress(mSelector: kAudioHardwarePropertyDefaultInputDevice,
-                                                           mScope: kAudioObjectPropertyScopeGlobal,
-                                                           mElement: kAudioObjectPropertyElementMain)
-    try throwIfError(AudioObjectGetPropertyData(UInt32(kAudioObjectSystemObject),
-                                                &defaultDeviceProperty,
-                                                0,
-                                                nil,
-                                                &propertySize,
-                                                &defaultDevice),
-                     "get default input device")
+    var defaultDevice = try AudioObjectID.find(mSelector: kAudioHardwarePropertyDefaultInputDevice)
     
     // manually override input device
     // defaultDevice = 57
     // print (defaultDevice)
-    
+    let outputBus = AudioUnitScope(0)
+    let inputBus = AudioUnitScope(1)
+    var propertySize = UInt32(0)
+
     try throwIfError(AudioUnitSetProperty(player.pointee.inputUnit,
                                           kAudioOutputUnitProperty_CurrentDevice,
                                           kAudioUnitScope_Global,
@@ -247,16 +213,10 @@ func createMyAUGraph(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
     
     // Generate a description that matched default output
     var outputcd = AudioComponentDescription(componentType: kAudioUnitType_Output,
-                                             componentSubType: kAudioUnitSubType_DefaultOutput,
-                                             componentManufacturer: kAudioUnitManufacturer_Apple,
-                                             componentFlags: 0,
-                                             componentFlagsMask: 0)
-    let comp = AudioComponentFindNext(nil, &outputcd)
+                                             componentSubType: kAudioUnitSubType_DefaultOutput)
+    // check if component exists
+    // let _ = try AudioComponent.find(cd: outputcd)
 
-    guard let _ = comp else {
-        print ("can't get output unit")
-        exit (-1)
-    }
     // Adds a node with above description to graph
     var outputNode = AUNode()
     
@@ -268,10 +228,7 @@ func createMyAUGraph(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
 #if PART_II
     // Add a mixer to the graph
     var mixercd = AudioComponentDescription(componentType: kAudioUnitType_Mixer,
-                                            componentSubType: kAudioUnitSubType_StereoMixer,
-                                            componentManufacturer: kAudioUnitManufacturer_Apple,
-                                            componentFlags: 0,
-                                            componentFlagsMask: 0)
+                                            componentSubType: kAudioUnitSubType_StereoMixer)
     var mixerNode: AUNode = 0
     try throwIfError(AUGraphAddNode(player.pointee.graph,
                                     &mixercd,
@@ -280,10 +237,7 @@ func createMyAUGraph(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
     
     // Add the speech synthesizer to the graph
     var speechcd = AudioComponentDescription(componentType: kAudioUnitType_Generator,
-                                             componentSubType: kAudioUnitSubType_SpeechSynthesis,
-                                             componentManufacturer: kAudioUnitManufacturer_Apple,
-                                             componentFlags: 0,
-                                             componentFlagsMask: 0)
+                                             componentSubType: kAudioUnitSubType_SpeechSynthesis)
     var speechNode: AUNode = 0
     try throwIfError(AUGraphAddNode(player.pointee.graph,
                                     &speechcd,
