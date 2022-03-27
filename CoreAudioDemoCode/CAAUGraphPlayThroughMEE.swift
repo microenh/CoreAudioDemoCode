@@ -97,7 +97,6 @@ func createInputUnit(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
     // Ger input unit from HAL
     player.pointee.inputUnit = try AudioUnit.new(componentType: kAudioUnitType_Output,
                                                  componentSubType: kAudioUnitSubType_HALOutput)
-    
     // enable I/O
     try player.pointee.inputUnit.setIO(inputScope: true, inputBus: true, enable: true)
     try player.pointee.inputUnit.setIO(inputScope: false, inputBus: false, enable: false)
@@ -111,14 +110,11 @@ func createInputUnit(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
     
     try player.pointee.inputUnit.setCurrentDevice(device: defaultDevice, inputBus: false)
         
-    try player.pointee.streamFormat = player.pointee.inputUnit.getABSD(inputScope: false,
-                                                                       inputBus: true)
-    
+    try player.pointee.streamFormat = player.pointee.inputUnit.getABSD(inputScope: false, inputBus: true)
     let deviceFormat = try player.pointee.inputUnit.getABSD(inputScope: true, inputBus: true)
-    print ("device: \(deviceFormat)")
-    print ("stream: \(player.pointee.streamFormat)")
     
     player.pointee.streamFormat.mSampleRate = deviceFormat.mSampleRate
+
     try player.pointee.inputUnit.setABSD(absd: player.pointee.streamFormat, inputScope: false, inputBus: true)
     
     let bufferSizeFrames = try player.pointee.inputUnit.getBufferFrameSize()

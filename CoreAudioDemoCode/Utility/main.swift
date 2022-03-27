@@ -7,14 +7,12 @@
 
 import Foundation
 
-fileprivate func printError(_ statusCode: OSStatus, _ operation: String) {
-    print("Error \(statusCode.appleString) \(operation)")
-}
-
 do {
     try main()
 } catch CAError.errorString(let errorCode, let operation) {
     print ("Error: \(errorCode) on \(operation)")
+} catch CAError.componentNotFound {
+    print ("component not found")
 } catch CAError.settingIO(let statusCode) {
     printError(statusCode, "setting IO")
 } catch CAError.findDevice(let statusCode) {
@@ -54,8 +52,8 @@ do {
 } catch CAError.graphStart(let statusCode) {
     printError(statusCode, "start graph")
 // --
-} catch is CAError {
-    print ("Unhandled CAError")
+//} catch is CAError {
+//    print ("Unhandled CAError")
 } catch {
     print ("Unhandled error \(error)")
 }

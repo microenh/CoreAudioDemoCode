@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		4D050A5727EE980B008F2ACF /* CAAUGraphPlayThrough.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC93E0E27EA6F2E000DD987 /* CAAUGraphPlayThrough.swift */; };
-		4D050A5B27EE9A25008F2ACF /* CAUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7235E327EDF94F00ABDF4F /* CAUtility.swift */; };
+		4D050A5B27EE9A25008F2ACF /* AudioDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7235E327EDF94F00ABDF4F /* AudioDevices.swift */; };
 		4D050A5C27EE9A25008F2ACF /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
 		4D050A5E27EE9A25008F2ACF /* CARingBufferWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4D4C53B227EBC8DB007499A5 /* CARingBufferWrapper.mm */; };
 		4D050A5F27EE9A25008F2ACF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4D050A6027EE9A25008F2ACF /* CARingBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4C53AE27EBC8DB007499A5 /* CARingBuffer.cpp */; };
 		4D050A6827EE9A9D008F2ACF /* CAAUGraphPlayThroughMEE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D050A6727EE9A9D008F2ACF /* CAAUGraphPlayThroughMEE.swift */; };
-		4D07883327EFA6480091AA6B /* CAUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7235E327EDF94F00ABDF4F /* CAUtility.swift */; };
+		4D07883327EFA6480091AA6B /* AudioDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7235E327EDF94F00ABDF4F /* AudioDevices.swift */; };
 		4D07883427EFA6480091AA6B /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
 		4D07883527EFA6480091AA6B /* CARingBufferWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4D4C53B227EBC8DB007499A5 /* CARingBufferWrapper.mm */; };
 		4D07883627EFA6480091AA6B /* CAAUGraphPlayThroughMEE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D050A6727EE9A9D008F2ACF /* CAAUGraphPlayThroughMEE.swift */; };
@@ -34,15 +34,25 @@
 		4D45C40027DE1C29004E02C7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4D4C53B327EBC8DB007499A5 /* CARingBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4C53AE27EBC8DB007499A5 /* CARingBuffer.cpp */; };
 		4D4C53B427EBC8DB007499A5 /* CARingBufferWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4D4C53B227EBC8DB007499A5 /* CARingBufferWrapper.mm */; };
+		4D4EA5C827EFF06900F750A0 /* AudioObjectID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4EA5C627EFF04100F750A0 /* AudioObjectID.swift */; };
+		4D4EA5C927EFF06A00F750A0 /* AudioObjectID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4EA5C627EFF04100F750A0 /* AudioObjectID.swift */; };
+		4D4EA5CC27EFF0B400F750A0 /* AudioUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4EA5CA27EFF09800F750A0 /* AudioUnit.swift */; };
+		4D4EA5CD27EFF0B400F750A0 /* AudioUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4EA5CA27EFF09800F750A0 /* AudioUnit.swift */; };
+		4D4EA5D027EFF0D300F750A0 /* AUGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4EA5CE27EFF0CF00F750A0 /* AUGraph.swift */; };
+		4D4EA5D127EFF0D300F750A0 /* AUGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4EA5CE27EFF0CF00F750A0 /* AUGraph.swift */; };
+		4D4EA5D427EFF10400F750A0 /* AudioComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4EA5D227EFF10200F750A0 /* AudioComponent.swift */; };
+		4D4EA5D527EFF10500F750A0 /* AudioComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4EA5D227EFF10200F750A0 /* AudioComponent.swift */; };
+		4D4EA5D727EFF15500F750A0 /* AudioComponentExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4EA5D627EFF15500F750A0 /* AudioComponentExtension.swift */; };
+		4D4EA5D827EFF15500F750A0 /* AudioComponentExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4EA5D627EFF15500F750A0 /* AudioComponentExtension.swift */; };
+		4D4EA5D927EFF1FB00F750A0 /* CAMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7820BA27DD81C500C8EFB7 /* CAMetadata.swift */; };
 		4D530CCF27E928CC0076CF16 /* CACustomRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D530CCC27E928C20076CF16 /* CACustomRender.swift */; };
 		4D530CD027E928D40076CF16 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4D530CD127E928D80076CF16 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
 		4D63D1B027E78141006E2BB8 /* CAConverterExtended.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D63D1AF27E78141006E2BB8 /* CAConverterExtended.swift */; };
 		4D63D1B127E781EE006E2BB8 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4D63D1B227E781F2006E2BB8 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
-		4D7235E427EDF94F00ABDF4F /* CAUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7235E327EDF94F00ABDF4F /* CAUtility.swift */; };
-		4D7235E527EDF94F00ABDF4F /* CAUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7235E327EDF94F00ABDF4F /* CAUtility.swift */; };
-		4D7820BB27DD81C500C8EFB7 /* CAMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7820BA27DD81C500C8EFB7 /* CAMetadata.swift */; };
+		4D7235E427EDF94F00ABDF4F /* AudioDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7235E327EDF94F00ABDF4F /* AudioDevices.swift */; };
+		4D7235E527EDF94F00ABDF4F /* AudioDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7235E327EDF94F00ABDF4F /* AudioDevices.swift */; };
 		4D85AB8427EF344E00BF3A25 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
 		4DABA08C27E0B8FF004E1328 /* CAPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DABA08B27E0B8FF004E1328 /* CAPlayer.swift */; };
 		4DABA08D27E0B940004E1328 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
@@ -225,11 +235,16 @@
 		4D4C53B027EBC8DB007499A5 /* CARingBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARingBuffer.h; sourceTree = "<group>"; };
 		4D4C53B127EBC8DB007499A5 /* CARingBufferMisc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARingBufferMisc.h; sourceTree = "<group>"; };
 		4D4C53B227EBC8DB007499A5 /* CARingBufferWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CARingBufferWrapper.mm; sourceTree = "<group>"; };
+		4D4EA5C627EFF04100F750A0 /* AudioObjectID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioObjectID.swift; sourceTree = "<group>"; };
+		4D4EA5CA27EFF09800F750A0 /* AudioUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnit.swift; sourceTree = "<group>"; };
+		4D4EA5CE27EFF0CF00F750A0 /* AUGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AUGraph.swift; sourceTree = "<group>"; };
+		4D4EA5D227EFF10200F750A0 /* AudioComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioComponent.swift; sourceTree = "<group>"; };
+		4D4EA5D627EFF15500F750A0 /* AudioComponentExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioComponentExtension.swift; sourceTree = "<group>"; };
 		4D530CC527E928980076CF16 /* CACustomRender */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CACustomRender; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D530CCC27E928C20076CF16 /* CACustomRender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CACustomRender.swift; sourceTree = "<group>"; };
 		4D63D1A827E7811E006E2BB8 /* CAConverterExtended */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAConverterExtended; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D63D1AF27E78141006E2BB8 /* CAConverterExtended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAConverterExtended.swift; sourceTree = "<group>"; };
-		4D7235E327EDF94F00ABDF4F /* CAUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAUtility.swift; sourceTree = "<group>"; };
+		4D7235E327EDF94F00ABDF4F /* AudioDevices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevices.swift; sourceTree = "<group>"; };
 		4D7820B027DD807C00C8EFB7 /* CAMetadata */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAMetadata; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D7820BA27DD81C500C8EFB7 /* CAMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAMetadata.swift; sourceTree = "<group>"; };
 		4D7820BC27DD8C9400C8EFB7 /* CAToneFileGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAToneFileGenerator.swift; sourceTree = "<group>"; };
@@ -378,6 +393,18 @@
 			path = CARingBuffer;
 			sourceTree = "<group>";
 		};
+		4D4EA5C527EFF01F00F750A0 /* CAExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				4D4EA5C627EFF04100F750A0 /* AudioObjectID.swift */,
+				4D4EA5CA27EFF09800F750A0 /* AudioUnit.swift */,
+				4D4EA5CE27EFF0CF00F750A0 /* AUGraph.swift */,
+				4D4EA5D227EFF10200F750A0 /* AudioComponent.swift */,
+				4D4EA5D627EFF15500F750A0 /* AudioComponentExtension.swift */,
+			);
+			path = CAExtensions;
+			sourceTree = "<group>";
+		};
 		4D7820A727DD807C00C8EFB7 = {
 			isa = PBXGroup;
 			children = (
@@ -450,11 +477,12 @@
 		4DE488EC27DF9839003543CB /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				4D4EA5C527EFF01F00F750A0 /* CAExtensions */,
 				4D4C53AC27EBC8B8007499A5 /* CARingBuffer */,
 				4D45C3FE27DE1C29004E02C7 /* main.swift */,
 				4D1E1ABC27DECB2D0052CB16 /* NCO.swift */,
 				4DE488EE27DF988C003543CB /* CheckError.swift */,
-				4D7235E327EDF94F00ABDF4F /* CAUtility.swift */,
+				4D7235E327EDF94F00ABDF4F /* AudioDevices.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -804,12 +832,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D050A5B27EE9A25008F2ACF /* CAUtility.swift in Sources */,
+				4D4EA5D027EFF0D300F750A0 /* AUGraph.swift in Sources */,
+				4D050A5B27EE9A25008F2ACF /* AudioDevices.swift in Sources */,
 				4D050A5C27EE9A25008F2ACF /* CheckError.swift in Sources */,
 				4D050A5E27EE9A25008F2ACF /* CARingBufferWrapper.mm in Sources */,
+				4D4EA5D427EFF10400F750A0 /* AudioComponent.swift in Sources */,
 				4D050A6827EE9A9D008F2ACF /* CAAUGraphPlayThroughMEE.swift in Sources */,
+				4D4EA5CC27EFF0B400F750A0 /* AudioUnit.swift in Sources */,
 				4D050A5F27EE9A25008F2ACF /* main.swift in Sources */,
+				4D4EA5C927EFF06A00F750A0 /* AudioObjectID.swift in Sources */,
 				4D050A6027EE9A25008F2ACF /* CARingBuffer.cpp in Sources */,
+				4D4EA5D727EFF15500F750A0 /* AudioComponentExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -817,12 +850,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D07883327EFA6480091AA6B /* CAUtility.swift in Sources */,
+				4D4EA5D127EFF0D300F750A0 /* AUGraph.swift in Sources */,
+				4D07883327EFA6480091AA6B /* AudioDevices.swift in Sources */,
 				4D07883427EFA6480091AA6B /* CheckError.swift in Sources */,
 				4D07883527EFA6480091AA6B /* CARingBufferWrapper.mm in Sources */,
+				4D4EA5D527EFF10500F750A0 /* AudioComponent.swift in Sources */,
 				4D07883627EFA6480091AA6B /* CAAUGraphPlayThroughMEE.swift in Sources */,
+				4D4EA5CD27EFF0B400F750A0 /* AudioUnit.swift in Sources */,
 				4D07883727EFA6480091AA6B /* main.swift in Sources */,
+				4D4EA5C827EFF06900F750A0 /* AudioObjectID.swift in Sources */,
 				4D07883827EFA6480091AA6B /* CARingBuffer.cpp in Sources */,
+				4D4EA5D827EFF15500F750A0 /* AudioComponentExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -892,7 +930,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D45C3FF27DE1C29004E02C7 /* main.swift in Sources */,
-				4D7820BB27DD81C500C8EFB7 /* CAMetadata.swift in Sources */,
+				4D4EA5D927EFF1FB00F750A0 /* CAMetadata.swift in Sources */,
 				4D85AB8427EF344E00BF3A25 /* CheckError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -911,7 +949,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D7235E527EDF94F00ABDF4F /* CAUtility.swift in Sources */,
+				4D7235E527EDF94F00ABDF4F /* AudioDevices.swift in Sources */,
 				4DAD46D827ED0BB400EE7663 /* CheckError.swift in Sources */,
 				4D050A5727EE980B008F2ACF /* CAAUGraphPlayThrough.swift in Sources */,
 				4DAD46D927ED0BB400EE7663 /* CARingBufferWrapper.mm in Sources */,
@@ -944,7 +982,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D7235E427EDF94F00ABDF4F /* CAUtility.swift in Sources */,
+				4D7235E427EDF94F00ABDF4F /* AudioDevices.swift in Sources */,
 				4DC93E0F27EA6F2E000DD987 /* CAAUGraphPlayThrough.swift in Sources */,
 				4DC93E1027EA6F4D000DD987 /* CheckError.swift in Sources */,
 				4D4C53B427EBC8DB007499A5 /* CARingBufferWrapper.mm in Sources */,

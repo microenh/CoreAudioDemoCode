@@ -29,6 +29,53 @@ enum CAError: Error {
     case getSpeechChan(OSStatus)
     case auStart(OSStatus)
     case graphStart(OSStatus)
+    
+//    var description: String {
+//        switch self {
+//        case .errorString(_, _):
+//            return ""
+//        case .componentNotFound:
+//            return ""
+//        case .settingIO(_):
+//            return "setting I/O"
+//        case .findDevice(_):
+//            return "finding device"
+//        case .newUnit(_):
+//            return "new AU"
+//        case .setCurrentDevice(_):
+//            return "setting current device"
+//        case .getAsbd(_):
+//            return  "getting ABSD"
+//        case .setAsbd(_):
+//            return "setting ABSD"
+//        case .getBufferFrameSize(_):
+//            return "getting BufferFrameSize"
+//        case .setInputCallback(_):
+//            return "setting input callback"
+//        case .initializeAU(_):
+//            return "initializing AU"
+//        case .newGraph(_):
+//            return "new graph"
+//        case .addGraphNode(_):
+//            return "add graph node"
+//        case .openGraph(_):
+//            return "open graph"
+//        case .getUnit(_):
+//            return "get AU"
+//        case .connectNodes(_):
+//            return "connect nodes"
+//        case .setRenderCallback(_):
+//            return "setting render callback"
+//        case .initializeGraph(_):
+//            return "initialize graph"
+//        case .getSpeechChan(_):
+//            return "getting speec channel"
+//        case .auStart(_):
+//            return "start AU"
+//        case .graphStart(_):
+//            return "start graph"
+//        }
+//    }
 }
 
 // convert Apple 32-bit int to 4 characters if valid
@@ -44,16 +91,12 @@ extension Int32 {
     }
 }
 
-//func int32ToString(_ code: OSStatus) -> String {
-//    let chars = Swift.withUnsafeBytes(of: code){ Data($0) }.map{ Character(Unicode.Scalar($0)) }
-//    return chars.reduce(true){ $0 && (UInt8(32)...127).contains($1.asciiValue ?? 0)} ? String(chars.reversed()) : "\(code)"
-//}
-    
-//func int32ToString(_ code: OSType) -> String {
-//    let chars = Swift.withUnsafeBytes(of: code){ Data($0) }.map{ Character(Unicode.Scalar($0)) }
-//    return chars.reduce(true){ $0 && (UInt8(32)...127).contains($1.asciiValue ?? 0)} ? String(chars.reversed()) : "\(code)"
-//}
-    
+func printError(_ statusCode: OSStatus, _ operation: String) {
+    print("Error \(statusCode.appleString) \(operation)")
+}
+
+
+
 func checkError(_ error: OSStatus, _ operation: String = "") {
     guard error != noErr else { return }
     print ("Error: \(operation) \(error.appleString).")
