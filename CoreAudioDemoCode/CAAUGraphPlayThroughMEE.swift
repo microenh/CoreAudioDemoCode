@@ -113,8 +113,11 @@ func createInputUnit(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
     try player.pointee.streamFormat = player.pointee.inputUnit.getABSD(inputScope: false, inputBus: true)
     let deviceFormat = try player.pointee.inputUnit.getABSD(inputScope: true, inputBus: true)
     
+    print ("in:  \(deviceFormat)")
+    print ("out: \(player.pointee.streamFormat)")
+    
     player.pointee.streamFormat.mSampleRate = deviceFormat.mSampleRate
-
+    
     try player.pointee.inputUnit.setABSD(absd: player.pointee.streamFormat, inputScope: false, inputBus: true)
     
     let bufferSizeFrames = try player.pointee.inputUnit.getBufferFrameSize()
@@ -172,9 +175,17 @@ func createMyAUGraph(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
 
     // Set ASBD's here
     // Set stream format on input scope of bus 0 because of the render callback will be plug in at this scope
+    // per book
+    /*
     try player.pointee.outputUnit.setABSD(absd: player.pointee.streamFormat, inputScope: true)
-    // Set output stream format on speech unit and mixer unit to let stream format propagation happens
     try mixerUnit.setABSD(absd: player.pointee.streamFormat, inputScope: true)
+    try mixerUnit.setABSD(absd: player.pointee.streamFormat, inputScope: false)
+    */
+    
+    // alternate
+    try mixerUnit.setABSD(absd: player.pointee.streamFormat, inputScope: true)
+    // Set output stream format on speech unit and mixer unit to let stream format propagation happens
+    try player.pointee.speechUnit.setABSD(absd: player.pointee.streamFormat, inputScope: false)
     try mixerUnit.setABSD(absd: player.pointee.streamFormat, inputScope: false)
 
     // Connections
