@@ -16,6 +16,7 @@ extension AudioComponent {
                                            componentFlagsMask: 0)
         return try find(cd: cd)
     }
+    
     static func find(cd: AudioComponentDescription) throws -> AudioComponent {
         var cdp = cd
         guard let comp = AudioComponentFindNext(nil, &cdp) else {

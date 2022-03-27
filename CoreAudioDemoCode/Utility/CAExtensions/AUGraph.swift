@@ -10,10 +10,7 @@ import AVFoundation
 extension AUGraph {
     static func new() throws -> AUGraph {
         var graph: AUGraph?
-        let osStatus = NewAUGraph(&graph)
-        guard osStatus == noErr else {
-            throw CAError.newGraph(osStatus)
-        }
+        try checkOSStatus(NewAUGraph(&graph))
         return graph!
     }
     
@@ -21,52 +18,30 @@ extension AUGraph {
         var cd = AudioComponentDescription(componentType: componentType,
                                            componentSubType: componentSubType)
         var node = AUNode()
-        let osStatus = AUGraphAddNode(self,
-                                      &cd,
-                                      &node)
-        guard osStatus == noErr else {
-            throw CAError.addGraphNode(osStatus)
-        }
+        try checkOSStatus(AUGraphAddNode(self, &cd, &node))
         return node
     }
     
     func open() throws {
-        let osStatus = AUGraphOpen(self)
-        guard osStatus == noErr else {
-            throw CAError.openGraph(osStatus)
-        }
+        try checkOSStatus(AUGraphOpen(self))
     }
     
     func getNodeAU(node: AUNode) throws -> AudioUnit {
         var unit: AudioUnit?
-        let osStatus = AUGraphNodeInfo(self,
-                                       node,
-                                       nil,
-                                       &unit)
-        guard osStatus == noErr else {
-            throw CAError.getUnit(osStatus)
-        }
+        try checkOSStatus(AUGraphNodeInfo(self, node, nil,  &unit))
         return unit!
     }
     
     func connectNodes(node1: AUNode, bus1: UInt32, node2: AUNode, bus2: UInt32) throws {
-        let osStatus = AUGraphConnectNodeInput(self, node1, bus1, node2, bus2)
-        guard osStatus == noErr else {
-            throw CAError.connectNodes(osStatus)
-        }
+        try checkOSStatus(AUGraphConnectNodeInput(self, node1, bus1, node2, bus2))
     }
     
     func initialze() throws {
-        let osStatus = AUGraphInitialize(self)
-        guard osStatus == noErr else {
-            throw CAError.initializeGraph(osStatus)
-        }
+        try checkOSStatus(AUGraphInitialize(self))
     }
     
     func start() throws {
-        let osStatus = AUGraphStart(self)
-        guard osStatus == noErr else {
-            throw CAError.graphStart(osStatus)
-        }
+        try checkOSStatus(AUGraphStart(self))
+        
     }
 }

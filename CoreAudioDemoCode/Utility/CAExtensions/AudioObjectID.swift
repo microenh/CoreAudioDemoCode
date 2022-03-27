@@ -16,15 +16,12 @@ extension AudioObjectID {
                                                         mScope: mScope,
                                                         mElement: mElement)
         var propertySize = UInt32(MemoryLayout<AudioDeviceID>.size)
-        let osStatus = AudioObjectGetPropertyData(UInt32(kAudioObjectSystemObject),
-                                                  &deviceProperty,
-                                                  0,
-                                                  nil,
-                                                  &propertySize,
-                                                  &device)
-        guard osStatus == noErr else {
-            throw CAError.findDevice(osStatus)
-        }
+        try checkOSStatus(AudioObjectGetPropertyData(UInt32(kAudioObjectSystemObject),
+                                                     &deviceProperty,
+                                                     0,
+                                                     nil,
+                                                     &propertySize,
+                                                     &device))
         return device
     }
 }
