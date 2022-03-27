@@ -175,8 +175,8 @@ func createInputUnit(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
                                           &propertySize),
                      "get ASBD from input unit")
     
-    print ("Device rate \(deviceFormat.mSampleRate), graph rate \(player.pointee.streamFormat.mSampleRate)")
-    
+    print ("device: \(deviceFormat)")
+    print ("stream: \(player.pointee.streamFormat)")
     player.pointee.streamFormat.mSampleRate = deviceFormat.mSampleRate
     
     propertySize = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
@@ -201,6 +201,7 @@ func createInputUnit(player: UnsafeMutablePointer<MyAUGraphPlayer>) throws {
     
     print ("format is \(player.pointee.streamFormat.mFormatFlags & kAudioFormatFlagIsNonInterleaved > 0 ? "non-" : "")interleaved")
     let channelCount = Int(player.pointee.streamFormat.mChannelsPerFrame)
+    print ("channels \(channelCount)")
     let abl = AudioBufferList.allocate(maximumBuffers: channelCount)
     for i in 0..<channelCount {
         abl[i] = AudioBuffer(mNumberChannels: 1,
