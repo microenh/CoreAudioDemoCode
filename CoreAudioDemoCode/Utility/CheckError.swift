@@ -30,6 +30,13 @@ func printError(_ statusCode: OSStatus, _ operation: String) {
     print("Error \(statusCode.appleString) \(operation)")
 }
 
+func failOSStatus(_ osStatus: OSStatus) {
+    guard osStatus == noErr else {
+        print("Error \(osStatus.appleString)")
+        exit(-1)
+    }
+}
+
 func checkOSStatus(_ osStatus: OSStatus) throws {
     guard osStatus == noErr else {
         throw CAError.osStatus(osStatus)

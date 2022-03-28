@@ -67,6 +67,15 @@
 		4DBEDD7827E7F0B3006E5F8F /* CAAudioUnitPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBEDD7727E7F08D006E5F8F /* CAAudioUnitPlayer.swift */; };
 		4DBEDD7927E7F0B7006E5F8F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4DBEDD7A27E7F0BB006E5F8F /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
+		4DC1CF1D27F2429600397F01 /* CAAudioEnginePlayThroughMEE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC1CF1C27F2429600397F01 /* CAAudioEnginePlayThroughMEE.swift */; };
+		4DC1CF1E27F242D000397F01 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
+		4DC1CF1F27F242DD00397F01 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
+		4DC1CF2027F2450B00397F01 /* CARingBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4C53AE27EBC8DB007499A5 /* CARingBuffer.cpp */; };
+		4DC1CF2127F2451400397F01 /* CARingBufferWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4D4C53B227EBC8DB007499A5 /* CARingBufferWrapper.mm */; };
+		4DC1CF2227F246F900397F01 /* AudioUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4EA5CA27EFF09800F750A0 /* AudioUnit.swift */; };
+		4DC1CF2327F2470E00397F01 /* AudioObjectID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4EA5C627EFF04100F750A0 /* AudioObjectID.swift */; };
+		4DC1CF2427F2477000397F01 /* AudioComponentExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4EA5D627EFF15500F750A0 /* AudioComponentExtension.swift */; };
+		4DC1CF2527F2479300397F01 /* AudioComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4EA5D227EFF10200F750A0 /* AudioComponent.swift */; };
 		4DC93E0F27EA6F2E000DD987 /* CAAUGraphPlayThrough.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC93E0E27EA6F2E000DD987 /* CAAUGraphPlayThrough.swift */; };
 		4DC93E1027EA6F4D000DD987 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
 		4DC93E1127EA6F52000DD987 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
@@ -195,6 +204,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		4DC1CF1327F2422800397F01 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		4DC93E0527EA6EDF000DD987 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -229,7 +247,7 @@
 		4D3B069527E8C40000291BD9 /* CAAudioUnitSpeech2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAAudioUnitSpeech2; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D45C3FD27DE19BD004E02C7 /* CAToneFileGenerator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAToneFileGenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D45C3FE27DE1C29004E02C7 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		4D4C53AD27EBC8DB007499A5 /* CAAUGraphPlayThrough-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CAAUGraphPlayThrough-Bridging-Header.h"; sourceTree = "<group>"; };
+		4D4C53AD27EBC8DB007499A5 /* CARingBuffer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CARingBuffer-Bridging-Header.h"; sourceTree = "<group>"; };
 		4D4C53AE27EBC8DB007499A5 /* CARingBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CARingBuffer.cpp; sourceTree = "<group>"; };
 		4D4C53AF27EBC8DB007499A5 /* CARingBufferWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARingBufferWrapper.h; sourceTree = "<group>"; };
 		4D4C53B027EBC8DB007499A5 /* CARingBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARingBuffer.h; sourceTree = "<group>"; };
@@ -264,6 +282,8 @@
 		4DBA263627E81C48006E99DE /* BookCover.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BookCover.jpg; sourceTree = "<group>"; };
 		4DBEDD7027E7F075006E5F8F /* CAAudioUnitPlayer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAAudioUnitPlayer; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DBEDD7727E7F08D006E5F8F /* CAAudioUnitPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAAudioUnitPlayer.swift; sourceTree = "<group>"; };
+		4DC1CF1527F2422800397F01 /* CAAudioEnginePlayThroughMEE */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAAudioEnginePlayThroughMEE; sourceTree = BUILT_PRODUCTS_DIR; };
+		4DC1CF1C27F2429600397F01 /* CAAudioEnginePlayThroughMEE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAAudioEnginePlayThroughMEE.swift; sourceTree = "<group>"; };
 		4DC93E0727EA6EDF000DD987 /* CAAUGraphPlayThrough */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAAUGraphPlayThrough; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DC93E0E27EA6F2E000DD987 /* CAAUGraphPlayThrough.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAAUGraphPlayThrough.swift; sourceTree = "<group>"; };
 		4DE488E727DF953E003543CB /* CARecorder */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CARecorder; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -363,6 +383,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4DC1CF1227F2422800397F01 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4DC93E0427EA6EDF000DD987 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -388,7 +415,7 @@
 				4D4C53B127EBC8DB007499A5 /* CARingBufferMisc.h */,
 				4D4C53AF27EBC8DB007499A5 /* CARingBufferWrapper.h */,
 				4D4C53B227EBC8DB007499A5 /* CARingBufferWrapper.mm */,
-				4D4C53AD27EBC8DB007499A5 /* CAAUGraphPlayThrough-Bridging-Header.h */,
+				4D4C53AD27EBC8DB007499A5 /* CARingBuffer-Bridging-Header.h */,
 			);
 			path = CARingBuffer;
 			sourceTree = "<group>";
@@ -443,6 +470,7 @@
 				4DAD46E127ED0BB400EE7663 /* CAAUGraphPlayThrough2 */,
 				4D050A6627EE9A25008F2ACF /* CAAUGraphPlayThroughMEE */,
 				4D07883E27EFA6480091AA6B /* CAAUGraphPlayThroughMEE2 */,
+				4DC1CF1527F2422800397F01 /* CAAudioEnginePlayThroughMEE */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -463,6 +491,7 @@
 				4D530CCC27E928C20076CF16 /* CACustomRender.swift */,
 				4DC93E0E27EA6F2E000DD987 /* CAAUGraphPlayThrough.swift */,
 				4D050A6727EE9A9D008F2ACF /* CAAUGraphPlayThroughMEE.swift */,
+				4DC1CF1C27F2429600397F01 /* CAAudioEnginePlayThroughMEE.swift */,
 			);
 			path = CoreAudioDemoCode;
 			sourceTree = "<group>";
@@ -719,6 +748,23 @@
 			productReference = 4DBEDD7027E7F075006E5F8F /* CAAudioUnitPlayer */;
 			productType = "com.apple.product-type.tool";
 		};
+		4DC1CF1427F2422800397F01 /* CAAudioEnginePlayThroughMEE */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4DC1CF1B27F2422800397F01 /* Build configuration list for PBXNativeTarget "CAAudioEnginePlayThroughMEE" */;
+			buildPhases = (
+				4DC1CF1127F2422800397F01 /* Sources */,
+				4DC1CF1227F2422800397F01 /* Frameworks */,
+				4DC1CF1327F2422800397F01 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CAAudioEnginePlayThroughMEE;
+			productName = CAAudioEnginePlayThroughMEE;
+			productReference = 4DC1CF1527F2422800397F01 /* CAAudioEnginePlayThroughMEE */;
+			productType = "com.apple.product-type.tool";
+		};
 		4DC93E0627EA6EDF000DD987 /* CAAUGraphPlayThrough */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4DC93E0D27EA6EDF000DD987 /* Build configuration list for PBXNativeTarget "CAAUGraphPlayThrough" */;
@@ -787,6 +833,10 @@
 					4DBEDD6F27E7F075006E5F8F = {
 						CreatedOnToolsVersion = 13.2;
 					};
+					4DC1CF1427F2422800397F01 = {
+						CreatedOnToolsVersion = 13.2;
+						LastSwiftMigration = 1320;
+					};
 					4DC93E0627EA6EDF000DD987 = {
 						CreatedOnToolsVersion = 13.2;
 						LastSwiftMigration = 1320;
@@ -823,6 +873,7 @@
 				4DAD46D527ED0BB400EE7663 /* CAAUGraphPlayThrough2 */,
 				4D050A5927EE9A25008F2ACF /* CAAUGraphPlayThroughMEE */,
 				4D07883127EFA6480091AA6B /* CAAUGraphPlayThroughMEE2 */,
+				4DC1CF1427F2422800397F01 /* CAAudioEnginePlayThroughMEE */,
 			);
 		};
 /* End PBXProject section */
@@ -978,6 +1029,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4DC1CF1127F2422800397F01 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DC1CF2227F246F900397F01 /* AudioUnit.swift in Sources */,
+				4DC1CF1E27F242D000397F01 /* main.swift in Sources */,
+				4DC1CF2427F2477000397F01 /* AudioComponentExtension.swift in Sources */,
+				4DC1CF1D27F2429600397F01 /* CAAudioEnginePlayThroughMEE.swift in Sources */,
+				4DC1CF2127F2451400397F01 /* CARingBufferWrapper.mm in Sources */,
+				4DC1CF1F27F242DD00397F01 /* CheckError.swift in Sources */,
+				4DC1CF2327F2470E00397F01 /* AudioObjectID.swift in Sources */,
+				4DC1CF2527F2479300397F01 /* AudioComponent.swift in Sources */,
+				4DC1CF2027F2450B00397F01 /* CARingBuffer.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4DC93E0327EA6EDF000DD987 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1021,7 +1088,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"SWIFT_ACTIVE_COMPILATION_CONDITIONS[arch=*]" = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "CoreAudioDemoCode/Utility/CARingBuffer/CAAUGraphPlayThrough-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "CoreAudioDemoCode/Utility/CARingBuffer/CARingBuffer-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1044,7 +1111,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"SWIFT_ACTIVE_COMPILATION_CONDITIONS[arch=*]" = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "CoreAudioDemoCode/Utility/CARingBuffer/CAAUGraphPlayThrough-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "CoreAudioDemoCode/Utility/CARingBuffer/CARingBuffer-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -1066,7 +1133,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"SWIFT_ACTIVE_COMPILATION_CONDITIONS[arch=*]" = PART_II;
-				SWIFT_OBJC_BRIDGING_HEADER = "CoreAudioDemoCode/Utility/CARingBuffer/CAAUGraphPlayThrough-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "CoreAudioDemoCode/Utility/CARingBuffer/CARingBuffer-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1089,7 +1156,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"SWIFT_ACTIVE_COMPILATION_CONDITIONS[arch=*]" = PART_II;
-				SWIFT_OBJC_BRIDGING_HEADER = "CoreAudioDemoCode/Utility/CARingBuffer/CAAUGraphPlayThrough-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "CoreAudioDemoCode/Utility/CARingBuffer/CARingBuffer-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -1546,6 +1613,45 @@
 			};
 			name = Release;
 		};
+		4DC1CF1927F2422800397F01 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 566Y4FXUU7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CoreAudioDemoCode/Utility/CARingBuffer/CARingBuffer-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		4DC1CF1A27F2422800397F01 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 566Y4FXUU7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CoreAudioDemoCode/Utility/CARingBuffer/CARingBuffer-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		4DC93E0B27EA6EDF000DD987 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1744,6 +1850,15 @@
 			buildConfigurations = (
 				4DBEDD7427E7F075006E5F8F /* Debug */,
 				4DBEDD7527E7F075006E5F8F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4DC1CF1B27F2422800397F01 /* Build configuration list for PBXNativeTarget "CAAudioEnginePlayThroughMEE" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4DC1CF1927F2422800397F01 /* Debug */,
+				4DC1CF1A27F2422800397F01 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
