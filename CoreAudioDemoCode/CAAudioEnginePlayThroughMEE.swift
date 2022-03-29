@@ -177,7 +177,7 @@ func main() throws {
     try createInputUnit(player: &player)
     
     // build an engine with the output unit
-    // try createMyAVEngine(player: &player)
+    try createMyAVEngine(player: &player)
     
     
     try player.inputUnit.start()

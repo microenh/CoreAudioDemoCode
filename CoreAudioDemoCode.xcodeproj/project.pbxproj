@@ -289,6 +289,7 @@
 		4DE488E727DF953E003543CB /* CARecorder */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CARecorder; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DE488E827DF959A003543CB /* CARecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CARecorder.swift; sourceTree = "<group>"; };
 		4DE488EE27DF988C003543CB /* CheckError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckError.swift; sourceTree = "<group>"; };
+		4DEF827827F2A7E400746FFB /* CAAudioEnginePlayThroughMEE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CAAudioEnginePlayThroughMEE.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -435,6 +436,7 @@
 		4D7820A727DD807C00C8EFB7 = {
 			isa = PBXGroup;
 			children = (
+				4DEF827827F2A7E400746FFB /* CAAudioEnginePlayThroughMEE.entitlements */,
 				4D83F4EA27E81A01008A8D9E /* readme.md */,
 				4DBA263627E81C48006E99DE /* BookCover.jpg */,
 				4D8ADCCA27EE912400145DE0 /* CAAUGraphPlayThroughMEE.entitlements */,
@@ -1617,9 +1619,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = CAAudioEnginePlayThroughMEE.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 566Y4FXUU7;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -1637,9 +1640,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = CAAudioEnginePlayThroughMEE.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 566Y4FXUU7;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
