@@ -13,6 +13,7 @@ struct MyAUEnginePlayer {
     
     var engine = AVAudioEngine()
     var inputUnit: AudioUnit!
+    var outputUnit: AudioUnit!
     
 #if PART_II
 #endif
@@ -59,6 +60,33 @@ func inputRenderProc(inRefCon: UnsafeMutableRawPointer,
     return inputProcErr
 }
 
+
+func graphRenderProc(inRefCon: UnsafeMutableRawPointer,
+                     ioActionFlags: UnsafeMutablePointer<AudioUnitRenderActionFlags>,
+                     inTimeStamp: UnsafePointer<AudioTimeStamp>,
+                     inBusNumber: UInt32,
+                     inNumberFrames: UInt32,
+                     ioData: UnsafeMutablePointer<AudioBufferList>?) -> OSStatus {
+    
+    var player = inRefCon.assumingMemoryBound(to: MyAUEnginePlayer.self).pointee
+
+    // Have we ever logged input timing? (for offset calculation)
+    if player.firstOutputSampleTime < 0 {
+        player.firstOutputSampleTime = inTimeStamp.pointee.mSampleTime
+        if player.firstInputSampleTime > 0 && player.inToOutSampleTimeOffset < 0 {
+            player.inToOutSampleTimeOffset = player.firstInputSampleTime - player.firstOutputSampleTime
+        }
+    }
+    
+    // copy samples out of ring buffer
+    let outputProcErr = FetchBuffer(player.ringBuffer,
+                                    ioData,
+                                    inNumberFrames,
+                                    Int64(inTimeStamp.pointee.mSampleTime + player.inToOutSampleTimeOffset))
+    return outputProcErr
+}
+
+// typealias AVAudioSourceNodeRenderBlock = (UnsafeMutablePointer<ObjCBool>, UnsafePointer<AudioTimeStamp>, AVAudioFrameCount, UnsafeMutablePointer<AudioBufferList>) -> OSStatus
 
 // MARK: utility functions
 func createInputUnit(player: UnsafeMutablePointer<MyAUEnginePlayer>) throws {
@@ -122,10 +150,22 @@ func createInputUnit(player: UnsafeMutablePointer<MyAUEnginePlayer>) throws {
 }
 
 func createMyAVEngine(player: UnsafeMutablePointer<MyAUEnginePlayer>) throws {
+        
+    let outputNode = player.pointee.engine.outputNode
+    player.pointee.outputUnit = outputNode.audioUnit
     
+#if PART_II
+#endif
+    
+    
+    // Set the stream format on the output unit's input scope
+    try player.pointee.outputUnit.setABSD(absd: player.pointee.streamFormat, scope: kAudioUnitScope_Input)
 
-    
-    
+    try player.pointee.outputUnit.setRenderCallback(inputProc: graphRenderProc, inputProcRefCon: player)
+
+    player.pointee.engine.connect(player.pointee.engine.inputNode,
+                                  to: outputNode, format: nil)
+
     
     print ("Bottom of createMyAVEngine()")
 }
@@ -137,5 +177,17 @@ func main() throws {
     try createInputUnit(player: &player)
     
     // build an engine with the output unit
-    try createMyAVEngine(player: &player)
+    // try createMyAVEngine(player: &player)
+    
+    
+    try player.inputUnit.start()
+    player.engine.prepare()
+    try player.engine.start()
+    
+    // and wait
+    print ("Capturing, press <return> to stop:")
+    getchar()
+
+
+
 }
