@@ -28,9 +28,7 @@ struct MyAUEnginePlayer {
     var inputBuffer: UnsafeMutableAudioBufferListPointer!
     var ringBuffer: RingBufferWrapper!
     
-    var firstInputSampleTime = Float64(-1)
-    var firstOutputSampleTime = Float64(-1)
-    var inToOutSampleTimeOffset = Float64(-1)
+    var inToOutSampleTimeOffset = Float64(-2)
 }
 
 // MARK: render procs
@@ -41,56 +39,41 @@ func inputRenderProc(inRefCon: UnsafeMutableRawPointer,
                      inNumberFrames: UInt32,
                      ioData: UnsafeMutablePointer<AudioBufferList>?) -> OSStatus {
     
-    var player = inRefCon.assumingMemoryBound(to: MyAUEnginePlayer.self).pointee
-    
-    // Have we ever logged input timing? (for offset calculation)
-    if player.firstInputSampleTime < 0 {
-        player.firstInputSampleTime = inTimeStamp.pointee.mSampleTime
-        if player.firstOutputSampleTime > 0 && player.inToOutSampleTimeOffset < 0 {
-            player.inToOutSampleTimeOffset = player.firstInputSampleTime - player.firstOutputSampleTime
-        }
+    let player = inRefCon.assumingMemoryBound(to: MyAUEnginePlayer.self)
+        
+    if player.pointee.inToOutSampleTimeOffset < -1 {
+        player.pointee.inToOutSampleTimeOffset = -1
     }
     
-    var inputProcErr = AudioUnitRender(player.inputUnit,
+//    let hostTime = Double(inTimeStamp.pointee.mHostTime)
+//
+//    print ((hostTime - player.pointee.prevTicks) * player.pointee.audioFreq)
+//    player.pointee.prevTicks = hostTime
+    
+    var inputProcErr = AudioUnitRender(player.pointee.inputUnit,
                                        ioActionFlags,
                                        inTimeStamp,
                                        inBusNumber,
                                        inNumberFrames,
-                                       player.inputBuffer.unsafeMutablePointer)
+                                       player.pointee.inputBuffer.unsafeMutablePointer)
     
     if inputProcErr == 0 {
-        inputProcErr = StoreBuffer(player.ringBuffer,
-                                   player.inputBuffer.unsafeMutablePointer,
+        inputProcErr = StoreBuffer(player.pointee.ringBuffer,
+                                   player.pointee.inputBuffer.unsafeMutablePointer,
                                    inNumberFrames,
                                    Int64(inTimeStamp.pointee.mSampleTime))
+        
+        
+//        let adjStartTime = inTimeStamp.pointee.mSampleTime //  - player.pointee.inToOutSampleTimeOffset
+//        let adjEndTime = adjStartTime + Double(inNumberFrames)
+//        var startTime = SampleTime()
+//        var endTime = SampleTime()
+//        _ = GetTimeBoundsFromBuffer(player.pointee.ringBuffer, &startTime, &endTime)
+//        print ("\(startTime) \(adjStartTime) \(adjEndTime) \(endTime)")
+    } else {
+        print (inputProcErr)
     }
     return inputProcErr
-}
-
-
-func graphRenderProc(inRefCon: UnsafeMutableRawPointer,
-                     ioActionFlags: UnsafeMutablePointer<AudioUnitRenderActionFlags>,
-                     inTimeStamp: UnsafePointer<AudioTimeStamp>,
-                     inBusNumber: UInt32,
-                     inNumberFrames: UInt32,
-                     ioData: UnsafeMutablePointer<AudioBufferList>?) -> OSStatus {
-    
-    var player = inRefCon.assumingMemoryBound(to: MyAUEnginePlayer.self).pointee
-
-    // Have we ever logged input timing? (for offset calculation)
-    if player.firstOutputSampleTime < 0 {
-        player.firstOutputSampleTime = inTimeStamp.pointee.mSampleTime
-        if player.firstInputSampleTime > 0 && player.inToOutSampleTimeOffset < 0 {
-            player.inToOutSampleTimeOffset = player.firstInputSampleTime - player.firstOutputSampleTime
-        }
-    }
-    
-    // copy samples out of ring buffer
-    let outputProcErr = FetchBuffer(player.ringBuffer,
-                                    ioData,
-                                    inNumberFrames,
-                                    Int64(inTimeStamp.pointee.mSampleTime + player.inToOutSampleTimeOffset))
-    return outputProcErr
 }
 
 // MARK: utility functions
@@ -114,8 +97,8 @@ func createInputUnit(player: UnsafeMutablePointer<MyAUEnginePlayer>) throws {
     try player.pointee.streamFormat = player.pointee.inputUnit.getABSD(scope: kAudioUnitScope_Output, element: 1)
     let deviceFormat = try player.pointee.inputUnit.getABSD(scope: kAudioUnitScope_Input, element: 1)
     
-    // print ("in:  \(deviceFormat)")
-    // print ("out: \(player.pointee.streamFormat)")
+//     print ("in:  \(deviceFormat)")
+//     print ("out: \(player.pointee.streamFormat)")
     
     player.pointee.streamFormat.mSampleRate = deviceFormat.mSampleRate
     
@@ -147,8 +130,7 @@ func createInputUnit(player: UnsafeMutablePointer<MyAUEnginePlayer>) throws {
     
     try player.pointee.inputUnit.initialize()
     
-    player.pointee.firstInputSampleTime = -1
-    player.pointee.inToOutSampleTimeOffset = -1
+    player.pointee.inToOutSampleTimeOffset = -2
     
     print ("Bottom of CreateInputUnit()")
     
@@ -162,31 +144,65 @@ func createMyAVEngine(player: UnsafeMutablePointer<MyAUEnginePlayer>) throws {
     let outputFormat = outputNode.inputFormat(forBus: 0)
     
     let inputFormat = AVAudioFormat(commonFormat: outputFormat.commonFormat,
-                                    sampleRate: outputFormat.sampleRate,
-                                    channels: 2,
+                                    sampleRate: player.pointee.streamFormat.mSampleRate,
+                                    channels: 1,
                                     interleaved: outputFormat.isInterleaved)
     
-    let srcNode = AVAudioSourceNode { isSilence, inTimeStamp, frameCount, ioData -> OSStatus in
-        if player.pointee.firstOutputSampleTime < 0 {
-            player.pointee.firstOutputSampleTime = inTimeStamp.pointee.mSampleTime
-            if player.pointee.firstInputSampleTime > 0 && player.pointee.inToOutSampleTimeOffset < 0 {
-                player.pointee.inToOutSampleTimeOffset = player.pointee.firstInputSampleTime - player.pointee.firstOutputSampleTime
+//    print ("inputFormat: \(inputFormat!)")
+
+//    let audioFreq = 1.0 / AudioGetHostClockFrequency()
+//    var prevTicks = Float64(0)
+
+     
+    let srcNode = AVAudioSourceNode(format: inputFormat!) { isSilence, inTimeStamp, frameCount, ioData -> OSStatus in
+        
+//        let hostTime = Double(inTimeStamp.pointee.mHostTime)
+//        print ("time: \((hostTime - prevTicks) * audioFreq), samples: \(frameCount)")
+//        prevTicks = hostTime
+
+        
+        if player.pointee.inToOutSampleTimeOffset == -1 {
+            var startTime = SampleTime()
+            var endTime = SampleTime()
+            if GetTimeBoundsFromBuffer(player.pointee.ringBuffer, &startTime, &endTime) == 0 {
+                player.pointee.inToOutSampleTimeOffset = inTimeStamp.pointee.mSampleTime - Double(startTime)
+//                print ("setting \(player.pointee.inToOutSampleTimeOffset)")
             }
+
         }
+        
+        
+        let adjStartTime = inTimeStamp.pointee.mSampleTime - player.pointee.inToOutSampleTimeOffset
+//        let adjEndTime = adjStartTime + Double(frameCount)
+//        var startTime = SampleTime()
+//        var endTime = SampleTime()
+//        _ = GetTimeBoundsFromBuffer(player.pointee.ringBuffer, &startTime, &endTime)
+//        print ("available: \(startTime)-\(endTime) - requested: \(adjStartTime) \(adjEndTime)")
+        
         
         // copy samples out of ring buffer
         let outputProcErr = FetchBuffer(player.pointee.ringBuffer,
                                         ioData,
                                         frameCount,
-                                        Int64(inTimeStamp.pointee.mSampleTime + player.pointee.inToOutSampleTimeOffset))
+                                        Int64(adjStartTime))
         // isSilence.pointee = ObjCBool(outputProcErr != 0)
+                
         if outputProcErr > 0 {
             print (outputProcErr)
         }
         return noErr
     }
     
-    
+//    for i in 0..<srcNode.numberOfInputs {
+//        print ("input[\(i)] format: \(srcNode.inputFormat(forBus: i))")
+//        print ("name: \(srcNode.name(forInputBus: 0) ?? "<none>")")
+//    }
+//
+//    for i in 0..<srcNode.numberOfOutputs {
+//        print ("input[\(i)] format: \(srcNode.outputFormat(forBus: i))")
+//        print ("name: \(srcNode.name(forOutputBus: i) ?? "<none>")")
+//    }
+
     player.pointee.engine.attach(srcNode)
     
     // get the engine's mixer node
@@ -200,11 +216,11 @@ func createMyAVEngine(player: UnsafeMutablePointer<MyAUEnginePlayer>) throws {
     player.pointee.engine.attach(speechNode)
     player.pointee.speechUnit = speechNode.audioUnit
     
-    player.pointee.engine.connect(speechNode, to: mixerNode, format: inputFormat)
-
+    player.pointee.engine.connect(speechNode, to: mixerNode, fromBus: 0, toBus: 1, format: nil)
 #endif
-    player.pointee.engine.connect(srcNode, to: mixerNode, format: inputFormat)
-    player.pointee.engine.connect(mixerNode, to: outputNode, format: inputFormat)
+//    player.pointee.engine.connect(srcNode, to: outputNode, format: nil)
+    player.pointee.engine.connect(srcNode, to: mixerNode, fromBus: 0, toBus: 0, format: inputFormat)
+    player.pointee.engine.connect(mixerNode, to: outputNode, fromBus: 0, toBus: 0, format: nil)
     print ("Bottom of createMyAVEngine()")
 }
 
