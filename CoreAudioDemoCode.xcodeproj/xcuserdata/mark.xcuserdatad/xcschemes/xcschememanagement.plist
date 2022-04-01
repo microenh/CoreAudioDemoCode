@@ -34,6 +34,11 @@
 			<key>orderHint</key>
 			<integer>16</integer>
 		</dict>
+		<key>CAAudioEnginePlayThroughMEE2.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>17</integer>
+		</dict>
 		<key>CAAudioUnitPlayer.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -162,7 +167,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>4DC1CF1427F2422800397F01</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>4DC93E0627EA6EDF000DD987</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4DE33F0527F5039C00A6FA22</key>
 		<dict>
 			<key>primary</key>
 			<true/>
