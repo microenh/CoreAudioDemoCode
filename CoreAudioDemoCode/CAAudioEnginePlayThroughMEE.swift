@@ -229,13 +229,14 @@ func main() throws {
     try prepareSpeechAU(player: &player)
 #endif
     
-    // try player.inputUnit.start()
+
     player.engine.prepare()
     try player.engine.start()
     defer {
         player.engine.stop()
         player.engine.reset()
     }
+    try player.inputUnit.start()
     
     // and wait
     print ("Capturing, press <return> to stop:")
