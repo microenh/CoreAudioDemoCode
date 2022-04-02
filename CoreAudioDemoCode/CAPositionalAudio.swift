@@ -34,7 +34,6 @@ struct MyLoopPlayer {
 }
 
 // MARK: utility functions
-
 func checkALError(operation: String) {
     let alErr = alGetError()
     guard alErr != AL_NO_ERROR else {
@@ -91,25 +90,27 @@ func loadLoopIntoBuffer(player: UnsafeMutablePointer<MyLoopPlayer>) -> OSStatus 
     player.pointee.bufferSizeBytes = Int32(fileLengthFrames) * Int32(player.pointee.dataFormat.mBytesPerFrame)
     
     player.pointee.sampleBuffer = malloc(MemoryLayout<UInt16>.size * Int(player.pointee.bufferSizeBytes))
-    let buffers = AudioBuffer(mNumberChannels: 1,
+    var buffers = AudioBuffer(mNumberChannels: 1,
                               mDataByteSize: UInt32(player.pointee.bufferSizeBytes),
                               mData: player.pointee.sampleBuffer)
 
-    var convertedData = AudioBufferList(mNumberBuffers: 1, mBuffers: (buffers))
+    var convertedData: AudioBufferList
 
     // loop reading into the ABL until buffer is full
     var totalFramesRead = UInt32(0)
-    // repeat {
+    repeat {
         var framesRead = UInt32(fileLengthFrames) - totalFramesRead
         // while doing successive reads
-        // buffers[0].mData = player.pointee.sampleBuffer! + (Int(totalFramesRead) * MemoryLayout<UInt16>.size)
+        buffers.mData = player.pointee.sampleBuffer! + (Int(totalFramesRead) * MemoryLayout<UInt16>.size)
+        convertedData = AudioBufferList(mNumberBuffers: 1, mBuffers: (buffers))
+
         checkError(ExtAudioFileRead(extAudioFile,
                                     &framesRead,
                                     &convertedData),
                    "ExtAudioFileRead failed")
         totalFramesRead += framesRead
         print ("read \(framesRead) frames")
-    // } while totalFramesRead < fileLengthFrames
+    } while totalFramesRead < fileLengthFrames
     return noErr
 }
 
