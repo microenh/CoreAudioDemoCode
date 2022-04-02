@@ -21,7 +21,6 @@
     #pragma intrinsic(_InterlockedAnd)
 #else
     #include <CoreFoundation/CFBase.h>
-    #include <libkern/OSAtomic.h>
 #endif
 
 // MARK: - code from other header files
@@ -31,20 +30,6 @@ inline void* CA_malloc(size_t size)
     void* p = malloc(size);
     if (!p && size) throw std::bad_alloc();
     return p;
-}
-
-// from CAAtomic
-inline bool CAAtomicCompareAndSwap32Barrier(SInt32 oldValue, SInt32 newValue, volatile SInt32 *theValue)
-{
-#if TARGET_OS_WIN32
-    // InterlockedCompareExchange returns the old value. But we need to return bool value.
-    long lRetVal = InterlockedCompareExchange((volatile long*)theValue, newValue, oldValue);
-// Hence we check if the new value is set and if it is we return true else false.
-// If theValue is equal to oldValue then the swap happens. Otherwise swap doesn't happen.
-    return (oldValue == lRetVal);
-#else
-    return OSAtomicCompareAndSwap32Barrier(oldValue, newValue, (volatile int32_t *)theValue);
-#endif
 }
 
 // from CABitOperations.h

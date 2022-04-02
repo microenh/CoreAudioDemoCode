@@ -54,6 +54,8 @@
 #ifndef CARingBuffer_Header
 #define CARingBuffer_Header
 
+#include <atomic>  // [MEE]
+
 enum {
 	kCARingBufferError_OK = 0,
 	kCARingBufferError_TooMuch = 3, // fetch start time is earlier than buffer start time and fetch end time is later than buffer end time
@@ -118,7 +120,7 @@ protected:
 	} TimeBounds;
 	
 	CARingBuffer::TimeBounds mTimeBoundsQueue[kGeneralRingTimeBoundsQueueSize];
-	UInt32 mTimeBoundsQueuePtr;
+	std::atomic<UInt32> mTimeBoundsQueuePtr;  // [mee] added atomic
 };
 
 

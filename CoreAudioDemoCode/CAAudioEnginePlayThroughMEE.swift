@@ -111,7 +111,6 @@ func createInputUnit(player: UnsafeMutablePointer<MyAUEnginePlayer>) throws {
     
     let channelCount = Int(player.pointee.streamFormat.mChannelsPerFrame)
     
-    // TODO: Should the .allocate and malloc be freed?
     player.pointee.inputBuffer = AudioBufferList.allocate(maximumBuffers: channelCount)
     for i in 0..<channelCount {
         player.pointee.inputBuffer[i] = AudioBuffer(mNumberChannels: 1,
@@ -237,6 +236,15 @@ func main() throws {
     
     // create the input unit
     try createInputUnit(player: &player)
+    defer {
+        for i in 0..<player.inputBuffer.count {
+            free(player.inputBuffer[i].mData)
+        }
+        // TODO: how to free the audio buffer list?
+        // free(&player.inputBuffer!)
+        AudioComponentInstanceDispose(player.inputUnit)
+        DeallocateBuffer(player.ringBuffer)
+    }
     
     // build an engine with the output unit
     try createMyAVEngine(player: &player)

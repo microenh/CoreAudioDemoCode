@@ -53,7 +53,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <algorithm>
-#include <libkern/OSAtomic.h>
+//#include <libkern/OSAtomic.h>
 
 CARingBuffer::CARingBuffer() :
 	mBuffers(NULL), mNumberChannels(0), mCapacityFrames(0), mCapacityBytes(0)
@@ -220,7 +220,8 @@ void	CARingBuffer::SetTimeBounds(SampleTime startTime, SampleTime endTime)
 	mTimeBoundsQueue[index].mStartTime = startTime;
 	mTimeBoundsQueue[index].mEndTime = endTime;
 	mTimeBoundsQueue[index].mUpdateCounter = nextPtr;
-	CAAtomicCompareAndSwap32Barrier(mTimeBoundsQueuePtr, mTimeBoundsQueuePtr + 1, (SInt32*)&mTimeBoundsQueuePtr);
+	// CAAtomicCompareAndSwap32Barrier(mTimeBoundsQueuePtr, mTimeBoundsQueuePtr + 1, (SInt32*)&mTimeBoundsQueuePtr);
+    mTimeBoundsQueuePtr++;  // [mee]
 }
 
 CARingBufferError	CARingBuffer::GetTimeBounds(SampleTime &startTime, SampleTime &endTime)
