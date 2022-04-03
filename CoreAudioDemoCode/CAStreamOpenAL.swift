@@ -11,8 +11,8 @@ import CoreAudioTypes
 import AudioToolbox
 
 struct Settings {
-    static let bufferCount = 3
-    static let bufferDurationSeconds = UInt32(3)
+    static let bufferCount = 2
+    static let bufferDurationSeconds = 1.0
     static let orbitSpeed = 1.0
     static let streamPath = "/Users/mark/Music/daily_download_20191014_128.mp3" as CFString
     static let runTime = 30.0
@@ -35,16 +35,19 @@ struct MyStreamPlayer {
     var totalFramesRead = Int64(0)
     var sources = [ALuint()]
     var extAudioFile: ExtAudioFileRef!
+    
+    var sampleBuffer: UnsafeMutableRawPointer!
+    var buffers: AudioBuffer!
 }
 
 // MARK: utility functions
 
 func updateSourceLocation(player: UnsafeMutablePointer<MyStreamPlayer>) {
     let theta = fmod(CFAbsoluteTimeGetCurrent() * Settings.orbitSpeed, Double.pi * 2)
-    let x = ALfloat(3 * cos(theta))
-    let y = ALfloat(0.5 * sin(theta))
-    let z = ALfloat(sin(theta))
-    alSource3f(player.pointee.sources[0], AL_POSITION, x, y, z)
+    alSource3f(player.pointee.sources[0], AL_POSITION,
+               ALfloat(3 * cos(theta)),
+               ALfloat(0.5 * sin(theta)),
+               ALfloat(sin(theta)))
 }
 
 func setUpExtAudioFile(player: UnsafeMutablePointer<MyStreamPlayer>) -> OSStatus {
@@ -72,30 +75,36 @@ func setUpExtAudioFile(player: UnsafeMutablePointer<MyStreamPlayer>) -> OSStatus
     
     print ("fileLengthFrames = \(player.pointee.fileLengthFrames)")
     
-    player.pointee.bufferSizeBytes = Settings.bufferDurationSeconds *
-                                     UInt32(player.pointee.dataFormat.mSampleRate) *
-                                     UInt32(player.pointee.dataFormat.mBytesPerFrame)
+    player.pointee.bufferSizeBytes = UInt32(Settings.bufferDurationSeconds *
+                                     player.pointee.dataFormat.mSampleRate *
+                                     Double(player.pointee.dataFormat.mBytesPerFrame))
 
     print ("bufferSizeBytes = \(player.pointee.bufferSizeBytes)")
     print ("Bottom of setUpExtAudioFile")
     
+    player.pointee.sampleBuffer = malloc(MemoryLayout<UInt16>.size * Int(player.pointee.bufferSizeBytes))
+    player.pointee.buffers = AudioBuffer(mNumberChannels: 1,
+                                         mDataByteSize: UInt32(player.pointee.bufferSizeBytes),
+                                         mData: player.pointee.sampleBuffer)
+    print ("Allocated \(player.pointee.bufferSizeBytes) byte buffer for ABL")
     return noErr
 }
 
 func fillALBuffer(player: UnsafeMutablePointer<MyStreamPlayer>, alBuffer: ALuint) {
-    var sampleBuffer = malloc(MemoryLayout<UInt16>.size * Int(player.pointee.bufferSizeBytes))
-    var buffers = AudioBuffer(mNumberChannels: 1,
-                              mDataByteSize: UInt32(player.pointee.bufferSizeBytes),
-                              mData: sampleBuffer)
-
-    print ("Allocated \(player.pointee.bufferSizeBytes) byte buffer for ABL")
+//    player.pointee.sampleBuffer = malloc(MemoryLayout<UInt16>.size * Int(player.pointee.bufferSizeBytes))
+//    player.pointee.buffers = AudioBuffer(mNumberChannels: 1,
+//                                         mDataByteSize: UInt32(player.pointee.bufferSizeBytes),
+//                                         mData: player.pointee.sampleBuffer)
+//
+//    print ("Allocated \(player.pointee.bufferSizeBytes) byte buffer for ABL")
     
     var convertedData: AudioBufferList
     var framesReadIntoBuffer = UInt32(0)
+    var framesRead: UInt32
     repeat {
-        var framesRead = UInt32(player.pointee.fileLengthFrames) - framesReadIntoBuffer
-        buffers.mData = sampleBuffer! + (Int(framesReadIntoBuffer) * MemoryLayout<UInt16>.size)
-        convertedData = AudioBufferList(mNumberBuffers: 1, mBuffers: (buffers))
+        framesRead = UInt32(player.pointee.fileLengthFrames) - framesReadIntoBuffer
+        player.pointee.buffers.mData = player.pointee.sampleBuffer! + (Int(framesReadIntoBuffer) * MemoryLayout<UInt16>.size)
+        convertedData = AudioBufferList(mNumberBuffers: 1, mBuffers: (player.pointee.buffers))
 
         checkError(ExtAudioFileRead(player.pointee.extAudioFile,
                                     &framesRead,
@@ -103,21 +112,20 @@ func fillALBuffer(player: UnsafeMutablePointer<MyStreamPlayer>, alBuffer: ALuint
                    "ExtAudioFileRead failed")
         framesReadIntoBuffer += framesRead
         player.pointee.totalFramesRead += Int64(framesRead)
-        print ("read \(framesRead) frames")
-        print ("framesReadIntoBuffer \(framesReadIntoBuffer), target = \(player.pointee.bufferSizeBytes / UInt32(MemoryLayout<UInt16>.size))")
+//        print ("read \(framesRead) frames")
+//        print ("framesReadIntoBuffer \(framesReadIntoBuffer), target = \(player.pointee.bufferSizeBytes / UInt32(MemoryLayout<UInt16>.size))")
     } while framesReadIntoBuffer < (player.pointee.bufferSizeBytes / UInt32(MemoryLayout<UInt16>.size))
  
     // Copy from sample buffer to AL buffer
     alBufferData(alBuffer,
                  AL_FORMAT_MONO16,
-                 sampleBuffer,
+                 player.pointee.sampleBuffer,
                  ALsizei(player.pointee.bufferSizeBytes),
                  ALsizei(player.pointee.dataFormat.mSampleRate))
-    free(sampleBuffer)
+//    free(player.pointee.sampleBuffer)
 }
 
 func refillALBuffers(player: UnsafeMutablePointer<MyStreamPlayer>) {
-    // listings 9.34, 9.35
     var processed = ALint(0)
     alGetSourcei(player.pointee.sources[0],
                  AL_BUFFERS_PROCESSED,
@@ -130,7 +138,7 @@ func refillALBuffers(player: UnsafeMutablePointer<MyStreamPlayer>) {
                                1,
                                &freeBuffer)
         checkALError(operation: "Couldn't unqueue buffer")
-        print ("Refilling buffer \(freeBuffer)")
+        // print ("Refilling buffer \(freeBuffer)")
         fillALBuffer(player: player, alBuffer: freeBuffer)
         alSourceQueueBuffers(player.pointee.sources[0],
                              1,
@@ -200,5 +208,6 @@ func main() {
     alDeleteBuffers(ALsizei(Settings.bufferCount), &buffers)
     alcDestroyContext(alContext)
     alcCloseDevice(alDevice)
+    free(player.sampleBuffer)
     print ("Bottom of main")
 }
