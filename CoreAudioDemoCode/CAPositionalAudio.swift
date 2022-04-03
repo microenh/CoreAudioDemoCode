@@ -11,7 +11,7 @@ import AudioToolbox
 
 struct Settings {
     static let runTime = 20.0
-    static let orbitSpeed = 2.0
+    static let orbitSpeed = 1.0
     static let loopPath = "/Library/Audio/Apple Loops/Apple/11 Blues Garage/Backroad Blues Lead Guitar 03.caf" as CFString
 }
 
@@ -34,29 +34,6 @@ struct MyLoopPlayer {
 }
 
 // MARK: utility functions
-func checkALError(operation: String) {
-    let alErr = alGetError()
-    guard alErr != AL_NO_ERROR else {
-        return
-    }
-    var errName = "UNKNOWN"
-    switch alErr {
-    case AL_INVALID_NAME:
-        errName = "AL_INVALID_NAME"
-    case AL_INVALID_VALUE:
-        errName = "AL_INVALID_VALUE"
-    case AL_INVALID_ENUM:
-        errName = "AL_INVALID_ENUM"
-    case AL_INVALID_OPERATION:
-        errName = "AL_INVALID_OPERATION"
-    case AL_OUT_OF_MEMORY:
-        errName = "AL_OUT_OF_MEMORY"
-    default:
-        break
-    }
-    print ("OpenAL Error: \(operation) (\(errName))")
-    exit(1)
-}
 
 func updateSourceLocation(player: UnsafeMutablePointer<MyLoopPlayer>) {
     let theta = fmod(CFAbsoluteTimeGetCurrent() * Settings.orbitSpeed, Double.pi * 2)
@@ -90,6 +67,9 @@ func loadLoopIntoBuffer(player: UnsafeMutablePointer<MyLoopPlayer>) -> OSStatus 
     player.pointee.bufferSizeBytes = Int32(fileLengthFrames) * Int32(player.pointee.dataFormat.mBytesPerFrame)
     
     player.pointee.sampleBuffer = malloc(MemoryLayout<UInt16>.size * Int(player.pointee.bufferSizeBytes))
+    defer{
+        free(player.pointee.sampleBuffer)
+    }
     var buffers = AudioBuffer(mNumberChannels: 1,
                               mDataByteSize: UInt32(player.pointee.bufferSizeBytes),
                               mData: player.pointee.sampleBuffer)
@@ -127,7 +107,7 @@ func main() {
     let alContext = alcCreateContext(alDevice, nil)
     checkALError(operation: "Couldn't open AL context")
     alcMakeContextCurrent(alContext)
-    
+    checkALError(operation: "Couldn't make AL context current")
     // Set up OpenAL buffer
     var buffers = [ALuint()]
     alGenBuffers(1, &buffers)
@@ -138,7 +118,7 @@ func main() {
                  player.sampleBuffer,
                  player.bufferSizeBytes,
                  ALsizei(player.dataFormat.mSampleRate))
-    free(player.sampleBuffer)
+    // free(player.sampleBuffer)
         
     // Set up OpenAL source
     alGenSources(1, &player.sources)
