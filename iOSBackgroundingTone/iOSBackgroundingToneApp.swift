@@ -7,13 +7,9 @@
 
 import SwiftUI
 
-
-
 @main
 struct iOSBackgroundingToneApp: App {
-    // @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    var appDelegate = AppDelegate()
-    
+     
     var body: some Scene {
         WindowGroup {
             ContentView()
