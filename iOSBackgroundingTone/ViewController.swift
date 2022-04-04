@@ -111,7 +111,6 @@ class ViewController {
         }
         setupNotifications()
         checkError(AudioQueueStart(myPlayer.audioQueue, nil), "Couldn't start the AudioQueue")
-        return // true
     }
     
     func applicationDidEnterBackground() {
