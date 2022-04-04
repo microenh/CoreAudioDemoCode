@@ -32,23 +32,49 @@ struct MyPlayer {
                                                    mChannelsPerFrame: 1,
                                                    mBitsPerChannel: 16,
                                                    mReserved: 0)
-    
-    var frequency: Double {
-        get {
-            currentFrequency
-        }
-        set {
-            currentFrequency = newValue
-            startingFrameCount = 0.0
-        }
-    }
 }
 
 class ViewController {
     
     var myPlayer = MyPlayer()
+    
+    init() {
+        // there are issues with myPlayer if stattApplication is renamed init() (to be called directly)
+        startApplication()
+    }
+    
+    func setupNotifications() {
+        // Get the default notification center instance.
+        let nc = NotificationCenter.default
+        nc.addObserver(self,
+                       selector: #selector(handleInterruption),
+                       name: AVAudioSession.interruptionNotification,
+                       object: AVAudioSession.sharedInstance)
+    }
 
-    func applicationDidBecomeActive() {
+    @objc func handleInterruption(notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
+              let type = AVAudioSession.InterruptionType(rawValue: typeValue) else {
+                  return
+              }
+        
+        // Switch over the interruption type.
+        switch type {
+            
+        case .began:
+            // An interruption began. Update the UI as necessary.
+            break
+            
+        case .ended:
+            // An interruption ended. Resume playback, if appropriate.
+            checkError(AudioQueueStart(myPlayer.audioQueue, nil), "Couldn't restart the AudioQueue")
+            
+        default: ()
+        }
+    }
+
+    func startApplication() {
         let audioSession = AVAudioSession.sharedInstance()
         do {
             try audioSession.setCategory(.playback, mode: .moviePlayback, policy: .default)
@@ -83,34 +109,31 @@ class ViewController {
                                                nil),
                        "Couldn't enqueue buffer (priming)")
         }
+        setupNotifications()
         checkError(AudioQueueStart(myPlayer.audioQueue, nil), "Couldn't start the AudioQueue")
         return // true
     }
     
-    func applicationWillResignActive() {
-        
-    }
-    
     func applicationDidEnterBackground() {
-        myPlayer.frequency = Settings.backgroundFrequency
+        myPlayer.currentFrequency = Settings.backgroundFrequency
     }
     
     func applicationWillEnterForeground() {
+        // this block necessary if application is restarting after interruption
+        // it doesn't do any harm if application is just moving from background to foreground
         do {
             try AVAudioSession.sharedInstance().setActive(true)
-                
+
         } catch {
             print ("Couldn't reset audio session active")
             exit(1)
         }
         checkError(AudioQueueStart(myPlayer.audioQueue, nil), "Couldn't restart the AudioQueue")
-        myPlayer.frequency = Settings.foreroundFrequency
-    }
-    
-    
-    func applicationWillTerminate() {
+        // end of restart block
         
+        myPlayer.currentFrequency = Settings.foreroundFrequency
     }
+    
     
 }
 
