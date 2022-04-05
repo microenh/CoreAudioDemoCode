@@ -69,6 +69,11 @@
 			<key>orderHint</key>
 			<integer>11</integer>
 		</dict>
+		<key>CAMIDISynthesizer.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>22</integer>
+		</dict>
 		<key>CAMetadata.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>

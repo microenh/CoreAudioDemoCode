@@ -23,6 +23,9 @@
 		4D11B59E27E8B41300A6ACC6 /* CAAudioUnitSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D11B59C27E8B3DD00A6ACC6 /* CAAudioUnitSpeech.swift */; };
 		4D11B59F27E8B41A00A6ACC6 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4D11B5A027E8B41F00A6ACC6 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
+		4D19E48527FCF40200D85AE5 /* CAMIDISynthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D19E48427FCF40200D85AE5 /* CAMIDISynthesizer.swift */; };
+		4D19E48627FCF42200D85AE5 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
+		4D19E48727FCF42800D85AE5 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
 		4D1E1ABD27DECB2D0052CB16 /* NCO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1E1ABC27DECB2D0052CB16 /* NCO.swift */; };
 		4D1E1AC027DECFA00052CB16 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4D1E1ACA27DED0030052CB16 /* CAStreamFormatTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1E1AC927DED0030052CB16 /* CAStreamFormatTester.swift */; };
@@ -135,6 +138,15 @@
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 		4D11B59327E8B3B900A6ACC6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		4D19E47B27FCF3C400D85AE5 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -298,6 +310,9 @@
 		4D11B59527E8B3B900A6ACC6 /* CAAudioUnitSpeech */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAAudioUnitSpeech; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D11B59C27E8B3DD00A6ACC6 /* CAAudioUnitSpeech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAAudioUnitSpeech.swift; sourceTree = "<group>"; };
 		4D1665B727E02AD400BB7313 /* CAStreamFormatTester.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CAStreamFormatTester.entitlements; sourceTree = "<group>"; };
+		4D19E47D27FCF3C400D85AE5 /* CAMIDISynthesizer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAMIDISynthesizer; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D19E48427FCF40200D85AE5 /* CAMIDISynthesizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAMIDISynthesizer.swift; sourceTree = "<group>"; };
+		4D19E48827FCF46600D85AE5 /* CAMIDISynthesizer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CAMIDISynthesizer.entitlements; sourceTree = "<group>"; };
 		4D1E1ABC27DECB2D0052CB16 /* NCO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NCO.swift; sourceTree = "<group>"; };
 		4D1E1AC827DECFA00052CB16 /* CAStreamFormatTester */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAStreamFormatTester; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D1E1AC927DED0030052CB16 /* CAStreamFormatTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAStreamFormatTester.swift; sourceTree = "<group>"; };
@@ -383,6 +398,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4D11B59227E8B3B900A6ACC6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4D19E47A27FCF3C400D85AE5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -546,6 +568,7 @@
 		4D7820A727DD807C00C8EFB7 = {
 			isa = PBXGroup;
 			children = (
+				4D19E48827FCF46600D85AE5 /* CAMIDISynthesizer.entitlements */,
 				4D83F4EA27E81A01008A8D9E /* readme.md */,
 				4DBA263627E81C48006E99DE /* BookCover.jpg */,
 				4DEF827827F2A7E400746FFB /* CAAudioEnginePlayThroughMEE.entitlements */,
@@ -590,6 +613,7 @@
 				4D36DAE527F9188B00C49633 /* CAStreamOpenAL */,
 				4DA0A9D627FA0B330013443C /* iOSBackgroundingTone.app */,
 				4DA10D3527FB9B1100226EE6 /* iOSPlayThrough.app */,
+				4D19E47D27FCF3C400D85AE5 /* CAMIDISynthesizer */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -613,6 +637,7 @@
 				4DC1CF1C27F2429600397F01 /* CAAudioEnginePlayThroughMEE.swift */,
 				4DCEDE1427F8CC6E0066E851 /* CAPositionalAudio.swift */,
 				4D36DAEC27F918B400C49633 /* CAStreamOpenAL.swift */,
+				4D19E48427FCF40200D85AE5 /* CAMIDISynthesizer.swift */,
 			);
 			path = CoreAudioDemoCode;
 			sourceTree = "<group>";
@@ -735,6 +760,23 @@
 			name = CAAudioUnitSpeech;
 			productName = CAAudioUnitSpeech;
 			productReference = 4D11B59527E8B3B900A6ACC6 /* CAAudioUnitSpeech */;
+			productType = "com.apple.product-type.tool";
+		};
+		4D19E47C27FCF3C400D85AE5 /* CAMIDISynthesizer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D19E48327FCF3C400D85AE5 /* Build configuration list for PBXNativeTarget "CAMIDISynthesizer" */;
+			buildPhases = (
+				4D19E47927FCF3C400D85AE5 /* Sources */,
+				4D19E47A27FCF3C400D85AE5 /* Frameworks */,
+				4D19E47B27FCF3C400D85AE5 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CAMIDISynthesizer;
+			productName = CAMIDISynthesizer;
+			productReference = 4D19E47D27FCF3C400D85AE5 /* CAMIDISynthesizer */;
 			productType = "com.apple.product-type.tool";
 		};
 		4D1E1ABE27DECFA00052CB16 /* CAStreamFormatTester */ = {
@@ -1062,6 +1104,10 @@
 					4D11B59427E8B3B900A6ACC6 = {
 						CreatedOnToolsVersion = 13.2;
 					};
+					4D19E47C27FCF3C400D85AE5 = {
+						CreatedOnToolsVersion = 13.3;
+						LastSwiftMigration = 1330;
+					};
 					4D36DAE427F9188B00C49633 = {
 						CreatedOnToolsVersion = 13.2;
 						LastSwiftMigration = 1320;
@@ -1140,6 +1186,7 @@
 				4D36DAE427F9188B00C49633 /* CAStreamOpenAL */,
 				4DA0A9D527FA0B330013443C /* iOSBackgroundingTone */,
 				4DA10D3427FB9B1100226EE6 /* iOSPlayThrough */,
+				4D19E47C27FCF3C400D85AE5 /* CAMIDISynthesizer */,
 			);
 		};
 /* End PBXProject section */
@@ -1209,6 +1256,16 @@
 				4D11B59F27E8B41A00A6ACC6 /* main.swift in Sources */,
 				4D11B59E27E8B41300A6ACC6 /* CAAudioUnitSpeech.swift in Sources */,
 				4D11B5A027E8B41F00A6ACC6 /* CheckError.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4D19E47927FCF3C400D85AE5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D19E48627FCF42200D85AE5 /* main.swift in Sources */,
+				4D19E48527FCF40200D85AE5 /* CAMIDISynthesizer.swift in Sources */,
+				4D19E48727FCF42800D85AE5 /* CheckError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1529,6 +1586,45 @@
 				DEVELOPMENT_TEAM = 566Y4FXUU7;
 				ENABLE_HARDENED_RUNTIME = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		4D19E48127FCF3C400D85AE5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = CAMIDISynthesizer.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 566Y4FXUU7;
+				ENABLE_HARDENED_RUNTIME = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		4D19E48227FCF3C400D85AE5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = CAMIDISynthesizer.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 566Y4FXUU7;
+				ENABLE_HARDENED_RUNTIME = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -2348,6 +2444,15 @@
 			buildConfigurations = (
 				4D11B59927E8B3B900A6ACC6 /* Debug */,
 				4D11B59A27E8B3B900A6ACC6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4D19E48327FCF3C400D85AE5 /* Build configuration list for PBXNativeTarget "CAMIDISynthesizer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D19E48127FCF3C400D85AE5 /* Debug */,
+				4D19E48227FCF3C400D85AE5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
