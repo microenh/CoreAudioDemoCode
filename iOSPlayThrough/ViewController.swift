@@ -27,8 +27,8 @@ struct Settings {
 struct EffectState {
     var rioUnit: AudioUnit!
     var asbd: AudioStreamBasicDescription!
-    var sineFrequency = Float(0)
-    var sinePhase = Float(0)
+    var sineFrequency = 0.0
+    var sinePhase = 0.0
 }
 
 class ViewController {
@@ -43,7 +43,7 @@ class ViewController {
         // Set up audio session
         let audioSession = AVAudioSession.sharedInstance()
         do {
-            try audioSession.setCategory(.playAndRecord, mode: .moviePlayback, policy: .default)
+            try audioSession.setCategory(.playAndRecord, mode: .default, policy: .default)
         } catch {
             print ("Couldn't set category on audio session")
             return // false
@@ -57,7 +57,7 @@ class ViewController {
         }
         
         // Get hardware sample rate
-        let hardwareSampleRate = audioSession.preferredSampleRate
+        let hardwareSampleRate = audioSession.preferredSampleRate == 0 ? 44100.0: audioSession.preferredSampleRate
         print ("hardwareSampleRate = \(hardwareSampleRate)")
         
         // Get Rio unit from component manager
@@ -129,10 +129,65 @@ class ViewController {
         effectState.sinePhase = 0
         
         // Set the callback method
-//        var callbackStruct = AURenderCallbackStruct(inputProc: inputModulatingRenderCallback,
-//                                                    inputProcRefCon: &effectState)
+        var callbackStruct = AURenderCallbackStruct(inputProc: inputModulatingRenderCallback,
+                                                    inputProcRefCon: &effectState)
+        checkError(AudioUnitSetProperty(effectState.rioUnit,
+                                        kAudioUnitProperty_SetRenderCallback,
+                                        kAudioUnitScope_Global,
+                                        bus0,
+                                        &callbackStruct,
+                                        UInt32(MemoryLayout<AURenderCallbackStruct>.size)),
+                   "Couldn't set RIO's render callback on bus 0")
+
         
         // Start Rio unit
         // listing 10.26
+        checkError(AudioUnitInitialize(effectState.rioUnit),
+                   "Couldn't initialize the RIO unit")
+        checkError(AudioOutputUnitStart(effectState.rioUnit),
+                   "Couldn't start the RIO unit")
+        print ("RIO started")
     }
+
+}
+    
+func inputModulatingRenderCallback(inRefCon: UnsafeMutableRawPointer,
+                                   ioActionFlags: UnsafeMutablePointer<AudioUnitRenderActionFlags>,
+                                   inTimeStamp: UnsafePointer<AudioTimeStamp>,
+                                   inBusNumber: UInt32,
+                                   inNumberFrames: UInt32,
+                                   ioData: UnsafeMutablePointer<AudioBufferList>?) -> OSStatus {
+    
+    guard let abl = UnsafeMutableAudioBufferListPointer(ioData) else { return -50 }
+
+    let effectState = inRefCon.assumingMemoryBound(to: EffectState.self)
+    let bus1 = AudioUnitElement(1)
+    checkError(AudioUnitRender(effectState.pointee.rioUnit,
+                               ioActionFlags,
+                               inTimeStamp,
+                               bus1,
+                               inNumberFrames,
+                               ioData!),
+               "Couldn't render from RemoteIO unit")
+    
+    // Walk the samples
+    let bytesPerChannel = Int(effectState.pointee.asbd.mBytesPerFrame /
+                                 effectState.pointee.asbd.mChannelsPerFrame)
+    abl.forEach { buf in
+        for currentFrame in 0..<inNumberFrames {
+            let frameOffset = Int(currentFrame * effectState.pointee.asbd.mBytesPerFrame)
+            var channelOffset = Int(0)
+            for _ in 0..<buf.mNumberChannels {
+                let samplePtr = buf.mData!.advanced(by: frameOffset + channelOffset).assumingMemoryBound(to: Int16.self)
+                samplePtr.pointee = Int16(Double(samplePtr.pointee) * sin(effectState.pointee.sinePhase * Double.pi * 2))
+                channelOffset += bytesPerChannel
+                effectState.pointee.sinePhase += (effectState.pointee.sineFrequency / effectState.pointee.asbd.mSampleRate)
+                if effectState.pointee.sinePhase > 1.0 {
+                    effectState.pointee.sinePhase -= 1.0
+                }
+            }
+        }
+    }
+        
+    return noErr
 }

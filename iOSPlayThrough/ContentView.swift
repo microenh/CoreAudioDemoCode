@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    var viewController = ViewController()
     var body: some View {
         Text("iOS PlayThrough")
             .padding()

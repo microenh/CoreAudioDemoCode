@@ -82,7 +82,7 @@
 		<key>CAPositionalAudio.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>20</integer>
+			<integer>19</integer>
 		</dict>
 		<key>CARecorder.xcscheme_^#shared#^_</key>
 		<dict>
@@ -97,7 +97,7 @@
 		<key>CAStreamOpenAL.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>21</integer>
+			<integer>18</integer>
 		</dict>
 		<key>CAToneFileGenerator.xcscheme_^#shared#^_</key>
 		<dict>
@@ -112,12 +112,12 @@
 		<key>iOSBackgroundingTone.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>18</integer>
+			<integer>20</integer>
 		</dict>
 		<key>iOSPlayThrough.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>19</integer>
+			<integer>21</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -133,6 +133,11 @@
 			<true/>
 		</dict>
 		<key>4D1E1ABE27DECFA00052CB16</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4D36DAE427F9188B00C49633</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -198,6 +203,11 @@
 			<true/>
 		</dict>
 		<key>4DC93E0627EA6EDF000DD987</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4DCEDE0C27F8CC490066E851</key>
 		<dict>
 			<key>primary</key>
 			<true/>
