@@ -123,25 +123,37 @@ class ViewController {
                    "Couldn't set the ASBD for RIO on input scope/bus 0")
         
         // Set callback method
-        // listing 10.25
         effectState.asbd = myASBD
         effectState.sineFrequency = 30
         effectState.sinePhase = 0
         
-        // Set the callback method
-        var callbackStruct = AURenderCallbackStruct(inputProc: inputModulatingRenderCallback,
-                                                    inputProcRefCon: &effectState)
-        checkError(AudioUnitSetProperty(effectState.rioUnit,
-                                        kAudioUnitProperty_SetRenderCallback,
-                                        kAudioUnitScope_Global,
-                                        bus0,
-                                        &callbackStruct,
-                                        UInt32(MemoryLayout<AURenderCallbackStruct>.size)),
-                   "Couldn't set RIO's render callback on bus 0")
+//        // Set the callback method
+//        var callbackStruct = AURenderCallbackStruct(inputProc: inputModulatingRenderCallback,
+//                                                    inputProcRefCon: &effectState)
+//
+//        checkError(AudioUnitSetProperty(effectState.rioUnit,
+//                                        kAudioUnitProperty_SetRenderCallback,
+//                                        kAudioUnitScope_Global,
+//                                        bus0,
+//                                        &callbackStruct,
+//                                        UInt32(MemoryLayout<AURenderCallbackStruct>.size)),
+//                   "Couldn't set RIO's render callback on bus 0")
 
+        let rioUnit = effectState.rioUnit
+        withUnsafeMutablePointer(to: &effectState) { effectState in
+            var callbackStruct = AURenderCallbackStruct(inputProc: inputModulatingRenderCallback,
+                                                        inputProcRefCon: effectState)
+            
+            checkError(AudioUnitSetProperty(rioUnit!,
+                                            kAudioUnitProperty_SetRenderCallback,
+                                            kAudioUnitScope_Global,
+                                            bus0,
+                                            &callbackStruct,
+                                            UInt32(MemoryLayout<AURenderCallbackStruct>.size)),
+                       "Couldn't set RIO's render callback on bus 0")
+        }
         
         // Start Rio unit
-        // listing 10.26
         checkError(AudioUnitInitialize(effectState.rioUnit),
                    "Couldn't initialize the RIO unit")
         checkError(AudioOutputUnitStart(effectState.rioUnit),
