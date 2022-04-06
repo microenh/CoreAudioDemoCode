@@ -112,6 +112,7 @@ func myMIDIReadProc(pktlist: UnsafePointer<MIDIPacketList>,
                     connRefCon: UnsafeMutableRawPointer?) {
     let player = refCon?.assumingMemoryBound(to: MyMIDIPLayer.self)
     
+    
     pktlist.unsafeSequence().forEach{ packet in
         let midiStatus = packet.pointee.data.0
         let midiCommand = midiStatus >> 4
@@ -119,6 +120,8 @@ func myMIDIReadProc(pktlist: UnsafePointer<MIDIPacketList>,
         if midiCommand == 0x08 || midiCommand == 0x09 {
             let note = packet.pointee.data.1 & 0x7f
             let velocity = packet.pointee.data.2 & 0x7f
+            
+            // print ("note: \(note)")
             
             checkError(MusicDeviceMIDIEvent(player!.pointee.instrumentUnit,
                                             UInt32(midiStatus),
