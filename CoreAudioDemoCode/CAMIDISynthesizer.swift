@@ -101,12 +101,15 @@ func setupMIDI(player: UnsafeMutablePointer<MyMIDIPLayer>) throws {
 }
 
 // MARK: notify proc
-func myMIDINotifyProc(message: UnsafePointer<MIDINotification>, refCon: UnsafeMutableRawPointer?) {
+func myMIDINotifyProc(message: UnsafePointer<MIDINotification>,
+                      refCon: UnsafeMutableRawPointer?) {
     print("MIDI Notify, messageID=\(message.pointee.messageID)")
 }
 
 // MARK: read proc
-func myMIDIReadProc(pktlist: UnsafePointer<MIDIPacketList>, refCon: UnsafeMutableRawPointer?, connRefCon: UnsafeMutableRawPointer?) {
+func myMIDIReadProc(pktlist: UnsafePointer<MIDIPacketList>,
+                    refCon: UnsafeMutableRawPointer?,
+                    connRefCon: UnsafeMutableRawPointer?) {
     let player = refCon?.assumingMemoryBound(to: MyMIDIPLayer.self)
     
     pktlist.unsafeSequence().forEach{ packet in

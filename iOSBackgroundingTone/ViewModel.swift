@@ -34,7 +34,7 @@ struct MyPlayer {
                                                    mReserved: 0)
 }
 
-class ViewController {
+class ViewModel {
     
     var myPlayer = MyPlayer()
     

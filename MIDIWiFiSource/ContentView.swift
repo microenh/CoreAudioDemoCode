@@ -1,16 +1,15 @@
 //
 //  ContentView.swift
-//  iOSPlayThrough
+//  MIDIWiFiSource
 //
-//  Created by Mark Erbaugh on 4/4/22.
+//  Created by Mark Erbaugh on 4/6/22.
 //
 
 import SwiftUI
 
 struct ContentView: View {
-    var viewModel = ViewModel()
     var body: some View {
-        Text("iOS PlayThrough")
+        Text("Hello, world!")
             .padding()
     }
 }

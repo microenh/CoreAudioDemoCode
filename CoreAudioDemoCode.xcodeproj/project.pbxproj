@@ -66,13 +66,13 @@
 		4DA0A9DB27FA0B330013443C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA0A9DA27FA0B330013443C /* ContentView.swift */; };
 		4DA0A9DD27FA0B340013443C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DA0A9DC27FA0B340013443C /* Assets.xcassets */; };
 		4DA0A9E027FA0B340013443C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DA0A9DF27FA0B340013443C /* Preview Assets.xcassets */; };
-		4DA0A9E527FA0E4C0013443C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA0A9E427FA0E4C0013443C /* ViewController.swift */; };
+		4DA0A9E527FA0E4C0013443C /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA0A9E427FA0E4C0013443C /* ViewModel.swift */; };
 		4DA0A9E627FA0EE00013443C /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
 		4DA10D3827FB9B1100226EE6 /* iOSPlayThroughApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA10D3727FB9B1100226EE6 /* iOSPlayThroughApp.swift */; };
 		4DA10D3A27FB9B1100226EE6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA10D3927FB9B1100226EE6 /* ContentView.swift */; };
 		4DA10D3C27FB9B1200226EE6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DA10D3B27FB9B1200226EE6 /* Assets.xcassets */; };
 		4DA10D3F27FB9B1200226EE6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DA10D3E27FB9B1200226EE6 /* Preview Assets.xcassets */; };
-		4DA10D4427FB9C1700226EE6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA10D4327FB9C1700226EE6 /* ViewController.swift */; };
+		4DA10D4427FB9C1700226EE6 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA10D4327FB9C1700226EE6 /* ViewModel.swift */; };
 		4DA10D4527FBA07F00226EE6 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
 		4DABA08C27E0B8FF004E1328 /* CAPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DABA08B27E0B8FF004E1328 /* CAPlayer.swift */; };
 		4DABA08D27E0B940004E1328 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
@@ -87,6 +87,10 @@
 		4DBEDD7827E7F0B3006E5F8F /* CAAudioUnitPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBEDD7727E7F08D006E5F8F /* CAAudioUnitPlayer.swift */; };
 		4DBEDD7927E7F0B7006E5F8F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4DBEDD7A27E7F0BB006E5F8F /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
+		4DC0892E27FDB9FA00315227 /* MIDIWiFiSourceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC0892D27FDB9FA00315227 /* MIDIWiFiSourceApp.swift */; };
+		4DC0893027FDB9FA00315227 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC0892F27FDB9FA00315227 /* ContentView.swift */; };
+		4DC0893227FDB9FB00315227 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DC0893127FDB9FB00315227 /* Assets.xcassets */; };
+		4DC0893527FDB9FB00315227 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DC0893427FDB9FB00315227 /* Preview Assets.xcassets */; };
 		4DC1CF1D27F2429600397F01 /* CAAudioEnginePlayThroughMEE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC1CF1C27F2429600397F01 /* CAAudioEnginePlayThroughMEE.swift */; };
 		4DC1CF1E27F242D000397F01 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4DC1CF1F27F242DD00397F01 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
@@ -349,13 +353,13 @@
 		4DA0A9DA27FA0B330013443C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4DA0A9DC27FA0B340013443C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4DA0A9DF27FA0B340013443C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		4DA0A9E427FA0E4C0013443C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4DA0A9E427FA0E4C0013443C /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		4DA10D3527FB9B1100226EE6 /* iOSPlayThrough.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSPlayThrough.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DA10D3727FB9B1100226EE6 /* iOSPlayThroughApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSPlayThroughApp.swift; sourceTree = "<group>"; };
 		4DA10D3927FB9B1100226EE6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4DA10D3B27FB9B1200226EE6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4DA10D3E27FB9B1200226EE6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		4DA10D4327FB9C1700226EE6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4DA10D4327FB9C1700226EE6 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		4DABA07D27E0B83B004E1328 /* CARecorder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CARecorder.entitlements; sourceTree = "<group>"; };
 		4DABA07E27E0B841004E1328 /* CAMetadata.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CAMetadata.entitlements; sourceTree = "<group>"; };
 		4DABA07F27E0B846004E1328 /* CAToneFileGenerator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CAToneFileGenerator.entitlements; sourceTree = "<group>"; };
@@ -369,6 +373,11 @@
 		4DBA263627E81C48006E99DE /* BookCover.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BookCover.jpg; sourceTree = "<group>"; };
 		4DBEDD7027E7F075006E5F8F /* CAAudioUnitPlayer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAAudioUnitPlayer; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DBEDD7727E7F08D006E5F8F /* CAAudioUnitPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAAudioUnitPlayer.swift; sourceTree = "<group>"; };
+		4DC0892B27FDB9FA00315227 /* MIDIWiFiSource.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MIDIWiFiSource.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4DC0892D27FDB9FA00315227 /* MIDIWiFiSourceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MIDIWiFiSourceApp.swift; sourceTree = "<group>"; };
+		4DC0892F27FDB9FA00315227 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		4DC0893127FDB9FB00315227 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4DC0893427FDB9FB00315227 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		4DC1CF1527F2422800397F01 /* CAAudioEnginePlayThroughMEE */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAAudioEnginePlayThroughMEE; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DC1CF1C27F2429600397F01 /* CAAudioEnginePlayThroughMEE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAAudioEnginePlayThroughMEE.swift; sourceTree = "<group>"; };
 		4DC93E0727EA6EDF000DD987 /* CAAUGraphPlayThrough */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAAUGraphPlayThrough; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -502,6 +511,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4DC0892827FDB9FA00315227 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4DC1CF1227F2422800397F01 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -584,6 +600,7 @@
 				4D7820B227DD807C00C8EFB7 /* CoreAudioDemoCode */,
 				4DA0A9D727FA0B330013443C /* iOSBackgroundingTone */,
 				4DA10D3627FB9B1100226EE6 /* iOSPlayThrough */,
+				4DC0892C27FDB9FA00315227 /* MIDIWiFiSource */,
 				4D7820B127DD807C00C8EFB7 /* Products */,
 				4DADD00727EB403600013883 /* Frameworks */,
 			);
@@ -614,6 +631,7 @@
 				4DA0A9D627FA0B330013443C /* iOSBackgroundingTone.app */,
 				4DA10D3527FB9B1100226EE6 /* iOSPlayThrough.app */,
 				4D19E47D27FCF3C400D85AE5 /* CAMIDISynthesizer */,
+				4DC0892B27FDB9FA00315227 /* MIDIWiFiSource.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -648,7 +666,7 @@
 				4D0B20B627FA861F00BF586F /* Info.plist */,
 				4DA0A9D827FA0B330013443C /* iOSBackgroundingToneApp.swift */,
 				4DA0A9DA27FA0B330013443C /* ContentView.swift */,
-				4DA0A9E427FA0E4C0013443C /* ViewController.swift */,
+				4DA0A9E427FA0E4C0013443C /* ViewModel.swift */,
 				4DA0A9DC27FA0B340013443C /* Assets.xcassets */,
 				4DA0A9DE27FA0B340013443C /* Preview Content */,
 			);
@@ -668,7 +686,7 @@
 			children = (
 				4DA10D3727FB9B1100226EE6 /* iOSPlayThroughApp.swift */,
 				4DA10D3927FB9B1100226EE6 /* ContentView.swift */,
-				4DA10D4327FB9C1700226EE6 /* ViewController.swift */,
+				4DA10D4327FB9C1700226EE6 /* ViewModel.swift */,
 				4DA10D3B27FB9B1200226EE6 /* Assets.xcassets */,
 				4DA10D3D27FB9B1200226EE6 /* Preview Content */,
 			);
@@ -688,6 +706,25 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4DC0892C27FDB9FA00315227 /* MIDIWiFiSource */ = {
+			isa = PBXGroup;
+			children = (
+				4DC0892D27FDB9FA00315227 /* MIDIWiFiSourceApp.swift */,
+				4DC0892F27FDB9FA00315227 /* ContentView.swift */,
+				4DC0893127FDB9FB00315227 /* Assets.xcassets */,
+				4DC0893327FDB9FB00315227 /* Preview Content */,
+			);
+			path = MIDIWiFiSource;
+			sourceTree = "<group>";
+		};
+		4DC0893327FDB9FB00315227 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				4DC0893427FDB9FB00315227 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		4DE488EC27DF9839003543CB /* Utility */ = {
@@ -1004,6 +1041,23 @@
 			productReference = 4DBEDD7027E7F075006E5F8F /* CAAudioUnitPlayer */;
 			productType = "com.apple.product-type.tool";
 		};
+		4DC0892A27FDB9FA00315227 /* MIDIWiFiSource */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4DC0893827FDB9FB00315227 /* Build configuration list for PBXNativeTarget "MIDIWiFiSource" */;
+			buildPhases = (
+				4DC0892727FDB9FA00315227 /* Sources */,
+				4DC0892827FDB9FA00315227 /* Frameworks */,
+				4DC0892927FDB9FA00315227 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MIDIWiFiSource;
+			productName = MIDIWiFiSource;
+			productReference = 4DC0892B27FDB9FA00315227 /* MIDIWiFiSource.app */;
+			productType = "com.apple.product-type.application";
+		};
 		4DC1CF1427F2422800397F01 /* CAAudioEnginePlayThroughMEE */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4DC1CF1B27F2422800397F01 /* Build configuration list for PBXNativeTarget "CAAudioEnginePlayThroughMEE" */;
@@ -1137,6 +1191,9 @@
 					4DBEDD6F27E7F075006E5F8F = {
 						CreatedOnToolsVersion = 13.2;
 					};
+					4DC0892A27FDB9FA00315227 = {
+						CreatedOnToolsVersion = 13.3;
+					};
 					4DC1CF1427F2422800397F01 = {
 						CreatedOnToolsVersion = 13.2;
 						LastSwiftMigration = 1320;
@@ -1187,6 +1244,7 @@
 				4DA0A9D527FA0B330013443C /* iOSBackgroundingTone */,
 				4DA10D3427FB9B1100226EE6 /* iOSPlayThrough */,
 				4D19E47C27FCF3C400D85AE5 /* CAMIDISynthesizer */,
+				4DC0892A27FDB9FA00315227 /* MIDIWiFiSource */,
 			);
 		};
 /* End PBXProject section */
@@ -1207,6 +1265,15 @@
 			files = (
 				4DA10D3F27FB9B1200226EE6 /* Preview Assets.xcassets in Resources */,
 				4DA10D3C27FB9B1200226EE6 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4DC0892927FDB9FA00315227 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DC0893527FDB9FB00315227 /* Preview Assets.xcassets in Resources */,
+				4DC0893227FDB9FB00315227 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1345,7 +1412,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4DA0A9E527FA0E4C0013443C /* ViewController.swift in Sources */,
+				4DA0A9E527FA0E4C0013443C /* ViewModel.swift in Sources */,
 				4DA0A9DB27FA0B330013443C /* ContentView.swift in Sources */,
 				4DA0A9D927FA0B330013443C /* iOSBackgroundingToneApp.swift in Sources */,
 				4DA0A9E627FA0EE00013443C /* CheckError.swift in Sources */,
@@ -1356,7 +1423,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4DA10D4427FB9C1700226EE6 /* ViewController.swift in Sources */,
+				4DA10D4427FB9C1700226EE6 /* ViewModel.swift in Sources */,
 				4DA10D3A27FB9B1100226EE6 /* ContentView.swift in Sources */,
 				4DA10D3827FB9B1100226EE6 /* iOSPlayThroughApp.swift in Sources */,
 				4DA10D4527FBA07F00226EE6 /* CheckError.swift in Sources */,
@@ -1403,6 +1470,15 @@
 				4DBEDD7927E7F0B7006E5F8F /* main.swift in Sources */,
 				4DBEDD7827E7F0B3006E5F8F /* CAAudioUnitPlayer.swift in Sources */,
 				4DBEDD7A27E7F0BB006E5F8F /* CheckError.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4DC0892727FDB9FA00315227 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DC0893027FDB9FA00315227 /* ContentView.swift in Sources */,
+				4DC0892E27FDB9FA00315227 /* MIDIWiFiSourceApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2229,6 +2305,69 @@
 			};
 			name = Release;
 		};
+		4DC0893627FDB9FB00315227 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MIDIWiFiSource/Preview Content\"";
+				DEVELOPMENT_TEAM = 566Y4FXUU7;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.microenh.MIDIWiFiSource;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4DC0893727FDB9FB00315227 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MIDIWiFiSource/Preview Content\"";
+				DEVELOPMENT_TEAM = 566Y4FXUU7;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.microenh.MIDIWiFiSource;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		4DC1CF1927F2422800397F01 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2579,6 +2718,15 @@
 			buildConfigurations = (
 				4DBEDD7427E7F075006E5F8F /* Debug */,
 				4DBEDD7527E7F075006E5F8F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4DC0893827FDB9FB00315227 /* Build configuration list for PBXNativeTarget "MIDIWiFiSource" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4DC0893627FDB9FB00315227 /* Debug */,
+				4DC0893727FDB9FB00315227 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

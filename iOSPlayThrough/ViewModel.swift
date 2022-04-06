@@ -31,7 +31,7 @@ struct EffectState {
     var sinePhase = 0.0
 }
 
-class ViewController {
+class ViewModel {
     
     var effectState = EffectState()
     

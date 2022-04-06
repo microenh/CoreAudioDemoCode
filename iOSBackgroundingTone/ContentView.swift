@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
-    var viewController = ViewController()
+    var viewModel = ViewModel()
     var body: some View {
         Text("Hello, world!")
             .padding()
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-            viewController.applicationWillEnterForeground()
+            viewModel.applicationWillEnterForeground()
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
-            viewController.applicationDidEnterBackground()
+            viewModel.applicationDidEnterBackground()
         }
     }
 
