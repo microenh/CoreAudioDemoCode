@@ -62,6 +62,8 @@
 		4D7235E427EDF94F00ABDF4F /* AudioDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7235E327EDF94F00ABDF4F /* AudioDevices.swift */; };
 		4D7235E527EDF94F00ABDF4F /* AudioDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7235E327EDF94F00ABDF4F /* AudioDevices.swift */; };
 		4D85AB8427EF344E00BF3A25 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
+		4D8A73C727FF0C1500A0479F /* sampler.aupreset in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4D8A73C227FF0A3200A0479F /* sampler.aupreset */; };
+		4D8A73C827FF0C1B00A0479F /* sampler.caf in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4D8A73C327FF0A8700A0479F /* sampler.caf */; };
 		4DA0A9D927FA0B330013443C /* iOSBackgroundingToneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA0A9D827FA0B330013443C /* iOSBackgroundingToneApp.swift */; };
 		4DA0A9DB27FA0B330013443C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA0A9DA27FA0B330013443C /* ContentView.swift */; };
 		4DA0A9DD27FA0B340013443C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DA0A9DC27FA0B340013443C /* Assets.xcassets */; };
@@ -293,12 +295,14 @@
 		};
 		4DD00E4827FE580A007C0675 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 16;
 			files = (
+				4D8A73C727FF0C1500A0479F /* sampler.aupreset in CopyFiles */,
+				4D8A73C827FF0C1B00A0479F /* sampler.caf in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4DE33F1127F5039C00A6FA22 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -361,6 +365,9 @@
 		4D7820BA27DD81C500C8EFB7 /* CAMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAMetadata.swift; sourceTree = "<group>"; };
 		4D7820BC27DD8C9400C8EFB7 /* CAToneFileGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAToneFileGenerator.swift; sourceTree = "<group>"; };
 		4D83F4EA27E81A01008A8D9E /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
+		4D8A73C227FF0A3200A0479F /* sampler.aupreset */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = sampler.aupreset; sourceTree = "<group>"; };
+		4D8A73C327FF0A8700A0479F /* sampler.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sampler.caf; sourceTree = "<group>"; };
+		4D8A73C427FF0B4B00A0479F /* CAAUSampler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CAAUSampler.entitlements; sourceTree = "<group>"; };
 		4D8ADCC927EE911B00145DE0 /* CAAUGraphPlayThroughMEERelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CAAUGraphPlayThroughMEERelease.entitlements; sourceTree = "<group>"; };
 		4D8ADCCA27EE912400145DE0 /* CAAUGraphPlayThroughMEE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CAAUGraphPlayThroughMEE.entitlements; sourceTree = "<group>"; };
 		4DA0A9D627FA0B330013443C /* iOSBackgroundingTone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSBackgroundingTone.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -624,6 +631,7 @@
 				4D1665B727E02AD400BB7313 /* CAStreamFormatTester.entitlements */,
 				4D19E48827FCF46600D85AE5 /* CAMIDISynthesizer.entitlements */,
 				4D7820B227DD807C00C8EFB7 /* CoreAudioDemoCode */,
+				4D8A73C127FF0A1100A0479F /* CAAUSampler */,
 				4DA0A9D727FA0B330013443C /* iOSBackgroundingTone */,
 				4DA10D3627FB9B1100226EE6 /* iOSPlayThrough */,
 				4DC0892C27FDB9FA00315227 /* MIDIWiFiSource */,
@@ -683,9 +691,19 @@
 				4DCEDE1427F8CC6E0066E851 /* CAPositionalAudio.swift */,
 				4D36DAEC27F918B400C49633 /* CAStreamOpenAL.swift */,
 				4D19E48427FCF40200D85AE5 /* CAMIDISynthesizer.swift */,
-				4DD00E5127FE585D007C0675 /* CAAUSampler.swift */,
 			);
 			path = CoreAudioDemoCode;
+			sourceTree = "<group>";
+		};
+		4D8A73C127FF0A1100A0479F /* CAAUSampler */ = {
+			isa = PBXGroup;
+			children = (
+				4D8A73C427FF0B4B00A0479F /* CAAUSampler.entitlements */,
+				4DD00E5127FE585D007C0675 /* CAAUSampler.swift */,
+				4D8A73C227FF0A3200A0479F /* sampler.aupreset */,
+				4D8A73C327FF0A8700A0479F /* sampler.caf */,
+			);
+			path = CAAUSampler;
 			sourceTree = "<group>";
 		};
 		4DA0A9D727FA0B330013443C /* iOSBackgroundingTone */ = {
@@ -1291,11 +1309,11 @@
 				4DE33F0527F5039C00A6FA22 /* CAAudioEnginePlayThroughMEE2 */,
 				4DCEDE0C27F8CC490066E851 /* CAPositionalAudio */,
 				4D36DAE427F9188B00C49633 /* CAStreamOpenAL */,
+				4D19E47C27FCF3C400D85AE5 /* CAMIDISynthesizer */,
+				4DD00E4927FE580A007C0675 /* CAAUSampler */,
 				4DA0A9D527FA0B330013443C /* iOSBackgroundingTone */,
 				4DA10D3427FB9B1100226EE6 /* iOSPlayThrough */,
-				4D19E47C27FCF3C400D85AE5 /* CAMIDISynthesizer */,
 				4DC0892A27FDB9FA00315227 /* MIDIWiFiSource */,
-				4DD00E4927FE580A007C0675 /* CAAUSampler */,
 			);
 		};
 /* End PBXProject section */
@@ -2547,9 +2565,10 @@
 		4DD00E4E27FE580A007C0675 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = CAAUSampler/CAAUSampler.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 566Y4FXUU7;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				MACOSX_DEPLOYMENT_TARGET = 12.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -2559,9 +2578,10 @@
 		4DD00E4F27FE580A007C0675 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = CAAUSampler/CAAUSampler.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 566Y4FXUU7;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				MACOSX_DEPLOYMENT_TARGET = 12.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

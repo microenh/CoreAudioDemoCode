@@ -9,6 +9,11 @@ import CoreMIDI
 import CoreAudio
 import AudioToolbox
 
+// MARK: Settings
+struct Settings {
+    static let presetFile = "sampler.aupreset"
+}
+
 // MARK: State Struct
 struct MyMIDIPLayer {
     var graph: AUGraph!
@@ -63,7 +68,7 @@ func setupAUGraph(player: UnsafeMutablePointer<MyMIDIPLayer>) throws {
     // Now initialize the graph (causes resources to be allocated)
     try throwIfError(AUGraphInitialize(player.pointee.graph), "AUGraphInitialize failed")
     
-    let presetURL = NSURL.fileURL(withPath: "/Users/mark/Desktop/mee3.aupreset")
+    let presetURL = NSURL.fileURL(withPath: Settings.presetFile)
     let presetData = try? Data(contentsOf: presetURL)
     
     if (presetData == nil) {
