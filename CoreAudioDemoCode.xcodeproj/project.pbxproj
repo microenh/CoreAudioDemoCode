@@ -350,7 +350,6 @@
 		4D4C53AE27EBC8DB007499A5 /* CARingBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CARingBuffer.cpp; sourceTree = "<group>"; };
 		4D4C53AF27EBC8DB007499A5 /* CARingBufferWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARingBufferWrapper.h; sourceTree = "<group>"; };
 		4D4C53B027EBC8DB007499A5 /* CARingBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARingBuffer.h; sourceTree = "<group>"; };
-		4D4C53B127EBC8DB007499A5 /* CARingBufferMisc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CARingBufferMisc.h; sourceTree = "<group>"; };
 		4D4C53B227EBC8DB007499A5 /* CARingBufferWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CARingBufferWrapper.mm; sourceTree = "<group>"; };
 		4D4EA5C627EFF04100F750A0 /* AudioObjectID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioObjectID.swift; sourceTree = "<group>"; };
 		4D4EA5CA27EFF09800F750A0 /* AudioUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnit.swift; sourceTree = "<group>"; };
@@ -595,7 +594,6 @@
 			children = (
 				4D4C53AE27EBC8DB007499A5 /* CARingBuffer.cpp */,
 				4D4C53B027EBC8DB007499A5 /* CARingBuffer.h */,
-				4D4C53B127EBC8DB007499A5 /* CARingBufferMisc.h */,
 				4D4C53AF27EBC8DB007499A5 /* CARingBufferWrapper.h */,
 				4D4C53B227EBC8DB007499A5 /* CARingBufferWrapper.mm */,
 				4D4C53AD27EBC8DB007499A5 /* CARingBuffer-Bridging-Header.h */,

@@ -45,7 +45,8 @@
  
 */
 #include "CARingBuffer.h"
-#include "CARingBufferMisc.h"
+
+// releveant declarations from these files have been added to CARingBufer.h
 //#include "CABitOperations.h"
 //#include "CAAutoDisposer.h"
 //#include "CAAtomic.h"
