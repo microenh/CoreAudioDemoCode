@@ -325,6 +325,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D00C7ED27FF130C00614BF6 /* notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = notes.md; sourceTree = "<group>"; };
 		4D050A6627EE9A25008F2ACF /* CAAUGraphPlayThroughMEE */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAAUGraphPlayThroughMEE; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D050A6727EE9A9D008F2ACF /* CAAUGraphPlayThroughMEE.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAAUGraphPlayThroughMEE.swift; sourceTree = "<group>"; };
 		4D07883E27EFA6480091AA6B /* CAAUGraphPlayThroughMEE2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAAUGraphPlayThroughMEE2; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -618,6 +619,7 @@
 			isa = PBXGroup;
 			children = (
 				4D83F4EA27E81A01008A8D9E /* readme.md */,
+				4D00C7ED27FF130C00614BF6 /* notes.md */,
 				4DBA263627E81C48006E99DE /* BookCover.jpg */,
 				4DEF827827F2A7E400746FFB /* CAAudioEnginePlayThroughMEE.entitlements */,
 				4D8ADCCA27EE912400145DE0 /* CAAUGraphPlayThroughMEE.entitlements */,
@@ -636,7 +638,6 @@
 				4DA10D3627FB9B1100226EE6 /* iOSPlayThrough */,
 				4DC0892C27FDB9FA00315227 /* MIDIWiFiSource */,
 				4D7820B127DD807C00C8EFB7 /* Products */,
-				4DADD00727EB403600013883 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -745,13 +746,6 @@
 				4DA10D3E27FB9B1200226EE6 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		4DADD00727EB403600013883 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		4DC0892C27FDB9FA00315227 /* MIDIWiFiSource */ = {
