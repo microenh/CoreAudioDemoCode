@@ -619,8 +619,7 @@
 			isa = PBXGroup;
 			children = (
 				4D83F4EA27E81A01008A8D9E /* readme.md */,
-				4D00C7ED27FF130C00614BF6 /* notes.md */,
-				4DBA263627E81C48006E99DE /* BookCover.jpg */,
+				4DDFA32727FF216900A9AC13 /* ReadmeFiles */,
 				4DEF827827F2A7E400746FFB /* CAAudioEnginePlayThroughMEE.entitlements */,
 				4D8ADCCA27EE912400145DE0 /* CAAUGraphPlayThroughMEE.entitlements */,
 				4D8ADCC927EE911B00145DE0 /* CAAUGraphPlayThroughMEERelease.entitlements */,
@@ -766,6 +765,15 @@
 				4DC0893427FDB9FB00315227 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		4DDFA32727FF216900A9AC13 /* ReadmeFiles */ = {
+			isa = PBXGroup;
+			children = (
+				4DBA263627E81C48006E99DE /* BookCover.jpg */,
+				4D00C7ED27FF130C00614BF6 /* notes.md */,
+			);
+			path = ReadmeFiles;
 			sourceTree = "<group>";
 		};
 		4DE488EC27DF9839003543CB /* Utility */ = {
