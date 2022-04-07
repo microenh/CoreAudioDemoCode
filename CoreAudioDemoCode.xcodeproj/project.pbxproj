@@ -109,6 +109,9 @@
 		4DCEDE1527F8CCA80066E851 /* CAPositionalAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCEDE1427F8CC6E0066E851 /* CAPositionalAudio.swift */; };
 		4DCEDE1627F8CCAF0066E851 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4DCEDE1827F8D19C0066E851 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
+		4DD00E5227FE586E007C0675 /* CAAUSampler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD00E5127FE585D007C0675 /* CAAUSampler.swift */; };
+		4DD00E5327FE5876007C0675 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
+		4DD00E5427FE587D007C0675 /* CheckError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE488EE27DF988C003543CB /* CheckError.swift */; };
 		4DE33F0727F5039C00A6FA22 /* AudioUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4EA5CA27EFF09800F750A0 /* AudioUnit.swift */; };
 		4DE33F0827F5039C00A6FA22 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D45C3FE27DE1C29004E02C7 /* main.swift */; };
 		4DE33F0927F5039C00A6FA22 /* AudioComponentExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4EA5D627EFF15500F750A0 /* AudioComponentExtension.swift */; };
@@ -288,6 +291,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		4DD00E4827FE580A007C0675 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		4DE33F1127F5039C00A6FA22 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -389,6 +401,8 @@
 		4DC93E0E27EA6F2E000DD987 /* CAAUGraphPlayThrough.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAAUGraphPlayThrough.swift; sourceTree = "<group>"; };
 		4DCEDE0D27F8CC490066E851 /* CAPositionalAudio */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAPositionalAudio; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DCEDE1427F8CC6E0066E851 /* CAPositionalAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAPositionalAudio.swift; sourceTree = "<group>"; };
+		4DD00E4A27FE580A007C0675 /* CAAUSampler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAAUSampler; sourceTree = BUILT_PRODUCTS_DIR; };
+		4DD00E5127FE585D007C0675 /* CAAUSampler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAAUSampler.swift; sourceTree = "<group>"; };
 		4DE33F1527F5039C00A6FA22 /* CAAudioEnginePlayThroughMEE2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CAAudioEnginePlayThroughMEE2; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DE488E727DF953E003543CB /* CARecorder */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CARecorder; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DE488E827DF959A003543CB /* CARecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CARecorder.swift; sourceTree = "<group>"; };
@@ -544,6 +558,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4DD00E4727FE580A007C0675 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4DE33F1027F5039C00A6FA22 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -637,6 +658,7 @@
 				4DA10D3527FB9B1100226EE6 /* iOSPlayThrough.app */,
 				4D19E47D27FCF3C400D85AE5 /* CAMIDISynthesizer */,
 				4DC0892B27FDB9FA00315227 /* MIDIWiFiSource.app */,
+				4DD00E4A27FE580A007C0675 /* CAAUSampler */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -661,6 +683,7 @@
 				4DCEDE1427F8CC6E0066E851 /* CAPositionalAudio.swift */,
 				4D36DAEC27F918B400C49633 /* CAStreamOpenAL.swift */,
 				4D19E48427FCF40200D85AE5 /* CAMIDISynthesizer.swift */,
+				4DD00E5127FE585D007C0675 /* CAAUSampler.swift */,
 			);
 			path = CoreAudioDemoCode;
 			sourceTree = "<group>";
@@ -1118,6 +1141,23 @@
 			productReference = 4DCEDE0D27F8CC490066E851 /* CAPositionalAudio */;
 			productType = "com.apple.product-type.tool";
 		};
+		4DD00E4927FE580A007C0675 /* CAAUSampler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4DD00E5027FE580A007C0675 /* Build configuration list for PBXNativeTarget "CAAUSampler" */;
+			buildPhases = (
+				4DD00E4627FE580A007C0675 /* Sources */,
+				4DD00E4727FE580A007C0675 /* Frameworks */,
+				4DD00E4827FE580A007C0675 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CAAUSampler;
+			productName = CAAUSampler;
+			productReference = 4DD00E4A27FE580A007C0675 /* CAAUSampler */;
+			productType = "com.apple.product-type.tool";
+		};
 		4DE33F0527F5039C00A6FA22 /* CAAudioEnginePlayThroughMEE2 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4DE33F1227F5039C00A6FA22 /* Build configuration list for PBXNativeTarget "CAAudioEnginePlayThroughMEE2" */;
@@ -1212,6 +1252,9 @@
 					4DCEDE0C27F8CC490066E851 = {
 						CreatedOnToolsVersion = 13.2;
 					};
+					4DD00E4927FE580A007C0675 = {
+						CreatedOnToolsVersion = 13.3;
+					};
 				};
 			};
 			buildConfigurationList = 4D7820AB27DD807C00C8EFB7 /* Build configuration list for PBXProject "CoreAudioDemoCode" */;
@@ -1252,6 +1295,7 @@
 				4DA10D3427FB9B1100226EE6 /* iOSPlayThrough */,
 				4D19E47C27FCF3C400D85AE5 /* CAMIDISynthesizer */,
 				4DC0892A27FDB9FA00315227 /* MIDIWiFiSource */,
+				4DD00E4927FE580A007C0675 /* CAAUSampler */,
 			);
 		};
 /* End PBXProject section */
@@ -1529,6 +1573,16 @@
 				4DCEDE1527F8CCA80066E851 /* CAPositionalAudio.swift in Sources */,
 				4D36DAF127F919C600C49633 /* CheckALError.swift in Sources */,
 				4DCEDE1827F8D19C0066E851 /* CheckError.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4DD00E4627FE580A007C0675 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DD00E5327FE5876007C0675 /* main.swift in Sources */,
+				4DD00E5227FE586E007C0675 /* CAAUSampler.swift in Sources */,
+				4DD00E5427FE587D007C0675 /* CheckError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2490,6 +2544,30 @@
 			};
 			name = Release;
 		};
+		4DD00E4E27FE580A007C0675 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 566Y4FXUU7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		4DD00E4F27FE580A007C0675 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 566Y4FXUU7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		4DE33F1327F5039C00A6FA22 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2764,6 +2842,15 @@
 			buildConfigurations = (
 				4DCEDE1127F8CC490066E851 /* Debug */,
 				4DCEDE1227F8CC490066E851 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4DD00E5027FE580A007C0675 /* Build configuration list for PBXNativeTarget "CAAUSampler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4DD00E4E27FE580A007C0675 /* Debug */,
+				4DD00E4F27FE580A007C0675 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

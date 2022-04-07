@@ -29,6 +29,11 @@
 			<key>orderHint</key>
 			<integer>15</integer>
 		</dict>
+		<key>CAAUSampler.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>21</integer>
+		</dict>
 		<key>CAAudioEnginePlayThroughMEE.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -122,12 +127,12 @@
 		<key>iOSBackgroundingTone.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>21</integer>
+			<integer>22</integer>
 		</dict>
 		<key>iOSPlayThrough.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>22</integer>
+			<integer>24</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -212,6 +217,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>4DC0892A27FDB9FA00315227</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>4DC1CF1427F2422800397F01</key>
 		<dict>
 			<key>primary</key>
@@ -223,6 +233,11 @@
 			<true/>
 		</dict>
 		<key>4DCEDE0C27F8CC490066E851</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4DD00E4927FE580A007C0675</key>
 		<dict>
 			<key>primary</key>
 			<true/>
