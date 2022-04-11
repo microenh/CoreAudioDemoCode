@@ -61,7 +61,6 @@ class ViewModel {
         print ("hardwareSampleRate = \(hardwareSampleRate)")
         
         // Get Rio unit from component manager
-        // listing 10.22
         // Describe the unit
         var audioCompDesc = AudioComponentDescription(componentType: kAudioUnitType_Output,
                                                       componentSubType: kAudioUnitSubType_RemoteIO,
@@ -93,10 +92,12 @@ class ViewModel {
                                         UInt32(MemoryLayout<UInt32>.size)),
                    "Couldn't enable RIO input")
         
-        // Setup an ASBD in teh iPhone canonical format
+        // Setup an ASBD in the iPhone canonical format
         var myASBD = AudioStreamBasicDescription(mSampleRate: hardwareSampleRate,
                                                  mFormatID: kAudioFormatLinearPCM,
-                                                 mFormatFlags: kAudioFormatFlagIsSignedInteger | kAudioFormatFlagsNativeEndian | kAudioFormatFlagIsPacked, // kAudioFormatFlagsCanonical,
+                                                 mFormatFlags: kAudioFormatFlagIsSignedInteger
+                                                             | kAudioFormatFlagsNativeEndian
+                                                             | kAudioFormatFlagIsPacked, // | kAudioFormatFlagsCanonical,
                                                  mBytesPerPacket: 4,
                                                  mFramesPerPacket: 1,
                                                  mBytesPerFrame: 4,
@@ -184,7 +185,7 @@ func inputModulatingRenderCallback(inRefCon: UnsafeMutableRawPointer,
     
     // Walk the samples
     let bytesPerChannel = Int(effectState.pointee.asbd.mBytesPerFrame /
-                                 effectState.pointee.asbd.mChannelsPerFrame)
+                              effectState.pointee.asbd.mChannelsPerFrame)
     abl.forEach { buf in
         for currentFrame in 0..<inNumberFrames {
             let frameOffset = Int(currentFrame * effectState.pointee.asbd.mBytesPerFrame)
@@ -193,7 +194,8 @@ func inputModulatingRenderCallback(inRefCon: UnsafeMutableRawPointer,
                 let samplePtr = buf.mData!.advanced(by: frameOffset + channelOffset).assumingMemoryBound(to: Int16.self)
                 samplePtr.pointee = Int16(Double(samplePtr.pointee) * sin(effectState.pointee.sinePhase * Double.pi * 2))
                 channelOffset += bytesPerChannel
-                effectState.pointee.sinePhase += (effectState.pointee.sineFrequency / effectState.pointee.asbd.mSampleRate)
+                effectState.pointee.sinePhase += (effectState.pointee.sineFrequency /
+                                                  effectState.pointee.asbd.mSampleRate)
                 if effectState.pointee.sinePhase > 1.0 {
                     effectState.pointee.sinePhase -= 1.0
                 }
